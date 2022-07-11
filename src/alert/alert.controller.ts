@@ -1,34 +1,73 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { GetUser } from '../auth/decorator';
+import { JwtGuard } from '../auth/guard';
 import { AlertService } from './alert.service';
-import { CreateAlertDto } from './dto/create-alert.dto';
-import { UpdateAlertDto } from './dto/update-alert.dto';
+import { CreateAlertDto } from './dto';
+import { UpdateAlertDto } from './dto';
 
-@Controller('alert')
+@UseGuards(JwtGuard)
+@Controller('alerts')
 export class AlertController {
-  constructor(private readonly alertService: AlertService) {}
+  constructor(private alertService: AlertService) {}
+
+  @Get()
+  getBookmarks(@GetUser('id') userId: number) {
+    return this.alertService.getAlerts(
+      userId,
+    );
+  }
 
   @Post()
-  create(@Body() createAlertDto: CreateAlertDto) {
-    return this.alertService.create(createAlertDto);
+  createAlert(
+    @GetUser('id') userId: number,
+    @Body() dto: CreateAlertDto,
+  ) {
+    return this.alertService.createAlert(
+      userId,
+      dto,
+    );
   }
 
   @Get()
-  findAll() {
-    return this.alertService.findAll();
+  getAlerts(@GetUser('id') userId: number) {
+    return this.alertService.getAlerts(
+      userId,
+    );
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.alertService.findOne(+id);
+  getAlertById(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) alertId: number,
+  ) {
+    return this.alertService.getAlertById(
+      userId,
+      alertId,
+    );
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAlertDto: UpdateAlertDto) {
-    return this.alertService.update(+id, updateAlertDto);
+  editAlertById(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) alertId: number,
+    @Body() dto: UpdateAlertDto,
+  ) {
+    return this.alertService.editAlertById(
+      userId,
+      alertId,
+      dto,
+    );
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.alertService.remove(+id);
+  deleteBookmarkById(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) alertId: number,
+  ) {
+    return this.alertService.deleteAlertById(
+      userId,
+      alertId,
+    );
   }
 }
