@@ -18,34 +18,111 @@ model User{
   email String @unique
   hash String
   name String
-
-  isVolunteer Boolean @default(false)
+  role Role @default(USER)
 
   photo String?
   rut String?
-  organizationId Int?
-  organizationName String?
   volunteerType String?
+  patente String?
+  sector String?
+
+  organizationId Int?
+  organization Organization? @relation("Volunteers", fields:[organizationId], references: [id])
   
-  alerts Alert[]
+  createdAlerts Alert[]  @relation("CreatedAlerts")
+  attendedAlerts Alert[] @relation("AttendedAlerts")
+  inPosts Post[]  @relation("Posts")
 
   @@map("users")
 }
 
+enum Role {
+  USER
+  VOLUNTEER
+}
+
 model Alert{
   id Int @id @default(autoincrement())
-  specie String
-  alertType String
-  body String
-  latitude Float
-  longitude Float
-  status String @default("Abierto")
-  photo String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  specie String
+  alertCategory String
+  body String
+  neededElement String
+  photo String?
+  providedElement String?
+  userPhone String?
+  volunteerPhone String?
+  latitude Float
+  longitude Float
+  status String @default("Abierto")
+
   userId Int
-  user User @relation(fields: [userId], references: [id])
+  user User @relation("CreatedAlerts", fields:[userId], references: [id])
+
+  volunteerId Int?
+  volunteer User? @relation("AttendedAlerts", fields: [volunteerId], references: [id]) 
 
   @@map("alerts")
+}
+
+model Organization{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+  photo String?
+  description String?
+
+  email String?
+  phoneNum String?
+  socialMedia String?
+
+  isFoundation Boolean @default(false)
+  rutFoundation String?
+  rutPresidente String?
+  rutSecretario String?
+  rutTesorero String?
+
+  volunteers User[]  @relation("Volunteers")
+  inPosts Post[]  @relation("Posts")
+
+  @@map("organizations")
+}
+
+model Post{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  abstract String
+  body String
+  photo String
+  
+  volunteerId Int
+  volunteer User@relation("Posts", fields:[volunteerId], references: [id])
+
+  organizationId Int
+  organization Organization@relation("Posts", fields:[organizationId], references: [id])
+
+  categoryId Int
+  category Category@relation("Posts", fields:[categoryId], references: [id])
+
+  @@map("posts")
+}
+
+model Category{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  photo String
+  name String
+  
+  inPosts Post[]  @relation("Posts")
+
+  @@map("categorys")
 }
