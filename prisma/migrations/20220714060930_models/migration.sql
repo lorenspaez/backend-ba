@@ -1,6 +1,3 @@
--- CreateEnum
-CREATE TYPE "Role" AS ENUM ('USER', 'VOLUNTEER');
-
 -- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
@@ -9,7 +6,7 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "hash" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'USER',
+    "isVolunteer" BOOLEAN NOT NULL DEFAULT false,
     "photo" TEXT,
     "rut" TEXT,
     "volunteerType" TEXT,
@@ -79,14 +76,14 @@ CREATE TABLE "posts" (
 );
 
 -- CreateTable
-CREATE TABLE "categorys" (
+CREATE TABLE "categories" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "photo" TEXT NOT NULL,
     "name" TEXT NOT NULL,
 
-    CONSTRAINT "categorys_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -108,4 +105,4 @@ ALTER TABLE "posts" ADD CONSTRAINT "posts_volunteerId_fkey" FOREIGN KEY ("volunt
 ALTER TABLE "posts" ADD CONSTRAINT "posts_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "posts" ADD CONSTRAINT "posts_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categorys"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "posts" ADD CONSTRAINT "posts_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

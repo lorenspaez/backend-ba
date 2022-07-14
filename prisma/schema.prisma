@@ -18,7 +18,7 @@ model User{
   email String @unique
   hash String
   name String
-  role Role @default(USER)
+  isVolunteer Boolean @default(false)
 
   photo String?
   rut String?
@@ -27,18 +27,13 @@ model User{
   sector String?
 
   organizationId Int?
-  organization Organization? @relation("Volunteers", fields:[organizationId], references: [id])
+  organization Organization? @relation(fields:[organizationId], references: [id])
   
-  createdAlerts Alert[]  @relation("CreatedAlerts")
+  createdAlerts Alert[] @relation("CreatedAlerts")
   attendedAlerts Alert[] @relation("AttendedAlerts")
-  inPosts Post[]  @relation("Posts")
+  userPosts Post[]
 
   @@map("users")
-}
-
-enum Role {
-  USER
-  VOLUNTEER
 }
 
 model Alert{
@@ -86,8 +81,8 @@ model Organization{
   rutSecretario String?
   rutTesorero String?
 
-  volunteers User[]  @relation("Volunteers")
-  inPosts Post[]  @relation("Posts")
+  volunteers User[]
+  inPosts Post[]
 
   @@map("organizations")
 }
@@ -103,13 +98,13 @@ model Post{
   photo String
   
   volunteerId Int
-  volunteer User@relation("Posts", fields:[volunteerId], references: [id])
+  volunteer User @relation(fields:[volunteerId], references: [id])
 
   organizationId Int
-  organization Organization@relation("Posts", fields:[organizationId], references: [id])
+  organization Organization @relation(fields:[organizationId], references: [id])
 
   categoryId Int
-  category Category@relation("Posts", fields:[categoryId], references: [id])
+  category Category @relation(fields:[categoryId], references: [id])
 
   @@map("posts")
 }
@@ -122,7 +117,7 @@ model Category{
   photo String
   name String
   
-  inPosts Post[]  @relation("Posts")
+  inPosts Post[]
 
-  @@map("categorys")
+  @@map("categories")
 }
