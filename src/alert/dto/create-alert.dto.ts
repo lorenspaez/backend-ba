@@ -1,36 +1,53 @@
 import {
     IsNotEmpty,
+    isNumber,
     IsNumber,
     IsOptional,
     IsString,
   } from 'class-validator';
 
 export class CreateAlertDto {
-    @IsString()
-    @IsNotEmpty()
-    specie: string;
+  @IsString()
+  @IsNotEmpty()
+  userName: string;
 
-    @IsString()
-    @IsNotEmpty()
-    alertType: string;
+  @IsString()
+  @IsOptional()
+  volunteerName?: string;
 
-    @IsString()
-    @IsNotEmpty()
-    body: string;
+  @IsString()
+  @IsNotEmpty()
+  specie: string;
 
-    @IsNumber()
-    @IsNotEmpty()
-    latitude: number;
+  @IsString()
+  @IsNotEmpty()
+  alertCategory: string;
 
-    @IsNumber()
-    @IsNotEmpty()
-    longitude: number;
+  @IsString()
+  @IsNotEmpty()
+  body: string;
 
-    @IsString()
-    @IsOptional()
-    photo?: string;
+  @IsString()
+  @IsNotEmpty()
+  neededElement: string;
 
-    @IsString()
-    @IsOptional()
-    status?: string; 
+  @IsString()
+  @IsOptional()
+  photo?: string;
+
+  @IsString()
+  @IsOptional()
+  providedElement?: string;
+
+  @IsString()
+  @IsOptional()
+  userPhone?: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  latitude: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  longitude: string;
 }

@@ -10,13 +10,6 @@ import { UpdateAlertDto } from './dto';
 export class AlertController {
   constructor(private alertService: AlertService) {}
 
-  @Get()
-  getBookmarks(@GetUser('id') userId: number) {
-    return this.alertService.getAlerts(
-      userId,
-    );
-  }
-
   @Post()
   createAlert(
     @GetUser('id') userId: number,
@@ -26,6 +19,11 @@ export class AlertController {
       userId,
       dto,
     );
+  }
+
+  @Get('all')
+  getAllAlerts() {
+    return this.alertService.getAllAlerts();
   }
 
   @Get()
@@ -61,7 +59,7 @@ export class AlertController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteBookmarkById(
+  deleteAlertById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) alertId: number,
   ) {

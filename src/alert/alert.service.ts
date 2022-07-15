@@ -21,6 +21,13 @@ export class AlertService {
     return alert;
   }
 
+  getAllAlerts() {
+    return this.prisma.alert.findMany({
+      where: {
+      },
+    });
+  }
+
   getAlerts(userId: number) {
     return this.prisma.alert.findMany({
       where: {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable , ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditUserDto } from './dto';
 import { UpgradeUserDto } from './dto';
@@ -37,5 +37,28 @@ export class UserService {
     });
     delete user.hash;
     return user;
+  }
+
+  async deleteUserById(
+    userId: number
+  ) {
+    const alert =
+      await this.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+    // check if user owns the bookmark
+    if (userId !== userId)
+      throw new ForbiddenException(
+        'Access to resources denied',
+      );
+
+    await this.prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
   }
 }

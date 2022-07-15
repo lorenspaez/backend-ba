@@ -9,31 +9,55 @@ import {
 
 export class UpdateAlertDto extends PartialType(CreateAlertDto) {
     
-    @IsString()
-    @IsNotEmpty()
-    status: string;    
+  @IsString()
+  @IsNotEmpty()
+  userName?: string;
 
-    @IsString()
-    @IsOptional()
-    specie?: string;
+  @IsString()
+  @IsOptional()
+  volunteerName?: string;
 
-    @IsString()
-    @IsOptional()
-    alertType?: string;
+  @IsString()
+  @IsNotEmpty()
+  specie: string;
 
-    @IsString()
-    @IsOptional()
-    body?: string;
+  @IsString()
+  @IsNotEmpty()
+  alertCategory: string;
 
-    @IsNumber()
-    @IsOptional()
-    latitude?: number;
+  @IsString()
+  @IsNotEmpty()
+  body: string;
 
-    @IsNumber()
-    @IsOptional()
-    longitude?: number;
+  @IsString()
+  @IsNotEmpty()
+  neededElement: string
 
-    @IsString()
-    @IsOptional()
-    photo?: string;
+  @IsString()
+  @IsOptional()
+  photo?: string;
+
+  @IsString()
+  @IsOptional()
+  providedElement?: string
+
+  @IsString()
+  @IsOptional()
+  userPhone?: string
+
+  @IsString()
+  @IsOptional()
+  volunteerPhone?: string
+
+  @IsNumber()
+  @IsNotEmpty()
+  latitude: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  longitude: string;
+
+  @IsString()
+  @IsOptional()
+  status?: string; 
 }
