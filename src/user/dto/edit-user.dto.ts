@@ -18,5 +18,9 @@ import {
     @IsString()
     @IsOptional()
     photo?: string;
+
+    @IsString()
+    @IsOptional()
+    organizationName?: string;
   }
   

@@ -26,6 +26,7 @@ model User{
   patente String?
   sector String?
 
+  organizationName String?
   organizationId Int?
   organization Organization? @relation(fields:[organizationId], references: [id])
   
@@ -53,9 +54,11 @@ model Alert{
   longitude Float
   status String @default("Abierto")
 
-  userId Int
-  user User @relation("CreatedAlerts", fields:[userId], references: [id])
+  userName String
+  userId Int?
+  user User? @relation("CreatedAlerts", fields:[userId], references: [id])
 
+  volunteerName String?
   volunteerId Int?
   volunteer User? @relation("AttendedAlerts", fields: [volunteerId], references: [id]) 
 
@@ -67,18 +70,24 @@ model Organization{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String
+  name String @unique
+  description String
   photo String?
-  description String?
 
   email String?
   phoneNum String?
   socialMedia String?
 
   isFoundation Boolean @default(false)
+  certificationDocument String?
+
   rutFoundation String?
+  
+  namePresidente String
   rutPresidente String?
+  nameSecretario String
   rutSecretario String?
+  nameTesorero String
   rutTesorero String?
 
   volunteers User[]
@@ -96,15 +105,17 @@ model Post{
   abstract String
   body String
   photo String
+  organizationName String
+  categoryName String
   
-  volunteerId Int
-  volunteer User @relation(fields:[volunteerId], references: [id])
+  userId Int
+  volunteer User? @relation(fields:[userId], references: [id])
 
-  organizationId Int
-  organization Organization @relation(fields:[organizationId], references: [id])
+  organizationId Int?
+  organization Organization? @relation(fields:[organizationId], references: [id])
 
-  categoryId Int
-  category Category @relation(fields:[categoryId], references: [id])
+  categoryId Int?
+  category Category? @relation(fields:[categoryId], references: [id])
 
   @@map("posts")
 }
@@ -115,7 +126,7 @@ model Category{
   updatedAt DateTime @updatedAt
 
   photo String
-  name String
+  name String @unique
   
   inPosts Post[]
 
