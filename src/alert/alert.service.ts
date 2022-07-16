@@ -9,12 +9,14 @@ export class AlertService {
 
   async createAlert(
     userId: number,
+    userName: string,
     dto: CreateAlertDto,
   ) {
     const alert =
       await this.prisma.alert.create({
         data: {
           userId,
+          userName,
           ...dto,
         },
       });
@@ -37,13 +39,11 @@ export class AlertService {
   }
 
   getAlertById(
-    userId: number,
     alertId: number,
   ) {
     return this.prisma.alert.findFirst({
       where: {
-        id: alertId,
-        userId,
+        id: alertId
       },
     });
   }

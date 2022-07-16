@@ -13,20 +13,22 @@ export class AlertController {
   @Post()
   createAlert(
     @GetUser('id') userId: number,
+    @GetUser('name') userName: string,
     @Body() dto: CreateAlertDto,
   ) {
     return this.alertService.createAlert(
       userId,
+      userName,
       dto,
     );
   }
 
-  @Get('all')
+  @Get()
   getAllAlerts() {
     return this.alertService.getAllAlerts();
   }
 
-  @Get()
+  @Get('myalerts')
   getAlerts(@GetUser('id') userId: number) {
     return this.alertService.getAlerts(
       userId,
@@ -35,12 +37,10 @@ export class AlertController {
 
   @Get(':id')
   getAlertById(
-    @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) alertId: number,
   ) {
     return this.alertService.getAlertById(
-      userId,
-      alertId,
+      alertId
     );
   }
 

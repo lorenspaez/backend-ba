@@ -15,7 +15,7 @@ export class UserController {
     return user;
   }
 
-  @Patch()
+  @Patch('edit')
   editUser(
     @GetUser('id') userId: number,
     @Body() dto: EditUserDto,
@@ -23,7 +23,7 @@ export class UserController {
     return this.userService.editUser(userId, dto);
   }
 
-  @Patch()
+  @Patch('upgrade')
   upgradeUser(
     @GetUser('id') userId: number,
     @Body() dto: UpgradeUserDto,
