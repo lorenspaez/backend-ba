@@ -5,6 +5,10 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": "=16.13.0",
+    "npm": "=8.13.2"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -70,10 +74,6 @@
       "json",
       "ts"
     ],
-    "engines": {
-      "node": "=16.13.0",
-      "npm": "=8.13.2"
-    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
