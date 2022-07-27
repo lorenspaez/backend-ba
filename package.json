@@ -5,6 +5,9 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "publishConfig" : {
+    "registry" : "http://localhost:8081/nexus/content/repositories/npm-internal/"
+  },
   "engines": {
     "node": "=16.13.0"
   },
