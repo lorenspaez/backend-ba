@@ -45,9 +45,9 @@ export class CreateAlertDto {
 
   @IsNumber()
   @IsNotEmpty()
-  latitude: string;
+  latitude: number;
 
   @IsNumber()
   @IsNotEmpty()
-  longitude: string;
+  longitude: number;
 }

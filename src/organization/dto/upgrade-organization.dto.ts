@@ -31,5 +31,5 @@ export class UpgradeOrganizationDto {
 
   @IsString()
   @IsNotEmpty()
-  isFoundation: string;
+  isFoundation: boolean;
 }
