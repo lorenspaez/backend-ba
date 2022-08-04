@@ -14,13 +14,6 @@ import { MassiveModule } from '@nestjsplus/massive';
     ConfigModule.forRoot({
       isGlobal: true
     }),
-    MassiveModule.register({
-      user: process.env.POSTGRES_USERNAME || '<local-postgres-user>',
-      password: process.env.POSTGRES_PASSWORD || '<local-postgres-password>',
-      host: process.env.POSTGRES_HOST || 'localhost',
-      port: 5432,
-      database: process.env.POSTGRES_DATABASE ||'<local-postgres-db-name>'
-      }),
     UserModule,
     OrganizationModule,
     AlertModule,
