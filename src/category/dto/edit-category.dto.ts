@@ -1,5 +1,4 @@
 import {
-  IsNumber,
   IsOptional,
   IsString,
   IsNotEmpty
@@ -9,4 +8,9 @@ export class EditCategoryDto {
   @IsString()
   @IsOptional()
   name?: string;
+
+  @IsString()
+  @IsOptional()
+  photo: string;
+
 }

@@ -24,8 +24,8 @@ export class AuthService {
           hash,
         },
       });
-
-      return this.signToken(user.id, user.email);
+      const tok = await this.signToken(user.id, user.email);
+      return [tok, user];
     } catch (error) {
       if (
         error instanceof
@@ -33,7 +33,7 @@ export class AuthService {
       ) {
         if (error.code === 'P2002') {
           throw new ForbiddenException(
-            'Credentials taken',
+            'El Email ya está siendo utilizado',
           );
         }
       }
@@ -52,7 +52,7 @@ export class AuthService {
     // if user does not exist throw exception
     if (!user)
       throw new ForbiddenException(
-        'Credentials incorrect',
+        'Email no está registrado',
       );
     // compare password
     const pwMatches = await argon.verify(
@@ -62,9 +62,10 @@ export class AuthService {
     // if password incorrect throw exception
     if (!pwMatches)
       throw new ForbiddenException(
-        'Credentials incorrect',
+        'Contraseña incorrecta',
       );
-    return this.signToken(user.id, user.email);
+    const tok = await this.signToken(user.id, user.email);
+    return [tok, user];
   }
 
   async signToken(
@@ -86,7 +87,7 @@ export class AuthService {
     );
 
     return {
-      access_token: token,
+      access_token: token
     };
   }
 }

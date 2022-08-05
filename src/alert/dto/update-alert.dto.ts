@@ -10,7 +10,7 @@ import {
 export class UpdateAlertDto extends PartialType(CreateAlertDto) {
     
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   userName?: string;
 
   @IsString()
@@ -18,19 +18,19 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
   volunteerName?: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   specie: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   alertCategory: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   body: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   neededElement: string
 
   @IsString()
