@@ -25,7 +25,7 @@ export class AuthService {
         },
       });
       const tok = await this.signToken(user.id, user.email);
-      return [tok, user];
+      return {tok, user};
     } catch (error) {
       if (
         error instanceof
@@ -33,7 +33,7 @@ export class AuthService {
       ) {
         if (error.code === 'P2002') {
           throw new ForbiddenException(
-            'El Email ya está siendo utilizado',
+            'El email ya está siendo utilizado',
           );
         }
       }
@@ -65,7 +65,7 @@ export class AuthService {
         'Contraseña incorrecta',
       );
     const tok = await this.signToken(user.id, user.email);
-    return [tok, user];
+    return {tok, user};
   }
 
   async signToken(

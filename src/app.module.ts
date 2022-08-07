@@ -7,7 +7,6 @@ import { CategoryModule } from './category/category.module';
 import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { MassiveModule } from '@nestjsplus/massive';
 
 @Module({
   imports: [
