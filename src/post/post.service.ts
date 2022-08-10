@@ -15,7 +15,6 @@ export class PostService {
     const post =
       await this.prisma.post.create({
         data: {
-          userId,
           organizationName,
           ...dto,
         },

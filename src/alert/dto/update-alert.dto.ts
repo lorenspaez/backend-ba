@@ -3,6 +3,7 @@ import { CreateAlertDto } from './create-alert.dto';
 import {
     IsNotEmpty,
     IsNumber,
+    IsObject,
     IsOptional,
     IsString,
   } from 'class-validator';
@@ -23,7 +24,7 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
 
   @IsString()
   @IsOptional()
-  alertCategory: string;
+  alertCategoryName: string;
 
   @IsString()
   @IsOptional()
@@ -31,7 +32,7 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
 
   @IsString()
   @IsOptional()
-  neededElement: string
+  neededElementName: string
 
   @IsString()
   @IsOptional()
@@ -39,7 +40,7 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
 
   @IsString()
   @IsOptional()
-  providedElement?: string
+  providedElementName?: string
 
   @IsString()
   @IsOptional()
@@ -50,11 +51,11 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
   volunteerPhone?: string
 
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   latitude: number;
 
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   longitude: number;
 
   @IsString()

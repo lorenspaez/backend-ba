@@ -1,7 +1,7 @@
 import {
     IsNotEmpty,
-    isNumber,
     IsNumber,
+    IsObject,
     IsOptional,
     IsString,
   } from 'class-validator';
@@ -21,7 +21,11 @@ export class CreateAlertDto {
 
   @IsString()
   @IsNotEmpty()
-  alertCategory: string;
+  alertCategoryName: string;
+
+  @IsObject()
+  @IsNotEmpty()
+  alertCategory: object;
 
   @IsString()
   @IsNotEmpty()
@@ -29,7 +33,7 @@ export class CreateAlertDto {
 
   @IsString()
   @IsNotEmpty()
-  neededElement: string;
+  neededElementName: string;
 
   @IsString()
   @IsOptional()
@@ -37,7 +41,7 @@ export class CreateAlertDto {
 
   @IsString()
   @IsOptional()
-  providedElement?: string;
+  providedElementName?: string;
 
   @IsString()
   @IsOptional()

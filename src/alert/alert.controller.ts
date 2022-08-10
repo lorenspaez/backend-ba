@@ -17,7 +17,6 @@ export class AlertController {
     @Body() dto: CreateAlertDto,
   ) {
     return this.alertService.createAlert(
-      userId,
       userName,
       dto,
     );

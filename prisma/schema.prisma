@@ -1,4 +1,4 @@
-// This is your Prisma schema file,
+    // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -43,11 +43,8 @@ model Alert{
   updatedAt DateTime @updatedAt
 
   specie String
-  alertCategory String
   body String
-  neededElement String
   photo String?
-  providedElement String?
   userPhone String?
   volunteerPhone String?
   latitude Float
@@ -57,6 +54,15 @@ model Alert{
   userName String
   userId Int?
   user User? @relation("CreatedAlerts", fields:[userId], references: [id])
+
+  alertCategoryName String
+  alertCategoryId Int
+  alertCategory AlertCategory @relation(fields:[alertCategoryId], references: [id])
+
+  providedElementName String?
+  providedElement AlertElement[]@relation("ProvidedElements")
+  neededElementName String
+  neededElement AlertElement[]@relation("NeededElements")
 
   volunteerName String?
   volunteerId Int?
@@ -72,15 +78,13 @@ model Organization{
 
   name String @unique
   description String
+  isFoundation Boolean @default(false)
   photo String?
-
   email String?
   phoneNum String?
   socialMedia String?
 
-  isFoundation Boolean @default(false)
   certificationDocument String?
-
   rutFoundation String?
   
   namePresidente String
@@ -105,17 +109,18 @@ model Post{
   abstract String
   body String
   photo String
-  organizationName String
-  categoryName String
   
+  userName String
   userId Int
-  volunteer User? @relation(fields:[userId], references: [id])
+  volunteer User @relation(fields:[userId], references: [id])
 
-  organizationId Int?
-  organization Organization? @relation(fields:[organizationId], references: [id])
+  organizationName String
+  organizationId Int
+  organization Organization @relation(fields:[organizationId], references: [id])
 
-  categoryId Int?
-  category Category? @relation(fields:[categoryId], references: [id])
+  categoryName String
+  categoryId Int
+  category Category @relation(fields:[categoryId], references: [id])
 
   @@map("posts")
 }
@@ -131,4 +136,30 @@ model Category{
   inPosts Post[]
 
   @@map("categories")
+}
+
+model AlertCategory{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+  photo String
+
+  inAlerts Alert[]
+
+  @@map("alertCategories")
+}
+
+model AlertElement{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String 
+
+  providedElements Alert[] @relation("ProvidedElements")
+  neededElements Alert[] @relation("NeededElements")
+
+  @@map("alertElements")
 }

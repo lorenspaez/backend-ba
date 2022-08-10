@@ -8,14 +8,12 @@ export class AlertService {
   constructor(private prisma: PrismaService) {}
 
   async createAlert(
-    userId: number,
     userName: string,
     dto: CreateAlertDto,
   ) {
     const alert =
       await this.prisma.alert.create({
         data: {
-          userId,
           userName,
           ...dto,
         },
@@ -53,7 +51,6 @@ export class AlertService {
     alertId: number,
     dto: UpdateAlertDto,
   ) {
-    // get the bookmark by id
     const alert =
       await this.prisma.alert.findUnique({
         where: {
@@ -61,10 +58,9 @@ export class AlertService {
         },
       });
 
-    // check if user owns the bookmark
     if (!alert || alert.userId !== userId)
       throw new ForbiddenException(
-        'Access to resources denied',
+        'No eres el propietario de la Alerta',
       );
 
     return this.prisma.alert.update({
@@ -88,10 +84,9 @@ export class AlertService {
         },
       });
 
-    // check if user owns the bookmark
     if (!alert || alert.userId !== userId)
       throw new ForbiddenException(
-        'Access to resources denied',
+        'No eres el propietario de la Alerta',
       );
 
     await this.prisma.alert.delete({
