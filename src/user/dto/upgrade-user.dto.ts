@@ -7,13 +7,13 @@ import {
   
   export class UpgradeUserDto {
     @IsBoolean()
-    @IsNotEmpty()
+    @IsOptional()
     isVolunteer: boolean;
 
     @IsString()
     @IsNotEmpty()
     name: string;
-
+    
     @IsString()
     @IsNotEmpty()
     rut: string;
