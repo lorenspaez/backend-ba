@@ -16,10 +16,7 @@ export class AlertController {
     @GetUser('name') userName: string,
     @Body() dto: CreateAlertDto,
   ) {
-    return this.alertService.createAlert(
-      userName,
-      dto,
-    );
+    return this.alertService.createAlert(userName, dto);
   }
 
   @Get()
@@ -29,18 +26,14 @@ export class AlertController {
 
   @Get('myalerts')
   getAlerts(@GetUser('id') userId: number) {
-    return this.alertService.getAlerts(
-      userId,
-    );
+    return this.alertService.getAlerts(userId);
   }
 
   @Get(':id')
   getAlertById(
     @Param('id', ParseIntPipe) alertId: number,
   ) {
-    return this.alertService.getAlertById(
-      alertId
-    );
+    return this.alertService.getAlertById(alertId);
   }
 
   @Patch(':id')
@@ -49,11 +42,7 @@ export class AlertController {
     @Param('id', ParseIntPipe) alertId: number,
     @Body() dto: UpdateAlertDto,
   ) {
-    return this.alertService.editAlertById(
-      userId,
-      alertId,
-      dto,
-    );
+    return this.alertService.editAlertById(userId, alertId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -62,9 +51,6 @@ export class AlertController {
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) alertId: number,
   ) {
-    return this.alertService.deleteAlertById(
-      userId,
-      alertId,
-    );
+    return this.alertService.deleteAlertById(userId, alertId);
   }
 }

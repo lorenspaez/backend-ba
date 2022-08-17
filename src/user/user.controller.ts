@@ -17,27 +17,25 @@ export class UserController {
 
   @Patch('edit')
   editUser(
-    @GetUser('id') userId: number,
-    @Body() dto: EditUserDto,
-  ) {
+    @GetUser('id') userId: number, 
+    @Body() dto: EditUserDto
+    ) {
     return this.userService.editUser(userId, dto);
   }
 
   @Patch('upgrade')
   upgradeUser(
     @GetUser('id') userId: number,
-    @Body() dto: UpgradeUserDto,
-  ) {
+    @Body() dto: UpgradeUserDto
+    ) {
     return this.userService.upgradeUser(userId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   deleteUserById(
-    @GetUser('id') userId: number,
-  ) {
-    return this.userService.deleteUserById(
-      userId,
-    );
+    @GetUser('id') userId: number
+    ) {
+    return this.userService.deleteUserById(userId);
   }
 }

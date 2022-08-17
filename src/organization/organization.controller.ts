@@ -16,9 +16,7 @@ export class OrganizationController {
   createOrganization(
     @Body() dto: CreateOrganizationDto,
   ) {
-    return this.organizationService.createOrganization(
-      dto
-    );
+    return this.organizationService.createOrganization(dto);
   }
 
   @Get()
@@ -30,9 +28,7 @@ export class OrganizationController {
   getOrganizationById(
     @Param('id', ParseIntPipe) organizationId: number,
     ) {
-    return this.organizationService.getOrganizationById(
-      organizationId
-    );
+    return this.organizationService.getOrganizationById(organizationId);
   }
 
   @Patch('edit/:id')
@@ -40,10 +36,7 @@ export class OrganizationController {
     @Param('id', ParseIntPipe) organizationId: number,
     @Body() dto: EditOrganizationDto,
   ) {
-    return this.organizationService.editOrganizationById(
-      organizationId,
-      dto,
-      );
+    return this.organizationService.editOrganizationById(organizationId, dto);
   }
 
   @Patch('upgrade/:id')
@@ -51,10 +44,7 @@ export class OrganizationController {
     @Param('id', ParseIntPipe) organizationId: number,
     @Body() dto: UpgradeOrganizationDto,
   ) {
-    return this.organizationService.upgradeOrganizationById(
-      organizationId,
-      dto,
-      );
+    return this.organizationService.upgradeOrganizationById(organizationId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -62,8 +52,6 @@ export class OrganizationController {
   deleteOrganizationById(
     @Param('id', ParseIntPipe) organizationId: number,
   ) {
-    return this.organizationService.deleteOrganizationById(
-      organizationId,
-    );
+    return this.organizationService.deleteOrganizationById(organizationId);
   }
 }

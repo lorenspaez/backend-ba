@@ -13,9 +13,7 @@ export class AlertElementController {
   createAlertElement(
     @Body() dto: CreateAlertElementDto,
   ) {
-    return this.alertElementService.createElement(
-      dto
-    );
+    return this.alertElementService.createElement(dto);
   }
 
   @Get()
@@ -27,9 +25,7 @@ export class AlertElementController {
   getAlertElementById(
     @Param('id', ParseIntPipe) elementId: number,
     ) {
-    return this.alertElementService.getElementById(
-      elementId
-    );
+    return this.alertElementService.getElementById(elementId);
   }
 
   @Patch(':id')
@@ -37,10 +33,7 @@ export class AlertElementController {
     @Param('id', ParseIntPipe) elementId: number,
     @Body() dto: EditAlertElementDto,
   ) {
-    return this.alertElementService.editElementById(
-      elementId,
-      dto,
-      );
+    return this.alertElementService.editElementById(elementId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -48,8 +41,6 @@ export class AlertElementController {
   deleteAlertElementById(
     @Param('id', ParseIntPipe) elementId: number,
   ) {
-    return this.alertElementService.deleteElementById(
-      elementId,
-    );
+    return this.alertElementService.deleteElementById(elementId);
   }
 }

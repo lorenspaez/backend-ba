@@ -13,9 +13,7 @@ export class CategoryController {
   createCategory(
     @Body() dto: CreateCategoryDto,
   ) {
-    return this.categoryService.createCategory(
-      dto
-    );
+    return this.categoryService.createCategory(dto);
   }
 
   @Get()
@@ -27,9 +25,7 @@ export class CategoryController {
   getCategoryById(
     @Param('id', ParseIntPipe) categoryId: number,
     ) {
-    return this.categoryService.getCategoryById(
-      categoryId
-    );
+    return this.categoryService.getCategoryById(categoryId);
   }
 
   @Patch(':id')
@@ -37,10 +33,7 @@ export class CategoryController {
     @Param('id', ParseIntPipe) categoryId: number,
     @Body() dto: EditCategoryDto,
   ) {
-    return this.categoryService.editCategoryById(
-      categoryId,
-      dto,
-      );
+    return this.categoryService.editCategoryById(categoryId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -48,8 +41,6 @@ export class CategoryController {
   deleteCategoryById(
     @Param('id', ParseIntPipe) categoryId: number,
   ) {
-    return this.categoryService.deleteCategoryById(
-      categoryId,
-    );
+    return this.categoryService.deleteCategoryById(categoryId);
   }
 }

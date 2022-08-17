@@ -13,9 +13,7 @@ export class AlertCategoryController {
   createAlertCategory(
     @Body() dto: CreateAlertCategoryDto,
   ) {
-    return this.alertCategoryService.createCategory(
-      dto
-    );
+    return this.alertCategoryService.createCategory(dto);
   }
 
   @Get()
@@ -27,9 +25,7 @@ export class AlertCategoryController {
   getAlertCategoryById(
     @Param('id', ParseIntPipe) categoryId: number,
     ) {
-    return this.alertCategoryService.getCategoryById(
-      categoryId
-    );
+    return this.alertCategoryService.getCategoryById(categoryId);
   }
 
   @Patch(':id')
@@ -37,10 +33,7 @@ export class AlertCategoryController {
     @Param('id', ParseIntPipe) categoryId: number,
     @Body() dto: EditAlertCategoryDto,
   ) {
-    return this.alertCategoryService.editCategoryById(
-      categoryId,
-      dto,
-      );
+    return this.alertCategoryService.editCategoryById(categoryId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -48,8 +41,6 @@ export class AlertCategoryController {
   deleteAlertCategoryById(
     @Param('id', ParseIntPipe) categoryId: number,
   ) {
-    return this.alertCategoryService.deleteCategoryById(
-      categoryId,
-    );
+    return this.alertCategoryService.deleteCategoryById(categoryId);
   }
 }

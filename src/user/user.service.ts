@@ -49,7 +49,6 @@ export class UserService {
         },
       });
 
-    // check if user owns the bookmark
     if (userId !== userId)
       throw new ForbiddenException(
         'Access to resources denied',

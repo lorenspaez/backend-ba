@@ -16,11 +16,7 @@ export class PostController {
     @GetUser('organizationName') organizationName: string,
     @Body() dto: CreatePostDto,
   ) {
-    return this.postService.createPost(
-      userId,
-      organizationName,
-      dto,
-    );
+    return this.postService.createPost(userId, organizationName, dto);
   }
 
   @Get()
@@ -29,28 +25,24 @@ export class PostController {
   }
 
   @Get('myposts')
-  getPosts(@GetUser('id') userId: number) {
-    return this.postService.getPosts(
-      userId,
-    );
+  getPosts(
+    @GetUser('id') userId: number
+    ) {
+    return this.postService.getPosts(userId);
   }
 
   @Get('orgposts')
   getOrganizationPosts(
-    @GetUser('organizationName') organizationName: string,
+    @GetUser('organizationName') organizationName: string
     ) {
-    return this.postService.getOrganizationPosts(
-      organizationName,
-    );
+    return this.postService.getOrganizationPosts(organizationName);
   }
 
   @Get(':organizationName')
   getPostByName(
     @Param('organizationName') organizatioName: string,
   ) {
-    return this.postService.getPostByName(
-      organizatioName
-    );
+    return this.postService.getPostByName(organizatioName);
   }
 
   @Patch(':id')
@@ -59,11 +51,7 @@ export class PostController {
     @Param('id', ParseIntPipe) postId: number,
     @Body() dto: UpdatePostDto,
   ) {
-    return this.postService.editPostById(
-      userId,
-      postId,
-      dto,
-    );
+    return this.postService.editPostById(userId, postId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -72,9 +60,6 @@ export class PostController {
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) postId: number,
   ) {
-    return this.postService.deletePostById(
-      userId,
-      postId,
-    );
+    return this.postService.deletePostById(userId, postId);
   }
 }

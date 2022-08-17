@@ -25,5 +25,13 @@ import {
     @IsString()
     @IsNotEmpty()
     volunteerType: string;
+
+    @IsString()
+    @IsOptional()
+    patente: string;
+
+    @IsString()
+    @IsOptional()
+    sector: string;
   }
   
