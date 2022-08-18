@@ -52,11 +52,11 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
 
   @IsNumber()
   @IsOptional()
-  latitude: number;
+  latitude: string;
 
   @IsNumber()
   @IsOptional()
-  longitude: number;
+  longitude: string;
 
   @IsString()
   @IsOptional()

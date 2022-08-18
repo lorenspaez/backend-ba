@@ -47,8 +47,8 @@ model Alert{
   photo String?
   userPhone String?
   volunteerPhone String?
-  latitude Float
-  longitude Float
+  latitude String
+  longitude String
   status String @default("Abierto")
 
   userName String
@@ -56,8 +56,8 @@ model Alert{
   user User? @relation("CreatedAlerts", fields:[userId], references: [id])
 
   alertCategoryName String
-  alertCategoryId Int
-  alertCategory AlertCategory @relation(fields:[alertCategoryId], references: [id])
+  alertCategoryId Int?
+  alertCategory AlertCategory? @relation(fields:[alertCategoryId], references: [id])
 
   providedElementName String?
   providedElement AlertElement[]@relation("ProvidedElements")
