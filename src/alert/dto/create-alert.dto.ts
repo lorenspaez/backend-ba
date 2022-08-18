@@ -23,10 +23,6 @@ export class CreateAlertDto {
   @IsNotEmpty()
   alertCategoryName: string;
 
-  @IsObject()
-  @IsNotEmpty()
-  alertCategory: object;
-
   @IsString()
   @IsNotEmpty()
   body: string;

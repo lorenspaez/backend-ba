@@ -34,7 +34,7 @@ CREATE TABLE "alerts" (
     "userName" TEXT NOT NULL,
     "userId" INTEGER,
     "alertCategoryName" TEXT NOT NULL,
-    "alertCategoryId" INTEGER NOT NULL,
+    "alertCategoryId" INTEGER,
     "providedElementName" TEXT,
     "neededElementName" TEXT NOT NULL,
     "volunteerName" TEXT,
@@ -161,7 +161,7 @@ ALTER TABLE "users" ADD CONSTRAINT "users_organizationId_fkey" FOREIGN KEY ("org
 ALTER TABLE "alerts" ADD CONSTRAINT "alerts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "alerts" ADD CONSTRAINT "alerts_alertCategoryId_fkey" FOREIGN KEY ("alertCategoryId") REFERENCES "alertCategories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "alerts" ADD CONSTRAINT "alerts_alertCategoryId_fkey" FOREIGN KEY ("alertCategoryId") REFERENCES "alertCategories"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "alerts" ADD CONSTRAINT "alerts_volunteerId_fkey" FOREIGN KEY ("volunteerId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
