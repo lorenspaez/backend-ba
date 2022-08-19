@@ -56,6 +56,8 @@ model Alert{
   user User? @relation("CreatedAlerts", fields:[userId], references: [id])
 
   alertCategoryName String
+  alertCategoryColour String
+  alertCategoryPhoto String
   alertCategoryId Int?
   alertCategory AlertCategory? @relation(fields:[alertCategoryId], references: [id])
 
@@ -145,6 +147,7 @@ model AlertCategory{
 
   name String @unique
   photo String
+  colour String
 
   inAlerts Alert[]
 

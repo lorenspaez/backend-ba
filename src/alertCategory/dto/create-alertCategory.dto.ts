@@ -12,4 +12,8 @@ export class CreateAlertCategoryDto {
   @IsString()
   @IsNotEmpty()
   photo: string;
+
+  @IsString()
+  @IsNotEmpty()
+  colour: string;
 }

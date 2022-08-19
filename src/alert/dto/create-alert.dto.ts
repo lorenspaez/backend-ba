@@ -25,6 +25,14 @@ export class CreateAlertDto {
 
   @IsString()
   @IsNotEmpty()
+  alertCategoryColour: string;
+
+  @IsString()
+  @IsNotEmpty()
+  alertCategoryPhoto: string;
+
+  @IsString()
+  @IsNotEmpty()
   body: string;
 
   @IsString()

@@ -13,4 +13,8 @@ export class EditAlertCategoryDto {
   @IsOptional()
   photo?: string;
 
+  @IsString()
+  @IsOptional()
+  colour?: string;
+
 }

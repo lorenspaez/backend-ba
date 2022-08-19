@@ -34,6 +34,8 @@ CREATE TABLE "alerts" (
     "userName" TEXT NOT NULL,
     "userId" INTEGER,
     "alertCategoryName" TEXT NOT NULL,
+    "alertCategoryColour" TEXT NOT NULL,
+    "alertCategoryPhoto" TEXT NOT NULL,
     "alertCategoryId" INTEGER,
     "providedElementName" TEXT,
     "neededElementName" TEXT NOT NULL,
@@ -104,6 +106,7 @@ CREATE TABLE "alertCategories" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
+    "colour" TEXT NOT NULL,
 
     CONSTRAINT "alertCategories_pkey" PRIMARY KEY ("id")
 );
