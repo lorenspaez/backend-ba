@@ -8,6 +8,10 @@ import {
 
 export class CreateAlertDto {
   @IsString()
+  @IsOptional()
+  userId: number;
+
+  @IsString()
   @IsNotEmpty()
   userName: string;
 
