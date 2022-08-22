@@ -11,6 +11,8 @@ CREATE TABLE "users" (
     "rut" TEXT,
     "volunteerType" TEXT,
     "patente" TEXT,
+    "region" TEXT,
+    "comuna" TEXT,
     "sector" TEXT,
     "organizationName" TEXT,
     "organizationId" INTEGER,
@@ -21,6 +23,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "alerts" (
     "id" SERIAL NOT NULL,
+    "alertKey" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "specie" TEXT NOT NULL,
@@ -135,6 +138,12 @@ CREATE TABLE "_NeededElements" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "alerts_alertKey_key" ON "alerts"("alertKey");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "alertKey" ON "alerts"("id", "userName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "organizations_name_key" ON "organizations"("name");

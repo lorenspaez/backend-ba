@@ -33,5 +33,13 @@ import {
     @IsString()
     @IsOptional()
     sector: string;
+
+    @IsString()
+    @IsOptional()
+    comuna: string;
+
+    @IsString()
+    @IsOptional()
+    region: string;
   }
   

@@ -12,6 +12,10 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
     
   @IsString()
   @IsOptional()
+  alertKey: string;
+
+  @IsString()
+  @IsOptional()
   userName?: string;
 
   @IsString()

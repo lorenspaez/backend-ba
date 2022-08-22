@@ -7,6 +7,13 @@ import { UpgradeUserDto } from './dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  getAllUsers() {
+    return this.prisma.user.findMany({
+      where: {
+      },
+    });
+  }
+
   async editUser(
     userId: number,
     dto: EditUserDto,

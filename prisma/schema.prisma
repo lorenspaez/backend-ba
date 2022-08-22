@@ -24,6 +24,8 @@ model User{
   rut String?
   volunteerType String?
   patente String?
+  region String?
+  comuna String?
   sector String?
 
   organizationName String?
@@ -39,9 +41,11 @@ model User{
 
 model Alert{
   id Int @id @default(autoincrement())
+  alertKey String? @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  
   specie String
   body String
   photo String?
@@ -70,6 +74,7 @@ model Alert{
   volunteerId Int?
   volunteer User? @relation("AttendedAlerts", fields: [volunteerId], references: [id]) 
 
+  @@unique([id, userName], map: "alertKey")
   @@map("alerts")
 }
 
