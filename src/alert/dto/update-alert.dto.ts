@@ -9,7 +9,7 @@ import {
   } from 'class-validator';
 
 export class UpdateAlertDto extends PartialType(CreateAlertDto) {
-    
+
   @IsString()
   @IsOptional()
   alertKey: string;

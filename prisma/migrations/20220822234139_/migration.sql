@@ -7,9 +7,9 @@ CREATE TABLE "users" (
     "hash" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "isVolunteer" BOOLEAN NOT NULL DEFAULT false,
+    "userKey" TEXT,
     "photo" TEXT,
     "rut" TEXT,
-    "volunteerType" TEXT,
     "patente" TEXT,
     "region" TEXT,
     "comuna" TEXT,
@@ -143,9 +143,6 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "alerts_alertKey_key" ON "alerts"("alertKey");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "alertKey" ON "alerts"("id", "userName");
-
--- CreateIndex
 CREATE UNIQUE INDEX "organizations_name_key" ON "organizations"("name");
 
 -- CreateIndex
@@ -153,6 +150,9 @@ CREATE UNIQUE INDEX "categories_name_key" ON "categories"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "alertCategories_name_key" ON "alertCategories"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "alertElements_name_key" ON "alertElements"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_ProvidedElements_AB_unique" ON "_ProvidedElements"("A", "B");

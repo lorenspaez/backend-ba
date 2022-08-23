@@ -23,8 +23,8 @@ import {
     organizationName?: string;
 
     @IsString()
-    @IsNotEmpty()
-    volunteerType: string;
+    @IsOptional()
+    organizationId?: number;
 
     @IsString()
     @IsOptional()

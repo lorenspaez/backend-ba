@@ -20,9 +20,9 @@ model User{
   name String
   isVolunteer Boolean @default(false)
 
+  userKey String?
   photo String?
   rut String?
-  volunteerType String?
   patente String?
   region String?
   comuna String?
@@ -74,7 +74,6 @@ model Alert{
   volunteerId Int?
   volunteer User? @relation("AttendedAlerts", fields: [volunteerId], references: [id]) 
 
-  @@unique([id, userName], map: "alertKey")
   @@map("alerts")
 }
 
@@ -164,7 +163,7 @@ model AlertElement{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String 
+  name String @unique
 
   providedElements Alert[] @relation("ProvidedElements")
   neededElements Alert[] @relation("NeededElements")

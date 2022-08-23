@@ -2,6 +2,7 @@ import { Injectable, ForbiddenException } from '@nestjs/common';
 import { CreateAlertDto } from './dto/create-alert.dto';
 import { UpdateAlertDto } from './dto/update-alert.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { SetAlertKeyDto } from './dto';
 
 @Injectable()
 export class AlertService {
@@ -46,10 +47,9 @@ export class AlertService {
     });
   }
 
-  async editAlertById(
-    userId: number,
+  async setAlertKey(
     alertId: number,
-    dto: UpdateAlertDto,
+    dto: SetAlertKeyDto,
   ) {
     const alert =
       await this.prisma.alert.findUnique({
@@ -57,12 +57,10 @@ export class AlertService {
           id: alertId,
         },
       });
-
-    if (!alert || alert.userId !== userId)
+    /*if (!alert || alert.userId !== userId)
       throw new ForbiddenException(
         'No eres el propietario de la Alerta',
-      );
-
+      );*/
     return this.prisma.alert.update({
       where: {
         id: alertId,
@@ -73,25 +71,45 @@ export class AlertService {
     });
   }
 
-  async deleteAlertById(
-    userId: number,
-    alertId: number,
+  async editAlertByKey(
+    alertKey: string,
+    dto: UpdateAlertDto,
   ) {
     const alert =
       await this.prisma.alert.findUnique({
         where: {
-          id: alertId,
+          alertKey: alertKey,
         },
       });
 
+    return this.prisma.alert.update({
+      where: {
+        alertKey: alertKey,
+      },
+      data: {
+        ...dto,
+      },
+    });
+  }
+
+  async deleteAlertByKey(
+    alertKey: string,
+  ) {
+    const alert =
+      await this.prisma.alert.findUnique({
+        where: {
+          alertKey: alertKey,
+        },
+      });
+    /*
     if (!alert || alert.userId !== userId)
       throw new ForbiddenException(
         'No eres el propietario de la Alerta',
       );
-
+    */
     await this.prisma.alert.delete({
       where: {
-        id: alertId,
+        alertKey: alertKey,
       },
     });
   }

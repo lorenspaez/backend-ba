@@ -1,6 +1,6 @@
 import { Injectable , ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { EditUserDto } from './dto';
+import { EditUserDto, SetUserKeyDto } from './dto';
 import { UpgradeUserDto } from './dto';
 
 @Injectable()
@@ -44,6 +44,26 @@ export class UserService {
     });
     delete user.hash;
     return user;
+  }
+
+  async setUserKey(
+    userId: number,
+    dto: SetUserKeyDto,
+  ) {
+    const alert =
+      await this.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+    return this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        ...dto,
+      },
+    });
   }
 
   async deleteUserById(

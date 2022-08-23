@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { AlertService } from './alert.service';
-import { CreateAlertDto } from './dto';
+import { CreateAlertDto, SetAlertKeyDto } from './dto';
 import { UpdateAlertDto } from './dto';
 
 @UseGuards(JwtGuard)
@@ -36,21 +36,27 @@ export class AlertController {
     return this.alertService.getAlertById(alertId);
   }
 
-  @Patch(':id')
-  editAlertById(
-    @GetUser('id') userId: number,
+  @Patch('key/:id')
+  setAlertKey(
     @Param('id', ParseIntPipe) alertId: number,
+    @Body() dto: SetAlertKeyDto,
+  ) {
+    return this.alertService.setAlertKey(alertId, dto);
+  }
+
+  @Patch(':alertKey')
+  editAlertByKey(
+    @Param('alertKey') alertKey: string,
     @Body() dto: UpdateAlertDto,
   ) {
-    return this.alertService.editAlertById(userId, alertId, dto);
+    return this.alertService.editAlertByKey(alertKey, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete(':id')
-  deleteAlertById(
-    @GetUser('id') userId: number,
-    @Param('id', ParseIntPipe) alertId: number,
+  @Delete(':alertKey')
+  deleteAlertByKey(
+    @Param('alertKey') alertKey: string,
   ) {
-    return this.alertService.deleteAlertById(userId, alertId);
+    return this.alertService.deleteAlertByKey(alertKey);
   }
 }

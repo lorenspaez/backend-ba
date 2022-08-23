@@ -2,7 +2,7 @@ import { Body,Controller,Get,Patch,UseGuards, Delete, HttpCode, HttpStatus } fro
 import { User } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
-import { EditUserDto } from './dto';
+import { EditUserDto, SetUserKeyDto } from './dto';
 import { UpgradeUserDto } from './dto';
 import { UserService } from './user.service';
 
@@ -26,6 +26,14 @@ export class UserController {
     @Body() dto: EditUserDto
     ) {
     return this.userService.editUser(userId, dto);
+  }
+
+  @Patch('key')
+  setUserKey(
+    @GetUser('id') userId: number, 
+    @Body() dto: SetUserKeyDto
+    ) {
+    return this.userService.setUserKey(userId, dto);
   }
 
   @Patch('upgrade')
