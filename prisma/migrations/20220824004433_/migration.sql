@@ -140,12 +140,6 @@ CREATE TABLE "_NeededElements" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_alertKey_key" ON "users"("alertKey");
-
--- CreateIndex
-CREATE UNIQUE INDEX "alerts_alertKey_key" ON "alerts"("alertKey");
-
--- CreateIndex
 CREATE UNIQUE INDEX "organizations_name_key" ON "organizations"("name");
 
 -- CreateIndex

@@ -20,7 +20,7 @@ model User{
   name String
   isVolunteer Boolean @default(false)
 
-  alertKey String? @unique
+  alertKey String?
   photo String?
   rut String?
   patente String?
@@ -41,7 +41,7 @@ model User{
 
 model Alert{
   id Int @id @default(autoincrement())
-  alertKey String? @unique
+  alertKey String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
