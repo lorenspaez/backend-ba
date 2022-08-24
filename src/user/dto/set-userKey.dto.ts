@@ -6,7 +6,7 @@ import {
   export class SetUserKeyDto {
     @IsString()
     @IsNotEmpty()
-    userKey: string;
+    alertKey: string;
 
   }
   
