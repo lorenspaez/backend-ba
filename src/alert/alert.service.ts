@@ -9,12 +9,25 @@ export class AlertService {
   constructor(private prisma: PrismaService) {}
 
   async createAlert(
+    userId: number,
     userName: string,
     dto: CreateAlertDto,
   ) {
+    if (userId == null
+      ){
+        const alert =
+      await this.prisma.alert.create({
+        data: {
+          userName,
+          ...dto,
+        },
+      });
+    return alert;
+      }
     const alert =
       await this.prisma.alert.create({
         data: {
+          userId,
           userName,
           ...dto,
         },
@@ -29,7 +42,7 @@ export class AlertService {
     });
   }
 
-  getAlerts(userId: number) {
+  getMyAlerts(userId: number) {
     return this.prisma.alert.findMany({
       where: {
         userId,
@@ -49,6 +62,8 @@ export class AlertService {
 
   async setAlertKey(
     alertId: number,
+    userName: string,
+    //userId: number,
     dto: SetAlertKeyDto,
   ) {
     const alert =
@@ -57,15 +72,12 @@ export class AlertService {
           id: alertId,
         },
       });
-    /*if (!alert || alert.userId !== userId)
-      throw new ForbiddenException(
-        'No eres el propietario de la Alerta',
-      );*/
     return this.prisma.alert.update({
       where: {
         id: alertId,
       },
       data: {
+        alertKey: String(alertId)+userName,
         ...dto,
       },
     });
@@ -76,7 +88,7 @@ export class AlertService {
     dto: UpdateAlertDto,
   ) {
     const alert =
-      await this.prisma.alert.findUnique({
+      await this.prisma.alert.findFirst({
         where: {
           alertKey: alertKey,
         },
@@ -84,7 +96,7 @@ export class AlertService {
 
     return this.prisma.alert.update({
       where: {
-        alertKey: alertKey,
+        id: alert.id,
       },
       data: {
         ...dto,
@@ -96,7 +108,7 @@ export class AlertService {
     alertKey: string,
   ) {
     const alert =
-      await this.prisma.alert.findUnique({
+      await this.prisma.alert.findFirst({
         where: {
           alertKey: alertKey,
         },
@@ -109,7 +121,7 @@ export class AlertService {
     */
     await this.prisma.alert.delete({
       where: {
-        alertKey: alertKey,
+        id: alert.id,
       },
     });
   }

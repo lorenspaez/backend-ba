@@ -16,7 +16,7 @@ export class AlertController {
     @GetUser('name') userName: string,
     @Body() dto: CreateAlertDto,
   ) {
-    return this.alertService.createAlert(userName, dto);
+    return this.alertService.createAlert(userId, userName, dto);
   }
 
   @Get()
@@ -25,8 +25,8 @@ export class AlertController {
   }
 
   @Get('myalerts')
-  getAlerts(@GetUser('id') userId: number) {
-    return this.alertService.getAlerts(userId);
+  getMyAlerts(@GetUser('id') userId: number) {
+    return this.alertService.getMyAlerts(userId);
   }
 
   @Get(':id')
@@ -39,9 +39,11 @@ export class AlertController {
   @Patch('key/:id')
   setAlertKey(
     @Param('id', ParseIntPipe) alertId: number,
+    @GetUser('name') userName: string,
+    @GetUser('id') userId: number,
     @Body() dto: SetAlertKeyDto,
   ) {
-    return this.alertService.setAlertKey(alertId, dto);
+    return this.alertService.setAlertKey(alertId, userName, dto);
   }
 
   @Patch(':alertKey')

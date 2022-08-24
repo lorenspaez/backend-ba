@@ -7,6 +7,8 @@ import {
   } from 'class-validator';
 
 export class CreateAlertDto {
+
+
   @IsString()
   @IsOptional()
   userId: number;
@@ -14,6 +16,10 @@ export class CreateAlertDto {
   @IsString()
   @IsNotEmpty()
   userName: string;
+
+  @IsString()
+  @IsOptional()
+  alertKey: string;
 
   @IsString()
   @IsOptional()
