@@ -20,7 +20,7 @@ model User{
   name String
   isVolunteer Boolean @default(false)
 
-  userKey String?
+  alertKey String? @unique
   photo String?
   rut String?
   patente String?

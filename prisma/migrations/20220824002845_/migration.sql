@@ -7,7 +7,7 @@ CREATE TABLE "users" (
     "hash" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "isVolunteer" BOOLEAN NOT NULL DEFAULT false,
-    "userKey" TEXT,
+    "alertKey" TEXT,
     "photo" TEXT,
     "rut" TEXT,
     "patente" TEXT,
@@ -138,6 +138,9 @@ CREATE TABLE "_NeededElements" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_alertKey_key" ON "users"("alertKey");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "alerts_alertKey_key" ON "alerts"("alertKey");
