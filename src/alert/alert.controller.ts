@@ -41,9 +41,9 @@ export class AlertController {
     @Param('id', ParseIntPipe) alertId: number,
     @GetUser('name') userName: string,
     @GetUser('id') userId: number,
-    @Body() dto: SetAlertKeyDto,
+    //@Body() dto: SetAlertKeyDto,
   ) {
-    return this.alertService.setAlertKey(alertId, userName, dto);
+    return this.alertService.setAlertKey(alertId, userName, userId/*, dto*/);
   }
 
   @Patch(':alertKey')

@@ -63,24 +63,48 @@ export class AlertService {
   async setAlertKey(
     alertId: number,
     userName: string,
-    //userId: number,
-    dto: SetAlertKeyDto,
+    userId: number,
+    //dto: SetAlertKeyDto,
   ) {
-    const alert =
+    if (userId != null){
+      /*const alert =
       await this.prisma.alert.findUnique({
         where: {
           id: alertId,
         },
+      });*/
+
+      /*const user = */await this.prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          alertKey: String(alertId)+userName/*,
+          ...dto,*/
+        },
       });
+
+      return this.prisma.alert.update({
+        where: {
+          id: alertId,
+        },
+        data: {
+          alertKey: String(alertId)+userName/*,
+          ...dto,*/
+        },
+      });
+    }
+
     return this.prisma.alert.update({
       where: {
         id: alertId,
       },
       data: {
-        alertKey: String(alertId)+userName,
-        ...dto,
+        alertKey: String(alertId)+userName/*,
+        ...dto,*/
       },
     });
+    
   }
 
   async editAlertByKey(

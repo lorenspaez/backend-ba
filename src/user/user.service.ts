@@ -7,7 +7,7 @@ import { UpgradeUserDto } from './dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  getAllUsers() {
+  async getAllUsers() {
     return this.prisma.user.findMany({
       where: {
       },
