@@ -46,39 +46,19 @@ export class UserService {
     return user;
   }
 
-  async setUserKey(
-    userId: number,
-    dto: SetUserKeyDto,
-  ) {
-    const alert =
-      await this.prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-    return this.prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        ...dto,
-      },
-    });
-  }
-
   async deleteUserById(
     userId: number
   ) {
-    const alert =
+    const user =
       await this.prisma.user.findUnique({
         where: {
           id: userId,
         },
       });
 
-    if (userId !== userId)
+    if (user.id !== userId)
       throw new ForbiddenException(
-        'Access to resources denied',
+        'Acceso denegado al usuario',
       );
 
     await this.prisma.user.delete({
@@ -86,5 +66,6 @@ export class UserService {
         id: userId,
       },
     });
+    return "Usuario eliminado";
   }
 }

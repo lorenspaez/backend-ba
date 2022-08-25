@@ -2,7 +2,6 @@ import { Injectable, ForbiddenException } from '@nestjs/common';
 import { CreateAlertDto } from './dto/create-alert.dto';
 import { UpdateAlertDto } from './dto/update-alert.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { SetAlertKeyDto } from './dto';
 
 @Injectable()
 export class AlertService {
@@ -13,10 +12,8 @@ export class AlertService {
     userName: string,
     dto: CreateAlertDto,
   ) {
-    if (userId == null
-      ){
-        const alert =
-      await this.prisma.alert.create({
+    if (userId == null){
+      const alert = await this.prisma.alert.create({
         data: {
           userName,
           ...dto,
@@ -60,27 +57,28 @@ export class AlertService {
     });
   }
 
+  getAlertByKey(
+    alertKey: string,
+  ) {
+    return this.prisma.alert.findFirst({
+      where: {
+        alertKey: alertKey
+      },
+    });
+  }
+
   async setAlertKey(
     alertId: number,
     userName: string,
-    userId: number,
-    //dto: SetAlertKeyDto,
+    userId: number
   ) {
     if (userId != null){
-      /*const alert =
-      await this.prisma.alert.findUnique({
-        where: {
-          id: alertId,
-        },
-      });*/
-
-      /*const user = */await this.prisma.user.update({
+      await this.prisma.user.update({
         where: {
           id: userId,
         },
         data: {
-          alertKey: String(alertId)+userName/*,
-          ...dto,*/
+          alertKey: String(alertId)+userName
         },
       });
 
@@ -89,8 +87,7 @@ export class AlertService {
           id: alertId,
         },
         data: {
-          alertKey: String(alertId)+userName/*,
-          ...dto,*/
+          alertKey: String(alertId)+userName
         },
       });
     }
@@ -100,8 +97,7 @@ export class AlertService {
         id: alertId,
       },
       data: {
-        alertKey: String(alertId)+userName/*,
-        ...dto,*/
+        alertKey: String(alertId)+userName
       },
     });
     
@@ -148,6 +144,7 @@ export class AlertService {
         id: alert.id,
       },
     });
+    return "Alerta eliminada"
   }
 }
 
