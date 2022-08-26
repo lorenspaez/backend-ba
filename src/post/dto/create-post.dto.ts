@@ -6,6 +6,7 @@ import {
   } from 'class-validator';
 
 export class CreatePostDto {
+
   @IsString()
   @IsNotEmpty()
   title: string;
@@ -25,10 +26,6 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   userName: string;
-
-  volunteer: object;
-  organization: object;
-  category: object;
 
   @IsString()
   @IsNotEmpty()

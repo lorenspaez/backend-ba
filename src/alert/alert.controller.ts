@@ -43,7 +43,7 @@ export class AlertController {
     return this.alertService.getAlertByKey(alertKey);
   }
 
-  @Patch('key/:id')
+  @Patch(':id')
   setAlertKey(
     @Param('id', ParseIntPipe) alertId: number,
     @GetUser('name') userName: string,

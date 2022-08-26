@@ -28,6 +28,13 @@ export class CategoryController {
     return this.categoryService.getCategoryById(categoryId);
   }
 
+  @Get(':name')
+  getCategoryByName(
+    @Param('name') name: string,
+    ) {
+    return this.categoryService.getCategoryByName(name);
+  }
+
   @Patch(':id')
   editCategory(
     @Param('id', ParseIntPipe) categoryId: number,

@@ -19,7 +19,18 @@ export class CategoryService {
     return category;
   }
 
-  getAllCategories() {
+  async getAllCategories() {
+
+    const posts =
+      await this.prisma.post.findMany({
+        where: {
+
+        }
+          /*orderBy: {
+            createdAt: { sort: 'des', nulls: 'last' },
+          },*/
+      });
+
     return this.prisma.category.findMany({
       where: {
       },
@@ -32,6 +43,16 @@ export class CategoryService {
     return this.prisma.category.findFirst({
       where: {
         id: categoryId,
+      },
+    });
+  }
+
+  getCategoryByName(
+    categoryName: string,
+  ) {
+    return this.prisma.category.findFirst({
+      where: {
+        name: categoryName,
       },
     });
   }

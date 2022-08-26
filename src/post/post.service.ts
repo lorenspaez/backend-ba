@@ -8,13 +8,15 @@ export class PostService {
   constructor(private prisma: PrismaService) {}
 
   async createPost(
-    userId: number,
+    //userId: number,
     organizationName: string,
+    categoryName: string,
     dto: CreatePostDto,
   ) {
     const post =
       await this.prisma.post.create({
         data: {
+          categoryName,
           organizationName,
           ...dto,
         },
