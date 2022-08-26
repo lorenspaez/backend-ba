@@ -5,7 +5,7 @@ import { AlertService } from './alert.service';
 import { CreateAlertDto} from './dto';
 import { UpdateAlertDto } from './dto';
 
-@UseGuards(JwtGuard)
+//@UseGuards(JwtGuard)
 @Controller('alerts')
 export class AlertController {
   constructor(private alertService: AlertService) {}
