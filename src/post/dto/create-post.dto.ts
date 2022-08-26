@@ -27,10 +27,6 @@ export class CreatePostDto {
   @IsNotEmpty()
   userName: string;
 
-  volunteer: object;
-  organization: object;
-  category: object;
-
   @IsString()
   @IsNotEmpty()
   organizationName: string;
