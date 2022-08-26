@@ -4,7 +4,7 @@ import { EditAlertElementDto } from './dto';
 import { CreateAlertElementDto } from './dto';
 import { AlertElementService } from './alertElement.service';
 
-@UseGuards(JwtGuard)
+//@UseGuards(JwtGuard)
 @Controller('alertElements')
 export class AlertElementController {
   constructor(private alertElementService: AlertElementService) {}

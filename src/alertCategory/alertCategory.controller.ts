@@ -4,7 +4,7 @@ import { EditAlertCategoryDto } from './dto';
 import { CreateAlertCategoryDto } from './dto';
 import { AlertCategoryService } from './alertCategory.service';
 
-@UseGuards(JwtGuard)
+//@UseGuards(JwtGuard)
 @Controller('alertCategories')
 export class AlertCategoryController {
   constructor(private alertCategoryService: AlertCategoryService) {}

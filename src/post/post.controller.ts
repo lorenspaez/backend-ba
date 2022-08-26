@@ -15,9 +15,10 @@ export class PostController {
     //@GetUser('id') userId: number,
     @GetUser('organizationName') organizationName: string,
     @Param('categoryName') categoryName: string,
+    @Param('userName') userName: string,
     @Body() dto: CreatePostDto,
   ) {
-    return this.postService.createPost(/*userId, */categoryName, organizationName, dto);
+    return this.postService.createPost(/*userId, */userName, categoryName, organizationName, dto);
   }
 
   @Get()
