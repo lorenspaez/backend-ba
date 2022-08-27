@@ -20,6 +20,12 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
+  @Patch('activateMode')
+  activateMode(
+    @GetUser('id') userId: number){
+      return this.userService.activateMode(userId)
+    }
+    
   @Patch('edit')
   editUser(
     @GetUser('id') userId: number, 

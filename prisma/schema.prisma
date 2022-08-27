@@ -19,6 +19,7 @@ model User{
   hash String
   name String
   isVolunteer Boolean @default(false)
+  isActive Boolean @default(false)
 
   alertKey String?
   photo String?

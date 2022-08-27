@@ -30,6 +30,22 @@ export class UserService {
     return user;
   }
 
+  async activateMode(
+    userId: number,
+  ) {
+    const user = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        isActive: true
+      },
+    });
+    delete user.hash;
+    return user;
+  }
+
+
   async upgradeUser(
     userId: number,
     dto: UpgradeUserDto,

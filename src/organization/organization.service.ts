@@ -30,9 +30,19 @@ export class OrganizationService {
   getOrganizationById(
     organizationId: number,
   ) {
-    return this.prisma.alert.findFirst({
+    return this.prisma.organization.findFirst({
       where: {
         id: organizationId,
+      },
+    });
+  }
+
+  getOrganizationByName(
+    organizationName: string,
+  ) {
+    return this.prisma.organization.findFirst({
+      where: {
+        name: organizationName,
       },
     });
   }
@@ -61,6 +71,7 @@ export class OrganizationService {
         id: organizationId,
       },
       data: {
+        isFoundation: true,
         ...dto
       },
     });
@@ -68,8 +79,16 @@ export class OrganizationService {
   }
 
   async deleteOrganizationById(
-    organizationId: number
+    organizationId: number,
+    userId: number
   ) {
+    const user =
+      await this.prisma.user.findUnique({
+        where:{
+          id: userId
+        }
+      })
+
     const organization =
       await this.prisma.organization.findUnique({
         where: {
@@ -77,10 +96,9 @@ export class OrganizationService {
         },
       });
 
-    // check if user owns the bookmark
-    if (organizationId !== organizationId)
+    if (user.organizationName !== organization.name)
       throw new ForbiddenException(
-        'Access to resources denied',
+        'No perteneces a esta fundación',
       );
 
     await this.prisma.organization.delete({

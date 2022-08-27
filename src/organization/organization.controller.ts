@@ -51,7 +51,8 @@ export class OrganizationController {
   @Delete(':id')
   deleteOrganizationById(
     @Param('id', ParseIntPipe) organizationId: number,
+    @GetUser('id', ParseIntPipe) userId: number,
   ) {
-    return this.organizationService.deleteOrganizationById(organizationId);
+    return this.organizationService.deleteOrganizationById(organizationId, userId);
   }
 }

@@ -22,7 +22,7 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   photo: string;
-
+/*
   @IsString()
   @IsNotEmpty()
   userName: string;
@@ -33,5 +33,5 @@ export class CreatePostDto {
 
   @IsString()
   @IsNotEmpty()
-  categoryName: string;
+  categoryName: string;*/
 }

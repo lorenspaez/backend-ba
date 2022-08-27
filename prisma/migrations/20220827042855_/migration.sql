@@ -7,6 +7,7 @@ CREATE TABLE "users" (
     "hash" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "isVolunteer" BOOLEAN NOT NULL DEFAULT false,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "alertKey" TEXT,
     "photo" TEXT,
     "rut" TEXT,
