@@ -56,7 +56,7 @@ export class PostController {
     return this.postService.getPostByFoundationName(organizatioName);
   }
 
-  @Get('foundation/:organizationName')
+  @Get('category/:organizationName')
   getPostByCategoryName(
     @Param('categoryName') categoryName: string,
   ) {

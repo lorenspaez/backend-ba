@@ -39,6 +39,7 @@ export class UserService {
         id: userId,
       },
       data: {
+        isVolunteer: true,
         ...dto,
       },
     });
