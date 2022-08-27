@@ -23,10 +23,10 @@ model User{
   alertKey String?
   photo String?
   rut String?
-  patente String?
-  region String?
-  comuna String?
-  sector String?
+  patente String? @default("")
+  region String? @default("")
+  comuna String? @default("")
+  sector String? @default("")
 
   organizationName String?
   organizationId Int?
