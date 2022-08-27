@@ -9,16 +9,36 @@ export class PostService {
 
   async createPost(
     userName: string,
+    userId: number,
     organizationName: string,
+    organizationId: number,
     categoryName: string,
+    categoryId: number,
     dto: CreatePostDto,
   ) {
+    const org =
+      await this.prisma.organization.findUnique({
+        where: {
+          name: organizationName
+        }
+      })
+
+      const cat =
+        await this.prisma.category.findUnique({
+          where: {
+            name: categoryName
+          }
+        })
+
     const post =
       await this.prisma.post.create({
         data: {
           userName,
+          userId,
           categoryName,
+          categoryId: cat.id,
           organizationName,
+          organizationId: org.id,
           ...dto,
         },
       });

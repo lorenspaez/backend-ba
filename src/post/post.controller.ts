@@ -12,13 +12,22 @@ export class PostController {
 
   @Post()
   createpost(
-    //@GetUser('id') userId: number,
+    @GetUser('userName') userName: string,
+    @GetUser('id') userId: number,
     @GetUser('organizationName') organizationName: string,
     @Param('categoryName') categoryName: string,
-    @Param('userName') userName: string,
+    categoryId: number,
+    organizationId: number,
     @Body() dto: CreatePostDto,
   ) {
-    return this.postService.createPost(/*userId, */userName, categoryName, organizationName, dto);
+    return this.postService.createPost(
+      userName,
+      userId,
+      categoryName,
+      categoryId,
+      organizationName,
+      organizationId,
+      dto);
   }
 
   @Get()
