@@ -11,9 +11,7 @@ export class PostService {
     userName: string,
     userId: number,
     organizationName: string,
-    organizationId: number,
     categoryName: string,
-    categoryId: number,
     dto: CreatePostDto,
   ) {
     const org =
@@ -22,22 +20,20 @@ export class PostService {
           name: organizationName
         }
       })
-
-      const cat =
-        await this.prisma.category.findUnique({
-          where: {
-            name: categoryName
-          }
-        })
-
+    const cat =
+      await this.prisma.category.findUnique({
+        where: {
+          name: categoryName
+        }
+      })
     const post =
       await this.prisma.post.create({
         data: {
-          userName,
-          userId,
-          categoryName,
+          userName: userName,
+          userId: userId,
+          categoryName: categoryName,
           categoryId: cat.id,
-          organizationName,
+          organizationName: organizationName,
           organizationId: org.id,
           ...dto,
         },
@@ -46,7 +42,7 @@ export class PostService {
   }
 
   getPostById(postId: number) {
-    return this.prisma.post.findMany({
+    return this.prisma.post.findUnique({
       where: {
         id: postId,
       },

@@ -100,7 +100,6 @@ export class AlertService {
         alertKey: String(alertId)+userName
       },
     });
-    
   }
 
   async editAlertByKey(

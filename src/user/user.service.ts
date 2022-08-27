@@ -33,7 +33,26 @@ export class UserService {
   async activateMode(
     userId: number,
   ) {
-    const user = await this.prisma.user.update({
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId
+      }
+    });
+
+    if (user.isActive == true){
+      await this.prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          isActive: false
+        },
+      });
+      delete user.hash;
+      return user;
+    }
+
+    await this.prisma.user.update({
       where: {
         id: userId,
       },
