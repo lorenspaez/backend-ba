@@ -25,6 +25,14 @@ export class PostService {
     return post;
   }
 
+  getPostById(postId: number) {
+    return this.prisma.post.findMany({
+      where: {
+        id: postId,
+      },
+    });
+  }
+
   getAllPosts() {
     return this.prisma.post.findMany({
       where: {
@@ -32,7 +40,7 @@ export class PostService {
     });
   }
 
-  getPosts(userId: number) {
+  getMyPosts(userId: number) {
     return this.prisma.post.findMany({
       where: {
         userId,
@@ -40,30 +48,31 @@ export class PostService {
     });
   }
 
-  getOrganizationPosts(organizationName: string) {
+  getPostByFoundationName(
+    organizationName: string,
+  ) {
     return this.prisma.post.findMany({
       where: {
-        organizationName,
+        organizationName: organizationName
       },
     });
   }
 
-  getPostByName(
-    orgName: string,
+  getPostByCategoryName(
+    categoryName: string,
   ) {
-    return this.prisma.post.findFirst({
+    return this.prisma.post.findMany({
       where: {
-        organizationName: orgName
+        categoryName: categoryName
       },
     });
   }
 
   async editPostById(
-    userId: number,
+    organizationName: string,
     postId: number,
     dto: UpdatePostDto,
   ) {
-    // get the bookmark by id
     const post =
       await this.prisma.post.findUnique({
         where: {
@@ -71,10 +80,9 @@ export class PostService {
         },
       });
 
-    // check if user owns the bookmark
-    if (!post || post.userId !== userId)
+    if (!post || post.organizationName !== organizationName)
       throw new ForbiddenException(
-        'Access to resources denied',
+        'No perteneces a esta Fundación',
       );
 
     return this.prisma.post.update({
@@ -88,7 +96,7 @@ export class PostService {
   }
 
   async deletePostById(
-    userId: number,
+    organizationName: string,
     postId: number,
   ) {
     const post =
@@ -98,10 +106,9 @@ export class PostService {
         },
       });
 
-    // check if user owns the bookmark
-    if (!post || post.userId !== userId)
+    if (!post || post.organizationName !== organizationName)
       throw new ForbiddenException(
-        'Access to resources denied',
+        'No perteneces a esta Fundación',
       );
 
     await this.prisma.post.delete({

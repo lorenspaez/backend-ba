@@ -26,42 +26,49 @@ export class PostController {
     return this.postService.getAllPosts();
   }
 
+  @Get(':id')
+  getPostById(
+    @Param('id', ParseIntPipe) id: number,
+    ) {
+    return this.postService.getPostById(id);
+  }
+
   @Get('myposts')
   getPosts(
     @GetUser('id') userId: number
     ) {
-    return this.postService.getPosts(userId);
+    return this.postService.getMyPosts(userId);
   }
 
-  @Get('orgposts')
-  getOrganizationPosts(
-    @GetUser('organizationName') organizationName: string
-    ) {
-    return this.postService.getOrganizationPosts(organizationName);
-  }
-
-  @Get(':organizationName')
-  getPostByName(
+  @Get('foundation/:organizationName')
+  getPostByFoundationName(
     @Param('organizationName') organizatioName: string,
   ) {
-    return this.postService.getPostByName(organizatioName);
+    return this.postService.getPostByFoundationName(organizatioName);
+  }
+
+  @Get('foundation/:organizationName')
+  getPostByCategoryName(
+    @Param('categoryName') categoryName: string,
+  ) {
+    return this.postService.getPostByCategoryName(categoryName);
   }
 
   @Patch(':id')
   editPostById(
-    @GetUser('id') userId: number,
+    @GetUser('organizationName') organizationName: string,
     @Param('id', ParseIntPipe) postId: number,
     @Body() dto: UpdatePostDto,
   ) {
-    return this.postService.editPostById(userId, postId, dto);
+    return this.postService.editPostById(organizationName, postId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   deletePostById(
-    @GetUser('id') userId: number,
+    @GetUser('organizationName') organizationName: string,
     @Param('id', ParseIntPipe) postId: number,
   ) {
-    return this.postService.deletePostById(userId, postId);
+    return this.postService.deletePostById(organizationName, postId);
   }
 }
