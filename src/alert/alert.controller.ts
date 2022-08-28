@@ -69,6 +69,14 @@ export class AlertController {
     return this.alertService.takeAlert(id, volunteerId, dto)
   }
 
+  @Patch('closeAlert/:id')
+  closeAlert(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser('id') volunteerId: number
+  ){
+    return this.alertService.closeAlert(id, volunteerId)
+  }
+
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('key/:alertKey')
   deleteAlertByKey(

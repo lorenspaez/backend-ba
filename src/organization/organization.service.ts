@@ -32,7 +32,7 @@ export class OrganizationService {
           }
       });
 
-    return organization;
+    return {user, organization};
   }
 
   getAllOrganizations() {

@@ -152,17 +152,56 @@ export class AlertService {
         'Solo los voluntarios pueden tomar casos',
       );
     }
-    const alert = 
-      await this.prisma.alert.update({
+    const alert = await this.prisma.alert.findUnique({
         where: {
           id: alertId
-        },
-        data: {
-          volunteerId: volunteer.id,
-          volunteerName: volunteer.name,
-          ...dto
         }
       })
+
+    if (alert.status == "Tomado"){
+      throw new ForbiddenException(
+        'El caso ya está siendo atendido por otro Voluntario',
+      );
+    }
+
+    return await this.prisma.alert.update({
+      where: {
+        id: alertId
+      },
+      data: {
+        volunteerId: volunteer.id,
+        volunteerName: volunteer.name,
+        status: "Tomado",
+        ...dto
+      }
+    });
+  }
+
+  async closeAlert(
+    alertId: number,
+    volunteerId: number
+  ){
+    const volunteer =
+      await this.prisma.user.findUnique({
+        where: {
+          id: volunteerId
+        }
+      })
+
+    if (volunteer.isVolunteer == false){
+      throw new ForbiddenException(
+        'Solo los voluntarios pueden cerrar casos',
+      );
+    }
+
+    return await this.prisma.alert.update({
+      where: {
+        id: alertId
+      },
+      data: {
+        status: "Cerrado"
+      }
+    });
   }
 
   async deleteAlertByKey(
