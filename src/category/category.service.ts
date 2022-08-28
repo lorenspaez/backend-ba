@@ -23,18 +23,20 @@ export class CategoryService {
 
     const posts =
       await this.prisma.post.findMany({
-        where: {
-
-        }
-          /*orderBy: {
-            createdAt: { sort: 'des', nulls: 'last' },
-          },*/
+        orderBy: [
+          {
+            createdAt: 'desc',
+          }
+        ]
       });
 
-    return this.prisma.category.findMany({
+    const categories =
+      await this.prisma.category.findMany({
       where: {
       },
     });
+
+    return {posts, categories}
   }
 
   getCategoryById(
