@@ -2,8 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { AlertService } from './alert.service';
-import { CreateAlertDto} from './dto';
-import { UpdateAlertDto } from './dto';
+import { CreateAlertDto, TakeAlertDto, UpdateAlertDto} from './dto';
 
 @UseGuards(JwtGuard)
 @Controller('alerts')
@@ -14,9 +13,10 @@ export class AlertController {
   createAlert(
     @GetUser('id') userId: number,
     @GetUser('name') userName: string,
+    alertCategoryName: string,
     @Body() dto: CreateAlertDto,
   ) {
-    return this.alertService.createAlert(userId, userName, dto);
+    return this.alertService.createAlert(userId, userName, alertCategoryName, dto);
   }
 
   @Get()
@@ -58,6 +58,15 @@ export class AlertController {
     @Body() dto: UpdateAlertDto,
   ) {
     return this.alertService.editAlertByKey(alertKey, dto);
+  }
+
+  @Patch('takeAlert/:id')
+  takeAlert(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser('id') volunteerId: number,
+    @Body() dto: TakeAlertDto
+  ){
+    return this.alertService.takeAlert(id, volunteerId, dto)
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)

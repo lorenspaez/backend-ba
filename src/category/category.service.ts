@@ -23,6 +23,7 @@ export class CategoryService {
 
     const posts =
       await this.prisma.post.findMany({
+        take:3,
         orderBy: [
           {
             createdAt: 'desc',

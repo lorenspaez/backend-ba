@@ -1,4 +1,5 @@
 import { Injectable , ForbiddenException } from '@nestjs/common';
+import { runInThisContext } from 'vm';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
@@ -9,14 +10,28 @@ export class OrganizationService {
   constructor(private prisma: PrismaService) {}
 
   async createOrganization(
+    userId: number,
     dto: CreateOrganizationDto,
   ) {
+
     const organization =
       await this.prisma.organization.create({
         data: {
           ...dto,
         },
       });
+
+    const user =
+      await this.prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          organizationId: organization.id,
+          organizationName: organization.name
+          }
+      });
+
     return organization;
   }
 

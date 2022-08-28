@@ -1,6 +1,7 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { CreateAlertDto } from './dto/create-alert.dto';
 import { UpdateAlertDto } from './dto/update-alert.dto';
+import { TakeAlertDto } from './dto/take-alert.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -10,21 +11,32 @@ export class AlertService {
   async createAlert(
     userId: number,
     userName: string,
+    alertCategoryName: string,
     dto: CreateAlertDto,
   ) {
+
+    const category = await this.prisma.category.findUnique({
+      where:{
+        name: alertCategoryName
+      }
+    })
+
     if (userId == null){
       const alert = await this.prisma.alert.create({
         data: {
           userName,
+          alertCategoryId: category.id,
           ...dto,
         },
       });
+
     return alert;
       }
     const alert =
       await this.prisma.alert.create({
         data: {
-          userId,
+          userId: userId,
+          alertCategoryId: category.id,
           userName,
           ...dto,
         },
@@ -121,6 +133,36 @@ export class AlertService {
         ...dto,
       },
     });
+  }
+
+  async takeAlert(
+    alertId: number,
+    volunteerId: number,
+    dto: TakeAlertDto
+  ){
+    const volunteer =
+      await this.prisma.user.findUnique({
+        where: {
+          id: volunteerId
+        }
+      })
+
+    if (volunteer.isVolunteer == false){
+      throw new ForbiddenException(
+        'Solo los voluntarios pueden tomar casos',
+      );
+    }
+    const alert = 
+      await this.prisma.alert.update({
+        where: {
+          id: alertId
+        },
+        data: {
+          volunteerId: volunteer.id,
+          volunteerName: volunteer.name,
+          ...dto
+        }
+      })
   }
 
   async deleteAlertByKey(

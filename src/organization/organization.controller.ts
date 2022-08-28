@@ -14,9 +14,10 @@ export class OrganizationController {
 
   @Post()
   createOrganization(
+    @GetUser('id', ParseIntPipe) userId: number,
     @Body() dto: CreateOrganizationDto,
   ) {
-    return this.organizationService.createOrganization(dto);
+    return this.organizationService.createOrganization(userId, dto);
   }
 
   @Get()
