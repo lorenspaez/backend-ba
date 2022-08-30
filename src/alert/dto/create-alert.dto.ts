@@ -7,20 +7,19 @@ import {
   } from 'class-validator';
 
 export class CreateAlertDto {
-
-
+/*
   @IsString()
   @IsOptional()
   userId: number;
-
+*/
   @IsString()
   @IsNotEmpty()
   userName: string;
-
+/*
   @IsString()
   @IsOptional()
   alertKey: string;
-
+*/
   @IsString()
   @IsOptional()
   volunteerName?: string;

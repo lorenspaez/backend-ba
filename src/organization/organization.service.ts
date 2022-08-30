@@ -93,6 +93,19 @@ export class OrganizationService {
     return organization;
   }
 
+  async getUsersFromOrg(
+    organizationId: number
+  ){
+    const users = 
+      await this.prisma.user.findMany({
+        where:{
+          organizationId: organizationId
+        }
+      });
+
+    return users;
+  }
+
   async deleteOrganizationById(
     organizationId: number,
     userId: number

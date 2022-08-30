@@ -30,8 +30,8 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   organizationName: string;
-
+  */
   @IsString()
   @IsNotEmpty()
-  categoryName: string;*/
+  categoryName: string;
 }
