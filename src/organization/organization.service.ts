@@ -42,17 +42,15 @@ export class OrganizationService {
     });
   }
 
-  async search({
-    name
-  }: FilterOrganizationUserDto): Promise<User[]> {
-    //if (active == null) throw new BadRequestException(ACTIVATE_MISSING);
-    const users: User[] = await this.prisma.user.findMany({
-      where: {
-        name: {
-          contains: `%${name}%`
+  async search({ name }: FilterOrganizationUserDto): Promise<User[]> {
+    const users = 
+      await this.prisma.user.findMany({
+        where: {
+          name: {
+            contains: `%${name}%`
+          },
         },
-      },
-    });
+      });
     return users;
 }
 
