@@ -151,7 +151,7 @@ export class AlertService {
     if (volunteer.isVolunteer == false){
       throw new ForbiddenException(
         'Solo los voluntarios pueden tomar casos',
-      );
+  );
     }
     const alert = await this.prisma.alert.findUnique({
         where: {
@@ -225,7 +225,7 @@ export class AlertService {
         id: alert.id,
       },
     });
-    return "Alerta eliminada"
+    return alert
   }
 }
 
