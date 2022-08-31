@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Query, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Organization } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
-import { CreateOrganizationDto } from './dto';
+import { CreateOrganizationDto, FilterOrganizationUserDto} from './dto';
 import { OrganizationService } from './organization.service';
 
 @UseGuards(JwtGuard)
@@ -30,6 +30,11 @@ export class OrganizationController {
     @Param('id', ParseIntPipe) organizationId: number,
   ){
     return this.organizationService.getUsersFromOrg(organizationId);
+  }
+
+  @Get('/search?')
+  search(@Query() filter: FilterOrganizationUserDto) {
+    return this.organizationService.search(filter);
   }
 
   @Get(':id')

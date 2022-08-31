@@ -1,9 +1,9 @@
 import { Injectable , ForbiddenException } from '@nestjs/common';
-import { runInThisContext } from 'vm';
+import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
-import { CreateOrganizationDto } from './dto';
+import { CreateOrganizationDto, FilterOrganizationUserDto} from './dto';
 
 @Injectable()
 export class OrganizationService {
@@ -41,6 +41,20 @@ export class OrganizationService {
       },
     });
   }
+
+  async search({
+    name
+  }: FilterOrganizationUserDto): Promise<User[]> {
+    //if (active == null) throw new BadRequestException(ACTIVATE_MISSING);
+    const users: User[] = await this.prisma.user.findMany({
+      where: {
+        name: {
+          contains: `%${name}%`
+        },
+      },
+    });
+    return users;
+}
 
   getOrganizationById(
     organizationId: number,
