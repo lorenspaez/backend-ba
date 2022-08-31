@@ -220,6 +220,22 @@ export class AlertService {
         'No eres el propietario de la Alerta',
       );
     */
+    const user = 
+      await this.prisma.user.findFirst({
+        where:{
+          alertKey: alert.alertKey
+        },
+      });
+        
+    await this.prisma.user.update({
+      where:{
+        id: user.id
+      },
+      data:{
+        alertKey: null
+      }
+    });
+
     return await this.prisma.alert.delete({
       where: {
         id: alert.id,
