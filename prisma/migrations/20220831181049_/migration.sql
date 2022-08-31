@@ -63,12 +63,6 @@ CREATE TABLE "organizations" (
     "socialMedia" TEXT,
     "certificationDocument" TEXT,
     "rutFoundation" TEXT,
-    "namePresidente" TEXT NOT NULL,
-    "rutPresidente" TEXT,
-    "nameSecretario" TEXT NOT NULL,
-    "rutSecretario" TEXT,
-    "nameTesorero" TEXT NOT NULL,
-    "rutTesorero" TEXT,
 
     CONSTRAINT "organizations_pkey" PRIMARY KEY ("id")
 );

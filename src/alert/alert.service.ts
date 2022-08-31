@@ -220,12 +220,11 @@ export class AlertService {
         'No eres el propietario de la Alerta',
       );
     */
-    await this.prisma.alert.delete({
+    return await this.prisma.alert.delete({
       where: {
         id: alert.id,
       },
     });
-    return await alert
   }
 }
 

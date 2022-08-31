@@ -94,13 +94,6 @@ model Organization{
   certificationDocument String?
   rutFoundation String?
   
-  namePresidente String
-  rutPresidente String?
-  nameSecretario String
-  rutSecretario String?
-  nameTesorero String
-  rutTesorero String?
-
   volunteers User[]
   inPosts Post[]
 
