@@ -13,7 +13,7 @@ export class AlertController {
   createAlert(
     @GetUser('id') userId: number,
     @GetUser('name') userName: string,
-    alertCategoryName: string,
+    @Body() alertCategoryName: string,
     @Body() dto: CreateAlertDto,
   ) {
     return this.alertService.createAlert(userId, userName, alertCategoryName, dto);
