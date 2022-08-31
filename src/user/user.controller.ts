@@ -20,7 +20,7 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
-  @Get()
+  @Get('volunteers')
   getVolunteers(){
     return this.userService.getVolunteers();
   }

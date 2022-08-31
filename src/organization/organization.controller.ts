@@ -25,7 +25,7 @@ export class OrganizationController {
     return this.organizationService.getAllOrganizations();
   }
 
-  @Get('users:id')
+  @Get('users/:id')
   getUsersFromOrg(
     @Param(':id', ParseIntPipe) organizationId: number,
   ){
