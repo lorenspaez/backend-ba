@@ -14,6 +14,15 @@ export class UserService {
     });
   }
 
+  async getVolunteers(){
+    const volunteers = await this.prisma.user.findMany({
+      where:{
+        isVolunteer: true
+      }
+    });
+    return volunteers;
+  }
+
   async editUser(
     userId: number,
     dto: EditUserDto,

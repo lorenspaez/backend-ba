@@ -225,7 +225,7 @@ export class AlertService {
         id: alert.id,
       },
     });
-    return alert
+    return await alert
   }
 }
 
