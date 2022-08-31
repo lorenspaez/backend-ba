@@ -15,7 +15,7 @@ export class AlertService {
     dto: CreateAlertDto,
   ) {
 
-    const category = await this.prisma.category.findUnique({
+    const category = await this.prisma.alertCategory.findUnique({
       where:{
         name: alertCategoryName
       }
