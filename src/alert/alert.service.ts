@@ -14,30 +14,31 @@ export class AlertService {
     alertCategoryName: string,
     dto: CreateAlertDto,
   ) {
-
-    const category = await this.prisma.alertCategory.findUnique({
+    const alertCategory = await this.prisma.alertCategory.findFirst({
       where:{
         name: alertCategoryName
       }
-    })
+    });
 
     if (userId == null){
       const alert = await this.prisma.alert.create({
         data: {
-          userName,
-          alertCategoryId: category.id,
+          userName: userName,
+          alertCategoryName: alertCategoryName,
+          alertCategoryId: alertCategory.id,
           ...dto,
         },
       });
 
     return alert;
-      }
-    const alert =
-      await this.prisma.alert.create({
+    };
+
+    const alert = await this.prisma.alert.create({
         data: {
           userId: userId,
-          alertCategoryId: category.id,
-          userName,
+          alertCategoryId: alertCategory.id,
+          alertCategoryName: alertCategoryName,
+          userName: userName,
           ...dto,
         },
       });
