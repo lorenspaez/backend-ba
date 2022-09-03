@@ -47,9 +47,10 @@ export class UserService {
         id: userId
       }
     });
+    delete user.hash;
 
     if (user.isActive == true){
-      await this.prisma.user.update({
+      return await this.prisma.user.update({
         where: {
           id: userId,
         },
@@ -57,11 +58,9 @@ export class UserService {
           isActive: false
         },
       });
-      delete user.hash;
-      return user;
     }
 
-    await this.prisma.user.update({
+    return await this.prisma.user.update({
       where: {
         id: userId,
       },
@@ -69,8 +68,6 @@ export class UserService {
         isActive: true
       },
     });
-    delete user.hash;
-    return user;
   }
 
 
