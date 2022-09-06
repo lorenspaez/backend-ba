@@ -57,6 +57,9 @@ model Alert{
   arrivalTime String?
   status String @default("Abierto")
 
+  parentId Int?
+  childId Int?
+
   userName String
   userId Int?
   user User? @relation("CreatedAlerts", fields:[userId], references: [id])

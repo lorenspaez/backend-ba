@@ -70,11 +70,12 @@ export class AlertController {
   }
 
   @Post('cloneAlert/:id')
-  cloneAlert(
+  askForHelp(
     @Param('id', ParseIntPipe) alertId: number,
     @GetUser('id') userId: number,
+    @Body() dto: CreateAlertDto
   ){
-    return this.alertService.cloneAlert(alertId, userId)
+    return this.alertService.cloneAlert(alertId, userId, dto)
   }
 
   @Patch('closeAlert/:id')

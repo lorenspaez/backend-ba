@@ -36,6 +36,8 @@ CREATE TABLE "alerts" (
     "longitude" TEXT NOT NULL,
     "arrivalTime" TEXT,
     "status" TEXT NOT NULL DEFAULT 'Abierto',
+    "parentId" INTEGER,
+    "childId" INTEGER,
     "userName" TEXT NOT NULL,
     "userId" INTEGER,
     "alertCategoryName" TEXT NOT NULL,

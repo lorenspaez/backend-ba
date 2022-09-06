@@ -180,7 +180,8 @@ export class AlertService {
 
   async cloneAlert(
     alertId: number,
-    volunteerId: number){
+    volunteerId: number,
+    dto: CreateAlertDto){
       const alert = 
         await this.prisma.alert.findUnique({
           where:{
@@ -200,20 +201,38 @@ export class AlertService {
           data:{
             userName: user.name,
             userId: user.id,
-
-            specie: alert.specie,
-            body: alert.body,
-            alertCategoryName: alert.alertCategoryName,
-            alertCategoryColour: alert.alertCategoryColour,
-            alertCategoryPhoto: alert.alertCategoryPhoto,
-            neededElementName: alert.neededElementName,
-            photo: alert.photo,
-            latitude: alert.latitude,
-            longitude: alert.longitude,
             userPhone: alert.volunteerPhone,
+            parentId: alert.id,
+            ...dto
         }
       });
-      return newAlert;
+
+      await this.prisma.user.update({
+        where:{
+          id:volunteerId
+        },
+        data:{
+          alertKey: String(newAlert.id)+user.name
+        }
+      });
+
+      await this.prisma.alert.update({
+        where:{
+          id:alertId
+        },
+        data:{
+          childId: newAlert.id
+        }
+      });
+
+      return await this.prisma.alert.update({
+        where:{
+          id: newAlert.id
+        },
+        data:{
+          alertKey: String(newAlert.id)+user.name
+        }
+      });
     }
 
   async closeAlert(
@@ -245,6 +264,21 @@ export class AlertService {
         'Otro voluntario esta a cargo de esta alerta',
       );
     }
+
+    const user = await this.prisma.user.findFirst({
+      where:{
+        alertKey: alert.alertKey,
+      }
+    });
+
+    await this.prisma.user.update({
+      where:{
+        id: user.id,
+      },
+      data:{
+        alertKey: null,
+      }
+    });
 
     return await this.prisma.alert.update({
       where: {
@@ -294,4 +328,3 @@ export class AlertService {
     });
   }
 }
-
