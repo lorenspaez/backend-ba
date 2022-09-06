@@ -178,6 +178,44 @@ export class AlertService {
     });
   }
 
+  async cloneAlert(
+    alertId: number,
+    volunteerId: number){
+      const alert = 
+        await this.prisma.alert.findUnique({
+          where:{
+            id: alertId
+          }
+        });
+
+      const user =
+        await this.prisma.user.findUnique({
+          where:{
+            id: volunteerId
+          }
+        });
+
+      const newAlert =
+        await this.prisma.alert.create({
+          data:{
+            userName: user.name,
+            userId: user.id,
+
+            specie: alert.specie,
+            body: alert.body,
+            alertCategoryName: alert.alertCategoryName,
+            alertCategoryColour: alert.alertCategoryColour,
+            alertCategoryPhoto: alert.alertCategoryPhoto,
+            neededElementName: alert.neededElementName,
+            photo: alert.photo,
+            latitude: alert.latitude,
+            longitude: alert.longitude,
+            userPhone: alert.volunteerPhone,
+        }
+      });
+      return newAlert;
+    }
+
   async closeAlert(
     alertId: number,
     volunteerId: number

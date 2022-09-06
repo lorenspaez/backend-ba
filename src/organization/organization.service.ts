@@ -32,6 +32,15 @@ export class OrganizationService {
           }
       });
 
+      await this.prisma.organization.update({
+        where:{
+          id: organization.id,
+        },
+        data:{
+          createdBy: user.name,
+        }
+      });
+
     return {user, organization};
   }
 
