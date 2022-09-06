@@ -11,12 +11,14 @@ export class OrganizationService {
 
   async createOrganization(
     userId: number,
+    createdBy: string,
     dto: CreateOrganizationDto,
   ) {
 
     const organization =
       await this.prisma.organization.create({
         data: {
+          createdBy: createdBy,
           ...dto,
         },
       });
@@ -31,16 +33,6 @@ export class OrganizationService {
           organizationName: organization.name
           }
       });
-
-      await this.prisma.organization.update({
-        where:{
-          id: organization.id,
-        },
-        data:{
-          createdBy: user.name,
-        }
-      });
-
     return {user, organization};
   }
 
