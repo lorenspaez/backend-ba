@@ -16,4 +16,8 @@ export class TakeAlertDto extends PartialType(CreateAlertDto) {
   @IsOptional()
   volunteerPhone?: string
 
+  @IsString()
+  @IsOptional()
+  arrivalTime?: string
+
 }

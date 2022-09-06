@@ -54,6 +54,7 @@ model Alert{
   volunteerPhone String?
   latitude String
   longitude String
+  arrivalTime String?
   status String @default("Abierto")
 
   userName String
@@ -86,6 +87,7 @@ model Organization{
   name String @unique
   description String
   isFoundation Boolean @default(false)
+  createdBy String
   photo String?
   email String?
   phoneNum String?

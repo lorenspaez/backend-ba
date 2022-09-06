@@ -195,6 +195,19 @@ export class AlertService {
       );
     }
 
+    const alert =
+      await this.prisma.alert.findUnique({
+        where: {
+          id: alertId
+        }
+      })
+
+    if (volunteer.id != alert.volunteerId){
+      throw new ForbiddenException(
+        'Otro voluntario esta a cargo de esta alerta',
+      );
+    }
+
     return await this.prisma.alert.update({
       where: {
         id: alertId

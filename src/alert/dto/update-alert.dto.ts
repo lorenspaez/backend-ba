@@ -12,19 +12,7 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
 
   @IsString()
   @IsOptional()
-  alertKey: string;
-
-  @IsString()
-  @IsOptional()
   userName?: string;
-
-  @IsString()
-  @IsOptional()
-  volunteerId?: number;
-
-  @IsString()
-  @IsOptional()
-  volunteerName?: string;
 
   @IsString()
   @IsOptional()
@@ -58,6 +46,10 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
   @IsOptional()
   volunteerPhone?: string
 
+  @IsString()
+  @IsOptional()
+  arrivalTime?: string
+
   @IsNumber()
   @IsOptional()
   latitude: string;
@@ -65,8 +57,4 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
   @IsNumber()
   @IsOptional()
   longitude: string;
-
-  @IsString()
-  @IsOptional()
-  status?: string; 
 }
