@@ -8,19 +8,6 @@ import {
 } from 'class-validator';
 
 export class UpgradeOrganizationDto {
-  
-  @IsString()
-  @IsNotEmpty()
-  rutPresidente: string;
-
-  @IsString()
-  @IsNotEmpty()
-  rutSecretario: string;
-
-  @IsString()
-  @IsNotEmpty()
-  rutTesorero: string;
-
   @IsString()
   @IsNotEmpty()
   rutFoundation: string;
@@ -28,8 +15,4 @@ export class UpgradeOrganizationDto {
   @IsString()
   @IsNotEmpty()
   certificationDocument: string
-
-  @IsString()
-  @IsNotEmpty()
-  isFoundation: boolean;
 }

@@ -15,18 +15,6 @@ export class EditOrganizationDto {
   @IsString()
   @IsOptional()
   description?: string;
-
-  @IsString()
-  @IsOptional()
-  namePresidente?: string;
-
-  @IsString()
-  @IsOptional()
-  nameSecretario?: string;
-
-  @IsString()
-  @IsOptional()
-  nameTesorero?: string;
   
   @IsEmail()
   @IsOptional()

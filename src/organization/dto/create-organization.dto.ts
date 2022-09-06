@@ -16,15 +16,7 @@ export class CreateOrganizationDto {
 
   @IsString()
   @IsNotEmpty()
-  namePresidente: string;
-
-  @IsString()
-  @IsNotEmpty()
-  nameSecretario: string;
-
-  @IsString()
-  @IsNotEmpty()
-  nameTesorero: string;
+  createdBy: string;
 
   @IsString()
   @IsOptional()
