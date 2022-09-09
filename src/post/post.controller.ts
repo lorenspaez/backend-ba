@@ -15,14 +15,12 @@ export class PostController {
     @GetUser('userName') userName: string,
     @GetUser('id') userId: number,
     @GetUser('organizationName') organizationName: string,
-    @Param('categoryName') categoryName: string,
     @Body() dto: CreatePostDto,
   ) {
     return this.postService.createPost(
       userName,
       userId,
       organizationName,
-      categoryName,
       dto);
   }
 

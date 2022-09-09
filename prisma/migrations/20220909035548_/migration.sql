@@ -80,11 +80,11 @@ CREATE TABLE "posts" (
     "abstract" TEXT NOT NULL,
     "body" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
-    "userName" TEXT NOT NULL,
+    "userName" TEXT,
     "userId" INTEGER,
-    "organizationName" TEXT NOT NULL,
+    "organizationName" TEXT,
     "organizationId" INTEGER,
-    "categoryName" TEXT NOT NULL,
+    "categoryName" TEXT,
     "categoryId" INTEGER,
 
     CONSTRAINT "posts_pkey" PRIMARY KEY ("id")

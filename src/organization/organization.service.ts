@@ -92,8 +92,21 @@ export class OrganizationService {
 
   async upgradeOrganizationById(
     organizationId: number,
-    dto: UpgradeOrganizationDto,
+    userId: number,
+    dto: UpgradeOrganizationDto
   ) {
+    const user = await this.prisma.user.findUnique({
+      where:{
+        id: userId
+      }
+    });
+
+    if (user.organizationId != organizationId){
+      throw new ForbiddenException(
+        'No perteneces a esta fundación'
+      )
+    };
+
     const organization = await this.prisma.organization.update({
       where: {
         id: organizationId,

@@ -55,9 +55,10 @@ export class OrganizationController {
   @Patch('upgrade/:id')
   upgradeOrganization(
     @Param('id', ParseIntPipe) organizationId: number,
+    @GetUser('id', ParseIntPipe) userId: number,
     @Body() dto: UpgradeOrganizationDto,
   ) {
-    return this.organizationService.upgradeOrganizationById(organizationId, dto);
+    return this.organizationService.upgradeOrganizationById(organizationId, userId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)

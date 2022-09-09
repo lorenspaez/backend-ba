@@ -11,7 +11,6 @@ export class PostService {
     userName: string,
     userId: number,
     organizationName: string,
-    categoryName: string,
     dto: CreatePostDto,
   ) {
     const org =
@@ -20,19 +19,19 @@ export class PostService {
           name: organizationName
         }
       })
-    const cat =
+    /*const cat =
       await this.prisma.category.findUnique({
         where: {
           name: categoryName
         }
-      })
+      })*/
     const post =
       await this.prisma.post.create({
         data: {
           userName: userName,
-          userId: userId,
+          userId: userId,/*
           categoryName: categoryName,
-          categoryId: cat.id,
+          categoryId: cat.id,*/
           organizationName: organizationName,
           organizationId: org.id,
           ...dto,

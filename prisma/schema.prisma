@@ -115,15 +115,15 @@ model Post{
   body String
   photo String
   
-  userName String
+  userName String?
   userId Int?
   volunteer User? @relation(fields:[userId], references: [id])
 
-  organizationName String
+  organizationName String?
   organizationId Int?
   organization Organization? @relation(fields:[organizationId], references: [id])
 
-  categoryName String
+  categoryName String?
   categoryId Int?
   category Category? @relation(fields:[categoryId], references: [id])
 
