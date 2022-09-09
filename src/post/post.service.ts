@@ -8,36 +8,44 @@ export class PostService {
   constructor(private prisma: PrismaService) {}
 
   async createPost(
-    userName: string,
-    userId: number,
-    organizationName: string,
+    volunteerName: string,
+    volunteerId: number,
+    foundationName: string,
     dto: CreatePostDto,
   ) {
     const org =
       await this.prisma.organization.findUnique({
         where: {
-          name: organizationName
+          name: foundationName
         }
-      })
-    /*const cat =
-      await this.prisma.category.findUnique({
-        where: {
-          name: categoryName
-        }
-      })*/
+      });
+    
     const post =
       await this.prisma.post.create({
         data: {
-          userName: userName,
-          userId: userId,/*
-          categoryName: categoryName,
-          categoryId: cat.id,*/
-          organizationName: organizationName,
+          userName: volunteerName,
+          userId: volunteerId,
+          organizationName: org.name,
           organizationId: org.id,
           ...dto,
         },
       });
-    return post;
+
+    const cat =
+      await this.prisma.category.findUnique({
+        where: {
+          name: post.categoryName
+        }
+      });
+
+    return await this.prisma.post.update({
+      where:{
+        id:post.id
+      },
+      data:{
+        categoryId: cat.id
+      }
+    });
   }
 
   getPostById(postId: number) {
