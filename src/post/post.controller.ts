@@ -12,13 +12,13 @@ export class PostController {
 
   @Post()
   createpost(
-    @GetUser('userName') userName: string,
+    @GetUser('name') name: string,
     @GetUser('id') userId: number,
     @GetUser('organizationName') organizationName: string,
     @Body() dto: CreatePostDto,
   ) {
     return this.postService.createPost(
-      userName,
+      name,
       userId,
       organizationName,
       dto);
@@ -38,7 +38,7 @@ export class PostController {
 
   @Get('myposts')
   getPosts(
-    @GetUser('id') userId: number
+    @GetUser('id', ParseIntPipe) userId: number
     ) {
     return this.postService.getMyPosts(userId);
   }

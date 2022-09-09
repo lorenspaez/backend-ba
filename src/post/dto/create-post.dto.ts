@@ -22,15 +22,7 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   photo: string;
-/*
-  @IsString()
-  @IsNotEmpty()
-  userName: string;
 
-  @IsString()
-  @IsNotEmpty()
-  organizationName: string;
-  */
   @IsString()
   @IsNotEmpty()
   categoryName: string;
