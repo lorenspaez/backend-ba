@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
-import { CreateOrganizationDto, FilterOrganizationUserDto} from './dto';
+import { CreateOrganizationDto} from './dto';
 
 @Injectable()
 export class OrganizationService {
@@ -43,18 +43,17 @@ export class OrganizationService {
     });
   }
 
-  async search(
-    name: FilterOrganizationUserDto){
-    const users = 
-      await this.prisma.user.findMany({
-        where: {
-          name: {
-            contains: `%${name}%`
-          },
+  async searchUsers(
+    name: string){
+    return await this.prisma.user.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
         },
-      });
-    return users;
-}
+      },
+    });
+  }
 
   getOrganizationById(
     organizationId: number,

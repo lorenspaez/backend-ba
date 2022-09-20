@@ -3,7 +3,7 @@ import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
-import { CreateOrganizationDto, FilterOrganizationUserDto} from './dto';
+import { CreateOrganizationDto} from './dto';
 import { OrganizationService } from './organization.service';
 
 @UseGuards(JwtGuard)
@@ -32,10 +32,13 @@ export class OrganizationController {
     return this.organizationService.getUsersFromOrg(organizationId);
   }
 
-  @Get('/search?')
-  search(@Query() filter: FilterOrganizationUserDto) {
-    return this.organizationService.search(filter);
+  @Get('search?')
+  search(
+    @Param('name') name: string,
+  ){
+    return this.organizationService.searchUsers(name);
   }
+
 
   @Get(':id')
   getOrganizationById(

@@ -66,7 +66,7 @@ export class PostService {
   getMyPosts(userId: number) {
     return this.prisma.post.findMany({
       where: {
-        userId,
+        userId: userId,
       },
     });
   }
@@ -90,6 +90,19 @@ export class PostService {
       },
     });
   }
+
+  async searchPosts(
+    text: string){
+    return await this.prisma.post.findMany({
+      where: {
+        title: {
+          contains: text,
+          mode: 'insensitive',
+        },
+      },
+    });
+  }
+
 
   async editPostById(
     organizationName: string,

@@ -50,11 +50,18 @@ export class PostController {
     return this.postService.getPostByFoundationName(organizatioName);
   }
 
-  @Get('category/:organizationName')
+  @Get('category/:categoryName')
   getPostByCategoryName(
     @Param('categoryName') categoryName: string,
   ) {
     return this.postService.getPostByCategoryName(categoryName);
+  }
+
+  @Get('search?')
+  search(
+    @Param('text') text: string,
+  ){
+    return this.postService.searchPosts(text);
   }
 
   @Patch(':id')
