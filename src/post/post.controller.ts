@@ -57,7 +57,7 @@ export class PostController {
     return this.postService.getPostByCategoryName(categoryName);
   }
 
-  @Get('search?')
+  @Get('search/:text')
   search(
     @Param('text') text: string,
   ){

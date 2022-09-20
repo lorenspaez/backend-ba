@@ -32,7 +32,7 @@ export class OrganizationController {
     return this.organizationService.getUsersFromOrg(organizationId);
   }
 
-  @Get('search?')
+  @Get('search/:name')
   search(
     @Param('name') name: string,
   ){
