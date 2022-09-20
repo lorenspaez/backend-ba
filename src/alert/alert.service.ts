@@ -95,7 +95,7 @@ export class AlertService {
         },
       });
 
-      return this.prisma.alert.update({
+      return await this.prisma.alert.update({
         where: {
           id: alertId,
         },
@@ -105,7 +105,7 @@ export class AlertService {
       });
     }
 
-    return this.prisma.alert.update({
+    return await this.prisma.alert.update({
       where: {
         id: alertId,
       },
@@ -299,19 +299,14 @@ export class AlertService {
           alertKey: alertKey,
         },
       });
-    /*
-    if (!alert || alert.userId !== userId)
-      throw new ForbiddenException(
-        'No eres el propietario de la Alerta',
-      );
-    */
+      
     const user = 
       await this.prisma.user.findFirst({
         where:{
           alertKey: alert.alertKey
         },
       });
-        
+
     await this.prisma.user.update({
       where:{
         id: user.id

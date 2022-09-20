@@ -43,7 +43,8 @@ export class OrganizationService {
     });
   }
 
-  async search({ name }: FilterOrganizationUserDto): Promise<User[]> {
+  async search(
+    name: FilterOrganizationUserDto){
     const users = 
       await this.prisma.user.findMany({
         where: {
