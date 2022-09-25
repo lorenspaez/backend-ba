@@ -33,6 +33,23 @@ export class OrganizationService {
           organizationName: organization.name
           }
       });
+
+    //Adding new members to organization
+    //const membersIds = dto.membersId;
+    const numMembersIds = dto.membersId.map(Number);
+
+    for(var i = 0; i<numMembersIds.length ; i++) { 
+      this.prisma.user.update({
+        where: {
+          id: numMembersIds[i]
+        },
+        data: {
+          organizationId: organization.id,
+          organizationName: organization.name
+          }
+      });
+    };
+
     return {user, organization};
   }
 
