@@ -44,8 +44,8 @@ CREATE TABLE "alerts" (
     "alertCategoryColour" TEXT NOT NULL,
     "alertCategoryPhoto" TEXT NOT NULL,
     "alertCategoryId" INTEGER,
-    "providedElementName" TEXT,
-    "neededElementName" TEXT NOT NULL,
+    "providedElementName" TEXT[],
+    "neededElementName" TEXT[],
     "volunteerName" TEXT,
     "volunteerId" INTEGER,
 
