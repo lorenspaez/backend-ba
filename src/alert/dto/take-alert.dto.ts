@@ -8,9 +8,8 @@ import {
 
 export class TakeAlertDto extends PartialType(CreateAlertDto) {
 
-  @IsString()
   @IsOptional()
-  providedElementName?: string
+  providedElementName?: string[]
 
   @IsString()
   @IsOptional()

@@ -38,10 +38,9 @@ export class OrganizationService {
       });
 
     //Adding new members to organization
-    //const membersIds = dto.membersId;
 
     for(var i = 0; i<numMembersIds.length ; i++) { 
-      this.prisma.user.update({
+      await this.prisma.user.update({
         where: {
           id: numMembersIds[i]
         },
