@@ -61,7 +61,6 @@ export class AlertElementService {
         },
       });
 
-    // check if user owns the bookmark
     if (elementId !== elementId)
       throw new ForbiddenException(
         'Access to resources denied',

@@ -1,5 +1,4 @@
 import { Injectable , ForbiddenException } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
@@ -15,6 +14,18 @@ export class OrganizationService {
     dto: CreateOrganizationDto,
   ) {
 
+    const user = await this.prisma.user.findUnique({
+      where:{
+        id: userId
+      },
+    });
+
+    if(user.organizationId != null){
+      throw new ForbiddenException(
+        'Ya perteneces a una organización',
+      );
+    };
+
     const numMembersIds = dto.membersId.map(Number);
     delete dto.membersId;
 
@@ -26,7 +37,7 @@ export class OrganizationService {
         },
       });
 
-    const user =
+    const userr =
       await this.prisma.user.update({
         where: {
           id: userId
@@ -36,8 +47,6 @@ export class OrganizationService {
           organizationName: organization.name
           }
       });
-
-    //Adding new members to organization
 
     for(var i = 0; i<numMembersIds.length ; i++) { 
       await this.prisma.user.update({
@@ -50,8 +59,7 @@ export class OrganizationService {
           }
       });
     };
-
-    return {user, organization};
+    return {userr, organization};
   }
 
   getAllOrganizations() {
@@ -94,9 +102,22 @@ export class OrganizationService {
   }
 
   async editOrganizationById(
+    userId: number,
     organizationId: number,
     dto: EditOrganizationDto,
   ) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if(user.organizationId != organizationId){
+      throw new ForbiddenException(
+        'No perteneces a esta fundación'
+      )
+    };
+
     const organization = await this.prisma.organization.update({
       where: {
         id: organizationId,
@@ -158,8 +179,8 @@ export class OrganizationService {
       await this.prisma.user.findUnique({
         where:{
           id: userId
-        }
-      })
+        },
+      });
 
     const organization =
       await this.prisma.organization.findUnique({
@@ -168,12 +189,23 @@ export class OrganizationService {
         },
       });
 
-    if (user.organizationName !== organization.name)
+    if (user.organizationName !== organization.name){
       throw new ForbiddenException(
         'No perteneces a esta fundación',
       );
+    };
 
-    await this.prisma.organization.delete({
+    await this.prisma.user.updateMany({
+      where:{
+        organizationId: organizationId
+      },
+      data:{
+        organizationId: null,
+        organizationName: null,
+      }
+    });
+
+    return await this.prisma.organization.delete({
       where: {
         id: organizationId,
       },

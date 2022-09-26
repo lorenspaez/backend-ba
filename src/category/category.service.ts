@@ -85,7 +85,6 @@ export class CategoryService {
         },
       });
 
-    // check if user owns the bookmark
     if (categoryId !== categoryId)
       throw new ForbiddenException(
         'Access to resources denied',

@@ -1,4 +1,4 @@
-import { Controller, Query, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { EditOrganizationDto } from './dto';
@@ -49,10 +49,11 @@ export class OrganizationController {
 
   @Patch('edit/:id')
   editOrganization(
+    @GetUser('id', ParseIntPipe) userId: number,
     @Param('id', ParseIntPipe) organizationId: number,
     @Body() dto: EditOrganizationDto,
   ) {
-    return this.organizationService.editOrganizationById(organizationId, dto);
+    return this.organizationService.editOrganizationById(userId, organizationId, dto);
   }
 
   @Patch('upgrade/:id')
