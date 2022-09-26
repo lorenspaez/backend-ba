@@ -15,6 +15,9 @@ export class OrganizationService {
     dto: CreateOrganizationDto,
   ) {
 
+    const numMembersIds = dto.membersId.map(Number);
+    delete dto.membersId;
+
     const organization =
       await this.prisma.organization.create({
         data: {
@@ -36,7 +39,6 @@ export class OrganizationService {
 
     //Adding new members to organization
     //const membersIds = dto.membersId;
-    const numMembersIds = dto.membersId.map(Number);
 
     for(var i = 0; i<numMembersIds.length ; i++) { 
       this.prisma.user.update({
