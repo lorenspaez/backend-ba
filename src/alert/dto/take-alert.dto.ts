@@ -9,7 +9,7 @@ import {
 export class TakeAlertDto extends PartialType(CreateAlertDto) {
 
   @IsOptional()
-  providedElementName?: string[]
+  providedElementName?: string
 
   @IsString()
   @IsOptional()

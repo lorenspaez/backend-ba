@@ -27,14 +27,14 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
   body: string;
 
   @IsOptional()
-  neededElementName: string[]
+  neededElementName: string
 
   @IsString()
   @IsOptional()
   photo?: string;
 
   @IsOptional()
-  providedElementName?: string[]
+  providedElementName?: string
 
   @IsString()
   @IsOptional()
