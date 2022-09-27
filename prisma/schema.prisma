@@ -67,9 +67,9 @@ model Alert{
   alertCategoryId Int?
   alertCategory AlertCategory? @relation(fields:[alertCategoryId], references: [id])
 
-  providedElementName String[] @default(dbgenerated())
+  providedElementName String?
   providedElement AlertElement[]@relation("ProvidedElements")
-  neededElementName String[]
+  neededElementName String
   neededElement AlertElement[]@relation("NeededElements")
 
   volunteerName String?

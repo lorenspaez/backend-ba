@@ -37,14 +37,14 @@ export class CreateAlertDto {
   body: string;
 
   @IsNotEmpty()
-  neededElementName: string[];
+  neededElementName: string;
 
   @IsString()
   @IsOptional()
   photo?: string;
 
   @IsOptional()
-  providedElementName?: string[];
+  providedElementName?: string;
 
   @IsString()
   @IsOptional()
