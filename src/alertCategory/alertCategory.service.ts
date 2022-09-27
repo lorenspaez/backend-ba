@@ -54,19 +54,8 @@ export class AlertCategoryService {
   async deleteCategoryById(
     categoryId: number
   ) {
-    const category =
-      await this.prisma.alertCategory.findUnique({
-        where: {
-          id: categoryId,
-        },
-      });
 
-    if (categoryId !== categoryId)
-      throw new ForbiddenException(
-        'Access to resources denied',
-      );
-
-    await this.prisma.alertCategory.delete({
+    return await this.prisma.alertCategory.delete({
       where: {
         id: categoryId,
       },

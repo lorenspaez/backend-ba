@@ -13,6 +13,18 @@ export class OrganizationService {
     createdBy: string,
     dto: CreateOrganizationDto,
   ) {
+    
+    const org1 = await this.prisma.organization.findUnique({
+      where:{
+        name: dto.name
+      },
+    });
+
+    if (org1 != null){
+      throw new ForbiddenException(
+        'Este nombre ya está siendo utilizado'
+      )
+    };
 
     const user = await this.prisma.user.findUnique({
       where:{
@@ -25,6 +37,8 @@ export class OrganizationService {
         'Ya perteneces a una organización',
       );
     };
+
+    //const numMembersIds = JSON.parse(dto.membersIds);
 
     const numMembersIds = dto.membersId.map(Number);
     delete dto.membersId;
@@ -77,6 +91,7 @@ export class OrganizationService {
           contains: name,
           mode: 'insensitive',
         },
+        organizationName: null,
       },
     });
   }
@@ -115,6 +130,18 @@ export class OrganizationService {
     if(user.organizationId != organizationId){
       throw new ForbiddenException(
         'No perteneces a esta fundación'
+      )
+    };
+
+    const org1 = await this.prisma.organization.findUnique({
+      where:{
+        name: dto.name
+      },
+    });
+
+    if(org1 != null){
+      throw new ForbiddenException(
+        'Este nombre ya está siendo utilizado'
       )
     };
 

@@ -1,4 +1,4 @@
-import { Injectable , ForbiddenException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditAlertElementDto } from './dto';
 import { CreateAlertElementDto } from './dto';
@@ -54,19 +54,8 @@ export class AlertElementService {
   async deleteElementById(
     elementId: number
   ) {
-    const category =
-      await this.prisma.alertElement.findUnique({
-        where: {
-          id: elementId,
-        },
-      });
-
-    if (elementId !== elementId)
-      throw new ForbiddenException(
-        'Access to resources denied',
-      );
-
-    await this.prisma.alertElement.delete({
+    
+    return await this.prisma.alertElement.delete({
       where: {
         id: elementId,
       },

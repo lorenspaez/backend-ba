@@ -1,4 +1,4 @@
-import { Injectable , ForbiddenException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditCategoryDto } from './dto';
 import { CreateCategoryDto } from './dto';
@@ -78,19 +78,8 @@ export class CategoryService {
   async deleteCategoryById(
     categoryId: number
   ) {
-    const category =
-      await this.prisma.category.findUnique({
-        where: {
-          id: categoryId,
-        },
-      });
 
-    if (categoryId !== categoryId)
-      throw new ForbiddenException(
-        'Access to resources denied',
-      );
-
-    await this.prisma.category.delete({
+    return await this.prisma.category.delete({
       where: {
         id: categoryId,
       },
