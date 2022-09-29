@@ -2,7 +2,7 @@ import { Body,Controller,Get,Patch,UseGuards, Delete, HttpCode, HttpStatus, Para
 import { User } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
-import { EditUserDto, SetUserKeyDto } from './dto';
+import { EditUserDto } from './dto';
 import { UpgradeUserDto } from './dto';
 import { UserService } from './user.service';
 

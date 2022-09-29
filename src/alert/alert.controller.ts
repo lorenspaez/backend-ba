@@ -4,19 +4,15 @@ import { JwtGuard } from '../auth/guard';
 import { AlertService } from './alert.service';
 import { CreateAlertDto, TakeAlertDto, UpdateAlertDto} from './dto';
 
-@UseGuards(JwtGuard)
 @Controller('alerts')
 export class AlertController {
   constructor(private alertService: AlertService) {}
 
   @Post()
   createAlert(
-    @GetUser('id') userId: number,
-    @GetUser('name') userName: string,
-    alertCategoryName: string,
     @Body() dto: CreateAlertDto,
   ) {
-    return this.alertService.createAlert(userId, userName, alertCategoryName, dto);
+    return this.alertService.createAlert(dto);
   }
 
   @Get()
@@ -24,6 +20,7 @@ export class AlertController {
     return this.alertService.getAllAlerts();
   }
 
+  @UseGuards(JwtGuard)
   @Get('myalerts')
   getMyAlerts(@GetUser('id') userId: number) {
     return this.alertService.getMyAlerts(userId);
@@ -43,15 +40,6 @@ export class AlertController {
     return this.alertService.getAlertByKey(alertKey);
   }
 
-  @Patch(':id')
-  setAlertKey(
-    @Param('id', ParseIntPipe) alertId: number,
-    @GetUser('name') userName: string,
-    @GetUser('id') userId: number,
-  ) {
-    return this.alertService.setAlertKey(alertId, userName, userId);
-  }
-
   @Patch('key/:alertKey')
   editAlertByKey(
     @Param('alertKey') alertKey: string,
@@ -60,6 +48,7 @@ export class AlertController {
     return this.alertService.editAlertByKey(alertKey, dto);
   }
 
+  @UseGuards(JwtGuard)
   @Patch('takeAlert/:id')
   takeAlert(
     @Param('id', ParseIntPipe) id: number,
@@ -69,6 +58,7 @@ export class AlertController {
     return this.alertService.takeAlert(id, volunteerId, dto)
   }
 
+  @UseGuards(JwtGuard)
   @Post('cloneAlert/:id')
   askForHelp(
     @Param('id', ParseIntPipe) alertId: number,
@@ -78,6 +68,7 @@ export class AlertController {
     return this.alertService.cloneAlert(alertId, userId, dto)
   }
 
+  @UseGuards(JwtGuard)
   @Patch('closeAlert/:id')
   closeAlert(
     @Param('id', ParseIntPipe) id: number,

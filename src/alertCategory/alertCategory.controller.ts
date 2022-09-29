@@ -1,10 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../auth/guard';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { EditAlertCategoryDto } from './dto';
 import { CreateAlertCategoryDto } from './dto';
 import { AlertCategoryService } from './alertCategory.service';
 
-//@UseGuards(JwtGuard)
 @Controller('alertCategories')
 export class AlertCategoryController {
   constructor(private alertCategoryService: AlertCategoryService) {}

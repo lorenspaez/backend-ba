@@ -90,9 +90,11 @@ model Organization{
   isFoundation Boolean @default(false)
   createdBy String
   photo String?
+  
   email String?
-  phoneNum String?
-  socialMedia String?
+  facebook String?
+  instagram String?
+  whatsapp String?
 
   certificationDocument String?
   rutFoundation String?

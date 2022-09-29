@@ -64,8 +64,9 @@ CREATE TABLE "organizations" (
     "createdBy" TEXT NOT NULL,
     "photo" TEXT,
     "email" TEXT,
-    "phoneNum" TEXT,
-    "socialMedia" TEXT,
+    "facebook" TEXT,
+    "instagram" TEXT,
+    "whatsapp" TEXT,
     "certificationDocument" TEXT,
     "rutFoundation" TEXT,
 

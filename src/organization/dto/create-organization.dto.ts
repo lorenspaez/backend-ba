@@ -30,9 +30,13 @@ export class CreateOrganizationDto {
 
   @IsString()
   @IsOptional()
-  socialMedia?: string;
+  instagram?: string;
 
   @IsString()
   @IsOptional()
-  phoneNum?: string;
+  whatsapp?: string;
+
+  @IsString()
+  @IsOptional()
+  facebook?: string;
 }

@@ -1,10 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../auth/guard';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { EditCategoryDto } from './dto';
 import { CreateCategoryDto } from './dto';
 import { CategoryService } from './category.service';
 
-//@UseGuards(JwtGuard)
 @Controller('categories')
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}

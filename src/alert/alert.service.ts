@@ -9,40 +9,57 @@ export class AlertService {
   constructor(private prisma: PrismaService) {}
 
   async createAlert(
-    userId: number,
-    userName: string,
-    alertCategoryName: string,
     dto: CreateAlertDto,
   ) {
+
     const alertCategory = await this.prisma.alertCategory.findFirst({
       where:{
-        name: alertCategoryName
+        name: dto.alertCategoryName
       }
     });
 
-    if (userId == null){
-      const alert = await this.prisma.alert.create({
+    //If it is a unregistered user
+    if (dto.userId == null){
+      const alert1 = await this.prisma.alert.create({
         data: {
-          userName: userName,
-          alertCategoryName: alertCategoryName,
+          alertCategoryName: alertCategory.name,
           alertCategoryId: alertCategory.id,
           ...dto,
         },
       });
 
-    return alert;
+      return await this.prisma.alert.update({
+        where:{
+          id: alert1.id
+        },
+        data:{
+          alertKey: String(alert1.id)+alert1.userName
+        },
+      });
     };
 
+    //If its a registered user
+    const id_user = String(dto.userId)
+    delete dto.userId;
+    
     const alert = await this.prisma.alert.create({
         data: {
-          userId: userId,
+          userId: parseInt(id_user),
           alertCategoryId: alertCategory.id,
-          alertCategoryName: alertCategoryName,
-          userName: userName,
+          alertCategoryName: alertCategory.name,
           ...dto,
         },
       });
-    return alert;
+
+    return await this.prisma.alert.update({
+      where:{
+        id: alert.id
+      },
+      data:{
+        alertKey: String(alert.id)+alert.userName
+      }
+    });
+    
   }
 
   getAllAlerts() {
@@ -76,41 +93,6 @@ export class AlertService {
     return this.prisma.alert.findFirst({
       where: {
         alertKey: alertKey
-      },
-    });
-  }
-
-  async setAlertKey(
-    alertId: number,
-    userName: string,
-    userId: number
-  ) {
-    if (userId != null){
-      await this.prisma.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          alertKey: String(alertId)+userName
-        },
-      });
-
-      return await this.prisma.alert.update({
-        where: {
-          id: alertId,
-        },
-        data: {
-          alertKey: String(alertId)+userName
-        },
-      });
-    }
-
-    return await this.prisma.alert.update({
-      where: {
-        id: alertId,
-      },
-      data: {
-        alertKey: String(alertId)+userName
       },
     });
   }

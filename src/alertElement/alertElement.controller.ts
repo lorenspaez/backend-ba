@@ -1,10 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../auth/guard';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { EditAlertElementDto } from './dto';
 import { CreateAlertElementDto } from './dto';
 import { AlertElementService } from './alertElement.service';
 
-//@UseGuards(JwtGuard)
 @Controller('alertElements')
 export class AlertElementController {
   constructor(private alertElementService: AlertElementService) {}

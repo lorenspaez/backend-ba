@@ -6,11 +6,11 @@ import { UpgradeOrganizationDto } from './dto';
 import { CreateOrganizationDto} from './dto';
 import { OrganizationService } from './organization.service';
 
-@UseGuards(JwtGuard)
 @Controller('organizations')
 export class OrganizationController {
   constructor(private organizationService: OrganizationService) {}
 
+  @UseGuards(JwtGuard)
   @Post()
   createOrganization(
     @GetUser('id', ParseIntPipe) userId: number,
@@ -39,7 +39,6 @@ export class OrganizationController {
     return this.organizationService.searchUsers(name);
   }
 
-
   @Get(':id')
   getOrganizationById(
     @Param('id', ParseIntPipe) organizationId: number,
@@ -47,6 +46,7 @@ export class OrganizationController {
     return this.organizationService.getOrganizationById(organizationId);
   }
 
+  @UseGuards(JwtGuard)
   @Patch('edit/:id')
   editOrganization(
     @GetUser('id', ParseIntPipe) userId: number,
@@ -56,6 +56,7 @@ export class OrganizationController {
     return this.organizationService.editOrganizationById(userId, organizationId, dto);
   }
 
+  @UseGuards(JwtGuard)
   @Patch('upgrade/:id')
   upgradeOrganization(
     @Param('id', ParseIntPipe) organizationId: number,
@@ -65,6 +66,7 @@ export class OrganizationController {
     return this.organizationService.upgradeOrganizationById(organizationId, userId, dto);
   }
 
+  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   deleteOrganizationById(
