@@ -9,6 +9,7 @@ CREATE TABLE "users" (
     "isVolunteer" BOOLEAN NOT NULL DEFAULT false,
     "isActive" BOOLEAN NOT NULL DEFAULT false,
     "alertKey" TEXT,
+    "takenAlertId" INTEGER,
     "photo" TEXT,
     "rut" TEXT,
     "patente" TEXT DEFAULT '',

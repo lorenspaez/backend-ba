@@ -165,6 +165,15 @@ export class AlertService {
       );
     }
 
+    await this.prisma.user.update({
+      where:{
+        id:volunteerId
+      },
+      data:{
+        takenAlertId: alertId
+      },
+    });
+    
     return await this.prisma.alert.update({
       where: {
         id: alertId
@@ -277,6 +286,15 @@ export class AlertService {
       },
       data:{
         alertKey: null,
+      }
+    });
+
+    await this.prisma.user.update({
+      where:{
+        id: volunteerId
+      },
+      data:{
+        takenAlertId: null
       }
     });
 

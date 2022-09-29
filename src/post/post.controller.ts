@@ -5,11 +5,11 @@ import { CreatePostDto } from './dto';
 import { UpdatePostDto } from './dto';
 import { PostService } from './post.service';
 
-@UseGuards(JwtGuard)
 @Controller('posts')
 export class PostController {
   constructor(private postService: PostService) {}
 
+  @UseGuards(JwtGuard)
   @Post()
   createpost(
     @GetUser('name') name: string,
@@ -36,6 +36,7 @@ export class PostController {
     return this.postService.getPostById(id);
   }
 
+  @UseGuards(JwtGuard)
   @Get('myposts')
   getPosts(
     @GetUser('id', ParseIntPipe) userId: number
@@ -64,6 +65,7 @@ export class PostController {
     return this.postService.searchPosts(text);
   }
 
+  @UseGuards(JwtGuard)
   @Patch(':id')
   editPostById(
     @GetUser('organizationName') organizationName: string,
@@ -73,6 +75,7 @@ export class PostController {
     return this.postService.editPostById(organizationName, postId, dto);
   }
 
+  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   deletePostById(
