@@ -63,16 +63,28 @@ export class OrganizationService {
       });
 
     for(var i = 0; i<numMembersIds.length ; i++) { 
-      await this.prisma.user.update({
-        where: {
+
+      await this.prisma.user.findUnique({
+        where:{
           id: numMembersIds[i]
         },
-        data: {
-          organizationId: organization.id,
-          organizationName: organization.name
-          }
       });
+
+      if (user.isVolunteer == true){
+
+        await this.prisma.user.update({
+          where: {
+            id: numMembersIds[i]
+          },
+          data: {
+            organizationId: organization.id,
+            organizationName: organization.name
+            }
+        });
+
+      }
     };
+
     return {userr, organization};
   }
 
@@ -92,6 +104,7 @@ export class OrganizationService {
           mode: 'insensitive',
         },
         organizationName: null,
+        isVolunteer: true,
       },
     });
   }
@@ -99,21 +112,37 @@ export class OrganizationService {
   getOrganizationById(
     organizationId: number,
   ) {
-    return this.prisma.organization.findFirst({
+    const org = this.prisma.organization.findFirst({
       where: {
         id: organizationId,
       },
     });
+
+    const users = this.prisma.user.findMany({
+      where:{
+        organizationId: organizationId
+      }
+    });
+
+    return {org, users}
   }
 
   getOrganizationByName(
     organizationName: string,
   ) {
-    return this.prisma.organization.findFirst({
+    const org = this.prisma.organization.findFirst({
       where: {
         name: organizationName,
       },
     });
+
+    const users = this.prisma.user.findMany({
+      where:{
+        organizationName: organizationName
+      }
+    });
+
+    return {org, users}
   }
 
   async editOrganizationById(
