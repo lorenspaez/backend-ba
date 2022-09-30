@@ -14,7 +14,7 @@ export class CreateOrganizationDto {
   description: string;
 
   @IsNotEmpty()
-  membersId: string[];
+  membersId: string;
   
   @IsString()
   @IsOptional()

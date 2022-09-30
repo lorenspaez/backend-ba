@@ -40,7 +40,7 @@ export class OrganizationService {
 
     //const numMembersIds = JSON.parse(dto.membersIds);
 
-    const numMembersIds = dto.membersId.map(Number);
+    const numMembersIds = JSON.parse(dto.membersId);
     delete dto.membersId;
 
     const organization =
