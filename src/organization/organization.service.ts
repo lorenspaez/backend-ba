@@ -109,16 +109,16 @@ export class OrganizationService {
     });
   }
 
-  getOrganizationById(
+  async getOrganizationById(
     organizationId: number,
   ) {
-    const org = this.prisma.organization.findFirst({
+    const org = await this.prisma.organization.findFirst({
       where: {
         id: organizationId,
       },
     });
 
-    const users = this.prisma.user.findMany({
+    const users = await this.prisma.user.findMany({
       where:{
         organizationId: organizationId
       }
@@ -127,16 +127,16 @@ export class OrganizationService {
     return {org, users}
   }
 
-  getOrganizationByName(
+  async getOrganizationByName(
     organizationName: string,
   ) {
-    const org = this.prisma.organization.findFirst({
+    const org = await this.prisma.organization.findFirst({
       where: {
         name: organizationName,
       },
     });
 
-    const users = this.prisma.user.findMany({
+    const users = await this.prisma.user.findMany({
       where:{
         organizationName: organizationName
       }
