@@ -51,6 +51,15 @@ export class AlertService {
         },
       });
 
+    await this.prisma.user.update({
+      where:{
+        id: parseInt(id_user)
+      },
+      data:{
+        alertKey: String(alert.id)+alert.userName
+      }
+    })
+
     return await this.prisma.alert.update({
       where:{
         id: alert.id
