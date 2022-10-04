@@ -117,7 +117,7 @@ export class AlertService {
         },
       });
 
-    return this.prisma.alert.update({
+    return await this.prisma.alert.update({
       where: {
         id: alert.id,
       },
@@ -161,7 +161,7 @@ export class AlertService {
         id:volunteerId
       },
       data:{
-        takenAlertId: alertId
+        takenAlertId: String(alert.id)+alert.userName
       },
     });
     
@@ -234,6 +234,39 @@ export class AlertService {
         }
       });
     }
+
+  async leaveAlert(
+    volunteerId: number
+  ){
+    await this.prisma.user.update({
+      where:{
+        id: volunteerId
+      },
+      data:{
+        takenAlertId: null
+      },
+    });
+
+    const alert = await this.prisma.alert.findFirst({
+      where:{
+        volunteerId: volunteerId
+      },
+    });
+
+
+    return await this.prisma.alert.update({
+      where:{
+        id: alert.id
+      },
+      data:{
+        volunteerId: null,
+        volunteerName: null,
+        volunteerPhone: null,
+        arrivalTime: null,
+        providedElementName: null
+      },
+    });
+  }
 
   async closeAlert(
     alertId: number,

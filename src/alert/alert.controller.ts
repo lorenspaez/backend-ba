@@ -59,6 +59,14 @@ export class AlertController {
   }
 
   @UseGuards(JwtGuard)
+  @Patch('leaveAlert')
+  leaveAlert(
+    @GetUser('id') volunteerId: number,
+  ){
+    return this.alertService.leaveAlert(volunteerId);
+  }
+
+  @UseGuards(JwtGuard)
   @Post('cloneAlert/:id')
   askForHelp(
     @Param('id', ParseIntPipe) alertId: number,

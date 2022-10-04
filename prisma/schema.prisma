@@ -19,7 +19,7 @@ model User{
   isActive Boolean @default(false)
 
   alertKey String?
-  takenAlertId Int?
+  takenAlertId String?
   photo String?
   rut String?
   patente String? @default("")
