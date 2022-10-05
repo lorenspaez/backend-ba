@@ -38,8 +38,6 @@ export class OrganizationService {
       );
     };
 
-    //const numMembersIds = JSON.parse(dto.membersIds);
-
     const numMembersIds = JSON.parse(dto.membersId);
     delete dto.membersId;
 
@@ -51,16 +49,15 @@ export class OrganizationService {
         },
       });
 
-    const userr =
-      await this.prisma.user.update({
-        where: {
-          id: userId
-        },
-        data: {
-          organizationId: organization.id,
-          organizationName: organization.name
-          }
-      });
+    await this.prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        organizationId: organization.id,
+        organizationName: organization.name
+        }
+    });
 
     for(var i = 0; i<numMembersIds.length ; i++) { 
 
@@ -81,11 +78,16 @@ export class OrganizationService {
             organizationName: organization.name
             }
         });
-
       }
     };
 
-    return {userr, organization};
+    const users = await this.prisma.user.findMany({
+      where:{
+        organizationId: organization.id
+      },
+    });
+
+    return {organization, users};
   }
 
   getAllOrganizations() {
