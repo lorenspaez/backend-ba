@@ -152,7 +152,7 @@ export class AlertService {
 
     if (alert.status == "Tomado"){
       throw new ForbiddenException(
-        'El caso ya está siendo atendido por otro Voluntario',
+        'El caso ya está siendo atendido',
       );
     }
 
@@ -298,15 +298,31 @@ export class AlertService {
       );
     }
 
-    const user = await this.prisma.user.findFirst({
-      where:{
-        alertKey: alert.alertKey,
-      }
-    });
+    if(alert.userId  == null){
+
+      await this.prisma.user.update({
+        where:{
+          id: volunteerId
+        },
+        data:{
+          takenAlertId: null
+        }
+      });
+  
+      return await this.prisma.alert.update({
+        where: {
+          id: alertId
+        },
+        data: {
+          status: "Cerrado"
+        }
+      });
+
+    }
 
     await this.prisma.user.update({
       where:{
-        id: user.id,
+        id: alert.userId,
       },
       data:{
         alertKey: null,
@@ -341,17 +357,37 @@ export class AlertService {
           alertKey: alertKey,
         },
       });
-      
-    const user = 
-      await this.prisma.user.findFirst({
-        where:{
-          alertKey: alert.alertKey
-        },
-      });
+
+      if(alert.userId  == null){
+        
+        await this.prisma.user.update({
+          where:{
+            id: alert.volunteerId
+          },
+          data:{
+            takenAlertId: null
+          }
+        });
+
+        return await this.prisma.alert.delete({
+          where: {
+            id: alert.id,
+          },
+        });
+      }
 
     await this.prisma.user.update({
       where:{
-        id: user.id
+        id: alert.volunteerId
+      },
+      data:{
+        takenAlertId: null
+      }
+    })  
+
+    await this.prisma.user.update({
+      where:{
+        id: alert.userId
       },
       data:{
         alertKey: null
