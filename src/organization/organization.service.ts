@@ -41,7 +41,7 @@ export class OrganizationService {
     const numMembersIds = JSON.parse(dto.membersId);
     delete dto.membersId;
 
-    const organization =
+    const org =
       await this.prisma.organization.create({
         data: {
           createdBy: createdBy,
@@ -54,8 +54,8 @@ export class OrganizationService {
         id: userId
       },
       data: {
-        organizationId: organization.id,
-        organizationName: organization.name
+        organizationId: org.id,
+        organizationName: org.name
         }
     });
 
@@ -74,8 +74,8 @@ export class OrganizationService {
             id: numMembersIds[i]
           },
           data: {
-            organizationId: organization.id,
-            organizationName: organization.name
+            organizationId: org.id,
+            organizationName: org.name
             }
         });
       }
@@ -83,11 +83,11 @@ export class OrganizationService {
 
     const users = await this.prisma.user.findMany({
       where:{
-        organizationId: organization.id
+        organizationId: org.id
       },
     });
 
-    return {organization, users};
+    return {org, users};
   }
 
   getAllOrganizations() {
