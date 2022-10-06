@@ -11,14 +11,13 @@ export class AlertService {
   async createAlert(
     dto: CreateAlertDto,
   ) {
-
     const alertCategory = await this.prisma.alertCategory.findFirst({
       where:{
         name: dto.alertCategoryName
-      }
+      },
     });
 
-    //If it is a unregistered user
+    //If it is an unregistered user
     if (dto.userId == null){
       const alert1 = await this.prisma.alert.create({
         data: {
@@ -43,13 +42,13 @@ export class AlertService {
     delete dto.userId;
     
     const alert = await this.prisma.alert.create({
-        data: {
-          userId: parseInt(id_user),
-          alertCategoryId: alertCategory.id,
-          alertCategoryName: alertCategory.name,
-          ...dto,
-        },
-      });
+      data: {
+        userId: parseInt(id_user),
+        alertCategoryId: alertCategory.id,
+        alertCategoryName: alertCategory.name,
+        ...dto,
+      },
+    });
 
     await this.prisma.user.update({
       where:{
@@ -57,8 +56,8 @@ export class AlertService {
       },
       data:{
         alertKey: String(alert.id)+alert.userName
-      }
-    })
+      },
+    });
 
     return await this.prisma.alert.update({
       where:{
@@ -66,9 +65,8 @@ export class AlertService {
       },
       data:{
         alertKey: String(alert.id)+alert.userName
-      }
+      },
     });
-    
   }
 
   getAllAlerts() {
@@ -136,19 +134,20 @@ export class AlertService {
       await this.prisma.user.findUnique({
         where: {
           id: volunteerId
-        }
-      })
+        },
+      });
 
     if (volunteer.isVolunteer == false){
       throw new ForbiddenException(
         'Solo los voluntarios pueden tomar casos',
-  );
-    }
+      )
+    };
+
     const alert = await this.prisma.alert.findUnique({
         where: {
           id: alertId
-        }
-      })
+        },
+      });
 
     if (alert.status == "Tomado"){
       throw new ForbiddenException(
@@ -174,7 +173,7 @@ export class AlertService {
         volunteerName: volunteer.name,
         status: "Tomado",
         ...dto
-      }
+      },
     });
   }
 
@@ -186,14 +185,14 @@ export class AlertService {
         await this.prisma.alert.findUnique({
           where:{
             id: alertId
-          }
+          },
         });
 
       const user =
         await this.prisma.user.findUnique({
           where:{
             id: volunteerId
-          }
+          },
         });
 
       const newAlert =
@@ -204,8 +203,8 @@ export class AlertService {
             userPhone: alert.volunteerPhone,
             parentId: alert.id,
             ...dto
-        }
-      });
+          },
+        });
 
       await this.prisma.user.update({
         where:{
@@ -213,16 +212,16 @@ export class AlertService {
         },
         data:{
           alertKey: String(newAlert.id)+user.name
-        }
+        },
       });
 
-      await this.prisma.alert.update({
+      this.prisma.alert.update({
         where:{
           id:alertId
         },
         data:{
           childId: newAlert.id
-        }
+        },
       });
 
       return await this.prisma.alert.update({
@@ -231,14 +230,14 @@ export class AlertService {
         },
         data:{
           alertKey: String(newAlert.id)+user.name
-        }
+        },
       });
     }
 
   async leaveAlert(
     volunteerId: number
   ){
-    await this.prisma.user.update({
+    this.prisma.user.update({
       where:{
         id: volunteerId
       },
@@ -252,7 +251,6 @@ export class AlertService {
         volunteerId: volunteerId
       },
     });
-
 
     return await this.prisma.alert.update({
       where:{
@@ -276,8 +274,8 @@ export class AlertService {
       await this.prisma.user.findUnique({
         where: {
           id: volunteerId
-        }
-      })
+        },
+      });
 
     if (volunteer.isVolunteer == false){
       throw new ForbiddenException(
@@ -289,8 +287,8 @@ export class AlertService {
       await this.prisma.alert.findUnique({
         where: {
           id: alertId
-        }
-      })
+        },
+      });
 
     if (volunteer.id != alert.volunteerId){
       throw new ForbiddenException(
@@ -299,14 +297,13 @@ export class AlertService {
     }
 
     if(alert.userId  == null){
-
-      await this.prisma.user.update({
+      this.prisma.user.update({
         where:{
           id: volunteerId
         },
         data:{
           takenAlertId: null
-        }
+        },
       });
   
       return await this.prisma.alert.update({
@@ -315,27 +312,26 @@ export class AlertService {
         },
         data: {
           status: "Cerrado"
-        }
+        },
       });
-
     }
 
-    await this.prisma.user.update({
+    this.prisma.user.update({
       where:{
         id: alert.userId,
       },
       data:{
         alertKey: null,
-      }
+      },
     });
 
-    await this.prisma.user.update({
+    this.prisma.user.update({
       where:{
         id: volunteerId
       },
       data:{
         takenAlertId: null
-      }
+      },
     });
 
     return await this.prisma.alert.update({
@@ -344,7 +340,7 @@ export class AlertService {
       },
       data: {
         status: "Cerrado"
-      }
+      },
     });
   }
 
@@ -357,10 +353,34 @@ export class AlertService {
           alertKey: alertKey,
         },
       });
-
-      if(alert.userId  == null){
-        
-        await this.prisma.user.update({
+      //If there is not volunteer and user is a Guest
+      if(alert.volunteerId == null){
+        if(alert.userId == null){
+          return await this.prisma.alert.delete({
+            where: {
+              id: alert.id,
+            },
+          });
+        }
+        //If there is no volunteer and user is registered
+        this.prisma.user.update({
+          where:{
+            id: alert.userId
+          },
+          data:{
+            alertKey: null
+          }
+        });
+    
+        return await this.prisma.alert.delete({
+          where: {
+            id: alert.id,
+          },
+        });
+      }
+      //If there is a volunteer but user is a Guest
+      if(alert.userId == null){
+        this.prisma.user.update({
           where:{
             id: alert.volunteerId
           },
@@ -375,17 +395,17 @@ export class AlertService {
           },
         });
       }
-
-    await this.prisma.user.update({
+    //if there is a volunteer and the user is registered
+    this.prisma.user.update({
       where:{
         id: alert.volunteerId
       },
       data:{
         takenAlertId: null
       }
-    })  
+    });
 
-    await this.prisma.user.update({
+    this.prisma.user.update({
       where:{
         id: alert.userId
       },
