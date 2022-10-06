@@ -215,7 +215,7 @@ export class AlertService {
         },
       });
 
-      this.prisma.alert.update({
+      await this.prisma.alert.update({
         where:{
           id:alertId
         },
@@ -237,7 +237,7 @@ export class AlertService {
   async leaveAlert(
     volunteerId: number
   ){
-    this.prisma.user.update({
+    await this.prisma.user.update({
       where:{
         id: volunteerId
       },
@@ -297,7 +297,7 @@ export class AlertService {
     }
 
     if(alert.userId  == null){
-      this.prisma.user.update({
+      await this.prisma.user.update({
         where:{
           id: volunteerId
         },
@@ -316,7 +316,7 @@ export class AlertService {
       });
     }
 
-    this.prisma.user.update({
+    await this.prisma.user.update({
       where:{
         id: alert.userId,
       },
@@ -325,7 +325,7 @@ export class AlertService {
       },
     });
 
-    this.prisma.user.update({
+    await this.prisma.user.update({
       where:{
         id: volunteerId
       },
@@ -363,7 +363,7 @@ export class AlertService {
           });
         }
         //If there is no volunteer and user is registered
-        this.prisma.user.update({
+        await this.prisma.user.update({
           where:{
             id: alert.userId
           },
@@ -380,7 +380,7 @@ export class AlertService {
       }
       //If there is a volunteer but user is a Guest
       if(alert.userId == null){
-        this.prisma.user.update({
+        await this.prisma.user.update({
           where:{
             id: alert.volunteerId
           },
@@ -396,7 +396,7 @@ export class AlertService {
         });
       }
     //if there is a volunteer and the user is registered
-    this.prisma.user.update({
+    await this.prisma.user.update({
       where:{
         id: alert.volunteerId
       },
@@ -405,7 +405,7 @@ export class AlertService {
       }
     });
 
-    this.prisma.user.update({
+    await this.prisma.user.update({
       where:{
         id: alert.userId
       },
