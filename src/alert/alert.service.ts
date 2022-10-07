@@ -84,14 +84,22 @@ export class AlertService {
     });
   }
 
-  getAlertById(
+  async getAlertById(
     alertId: number,
   ) {
-    return this.prisma.alert.findFirst({
+    const alert = await this.prisma.alert.findFirst({
       where: {
         id: alertId
       },
     });
+
+    if(alert.id == null){
+      throw new ForbiddenException(
+        'No existe la alerta',
+      )
+    };
+
+    return alert;
   }
 
   async getAlertByKey(
@@ -102,6 +110,12 @@ export class AlertService {
         alertKey: alertKey
       },
     });
+
+    if(alert.id == null){
+      throw new ForbiddenException(
+        'No existe la alerta',
+      )
+    };
 
     const user = await this.prisma.user.findFirst({
       where:{
@@ -128,6 +142,12 @@ export class AlertService {
           alertKey: alertKey,
         },
       });
+
+    if(alert.id == null){
+      throw new ForbiddenException(
+        'No existe la alerta',
+      )
+    };
 
     return await this.prisma.alert.update({
       where: {
@@ -162,6 +182,12 @@ export class AlertService {
           id: alertId
         },
       });
+
+    if(alert.id == null){
+      throw new ForbiddenException(
+        'No existe la alerta',
+      )
+    };
 
     if (alert.status == "Tomado"){
       throw new ForbiddenException(
