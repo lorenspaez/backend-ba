@@ -177,6 +177,18 @@ export class AlertService {
       )
     };
 
+    if (volunteer.takenAlertId != null){
+      throw new ForbiddenException(
+        'Ya tienes otro caso tomado',
+      )
+    };
+
+    if (volunteer.alertKey != null){
+      throw new ForbiddenException(
+        'Ya tienes un caso creado actualmente',
+      )
+    };
+
     const alert = await this.prisma.alert.findUnique({
         where: {
           id: alertId
