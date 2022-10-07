@@ -94,14 +94,28 @@ export class AlertService {
     });
   }
 
-  getAlertByKey(
+  async getAlertByKey(
     alertKey: string,
   ) {
-    return this.prisma.alert.findFirst({
+    const alert = await this.prisma.alert.findFirst({
       where: {
         alertKey: alertKey
       },
     });
+
+    const user = await this.prisma.user.findFirst({
+      where:{
+        alertKey: alertKey,
+      },
+    });
+
+    const volunteer = await this.prisma.user.findFirst({
+      where:{
+        takenAlertId: alertKey
+      },
+    });
+
+    return {alert, user, volunteer};
   }
 
   async editAlertByKey(
