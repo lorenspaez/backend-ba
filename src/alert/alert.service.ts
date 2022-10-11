@@ -313,6 +313,7 @@ export class AlertService {
         volunteerName: null,
         volunteerPhone: null,
         arrivalTime: null,
+        status: "Abierto",
         providedElementName: null
       },
     });
