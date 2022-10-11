@@ -287,7 +287,8 @@ export class AlertService {
     }
 
   async leaveAlert(
-    volunteerId: number
+    volunteerId: number,
+    alertId: number
   ){
     await this.prisma.user.update({
       where:{
@@ -298,15 +299,9 @@ export class AlertService {
       },
     });
 
-    const alert = await this.prisma.alert.findFirst({
-      where:{
-        volunteerId: volunteerId
-      },
-    });
-
     return await this.prisma.alert.update({
       where:{
-        id: alert.id
+        id: alertId
       },
       data:{
         volunteerId: null,

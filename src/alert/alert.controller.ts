@@ -59,11 +59,13 @@ export class AlertController {
   }
 
   @UseGuards(JwtGuard)
-  @Patch('leaveAlert')
+  @Patch('leaveAlert/:id')
   leaveAlert(
+    @Param('id', ParseIntPipe) id: number,
     @GetUser('id') volunteerId: number,
+
   ){
-    return this.alertService.leaveAlert(volunteerId);
+    return this.alertService.leaveAlert(volunteerId, id);
   }
 
   @UseGuards(JwtGuard)
