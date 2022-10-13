@@ -204,7 +204,7 @@ export class OrganizationService {
       )
     };
 
-    const organization = await this.prisma.organization.update({
+    const org = await this.prisma.organization.update({
       where: {
         id: organizationId,
       },
@@ -213,7 +213,14 @@ export class OrganizationService {
         ...dto
       },
     });
-    return organization;
+
+    const users = await this.prisma.user.findMany({
+      where:{
+        organizationId: org.id,
+      },
+    });
+    
+    return {org, users}
   }
 
   async getUsersFromOrg(
