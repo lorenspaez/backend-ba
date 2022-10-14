@@ -263,7 +263,8 @@ export class AlertService {
           id:volunteerId
         },
         data:{
-          alertKey: String(newAlert.id)+user.name
+          alertKey: String(newAlert.id)+user.name,
+          takenAlertId: null
         },
       });
 
@@ -355,6 +356,46 @@ export class AlertService {
       });
   
       return await this.prisma.alert.update({
+        where: {
+          id: alertId
+        },
+        data: {
+          status: "Cerrado"
+        },
+      });
+    }
+
+    if (alert.parentId != null){
+      await this.prisma.alert.update({
+        where:{
+          id: alert.parentId,
+        },
+        data:{
+          status: "Cerrado"
+        }
+      })
+
+      await this.prisma.alert.update({
+        where: {
+          id: alertId
+        },
+        data: {
+          status: "Cerrado"
+        },
+      });
+    }
+
+    if (alert.childId != null){
+      await this.prisma.alert.update({
+        where:{
+          id: alert.childId,
+        },
+        data:{
+          status: "Cerrado"
+        }
+      })
+
+      await this.prisma.alert.update({
         where: {
           id: alertId
         },
