@@ -72,6 +72,7 @@ export class AlertService {
   getAllAlerts() {
     return this.prisma.alert.findMany({
       where: {
+        status: { in: ["Abierto", "Tomado"]},
       },
     });
   }
