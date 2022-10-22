@@ -9,6 +9,7 @@ import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AlertElementModule } from './alertElement/alertElement.module';
+import { SocketsGateway } from './sockets/sockets.gateway';
 
 @Module({
   imports: [
@@ -25,6 +26,6 @@ import { AlertElementModule } from './alertElement/alertElement.module';
     PostModule,
     PrismaModule],
   controllers: [],
-  providers: [],
+  providers: [SocketsGateway],
 })
 export class AppModule {}
