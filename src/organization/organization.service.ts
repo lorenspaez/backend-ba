@@ -178,7 +178,7 @@ export class OrganizationService {
       },
     });
 
-    if(org1 != null){
+    if(!org1){
       throw new ForbiddenException(
         'Este nombre ya está siendo utilizado'
       )
