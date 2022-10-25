@@ -150,13 +150,20 @@ export class AlertService {
       )
     };
 
-    return await this.prisma.alert.update({
+    await this.prisma.alert.update({
       where: {
         id: alert.id,
       },
       data: {
         ...dto,
-        photo: dto.photo,
+      },
+    });
+
+    return await this.prisma.alert.update({
+      where: {
+        id: alert.id,
+      },
+      data: {
         alertCategoryPhoto: dto.alertCategoryPhoto
       },
     });

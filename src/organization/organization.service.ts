@@ -184,6 +184,32 @@ export class OrganizationService {
       )
     };
 
+    const organization0 = await this.prisma.organization.findUnique({
+      where: {
+        id: organizationId,
+      }
+    });
+
+    if (organization0.name != dto.name){
+      await this.prisma.user.updateMany({
+        where:{
+          organizationId: organizationId,
+        },
+        data:{
+          organizationName: dto.name
+        },
+      });
+  
+      await this.prisma.post.updateMany({
+        where:{
+          organizationId: organizationId,
+        },
+        data:{
+          organizationName: dto.name
+        },
+      });
+    }
+
     const organization = await this.prisma.organization.update({
       where: {
         id: organizationId,
