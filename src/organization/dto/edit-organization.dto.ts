@@ -10,6 +10,9 @@ export class EditOrganizationDto {
   @IsOptional()
   name?: string;
 
+  @IsOptional()
+  membersId: string;
+
   @IsString()
   @IsOptional()
   description?: string;

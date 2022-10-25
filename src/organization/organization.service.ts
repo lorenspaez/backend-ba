@@ -60,25 +60,15 @@ export class OrganizationService {
     });
 
     for(var i = 0; i<numMembersIds.length ; i++) { 
-
-      await this.prisma.user.findUnique({
-        where:{
+      await this.prisma.user.update({
+        where: {
           id: numMembersIds[i]
         },
+        data: {
+          organizationId: org.id,
+          organizationName: org.name
+          }
       });
-
-      if (user.isVolunteer == true){
-
-        await this.prisma.user.update({
-          where: {
-            id: numMembersIds[i]
-          },
-          data: {
-            organizationId: org.id,
-            organizationName: org.name
-            }
-        });
-      }
     };
 
     const users = await this.prisma.user.findMany({
@@ -131,7 +121,7 @@ export class OrganizationService {
     const users = await this.prisma.user.findMany({
       where:{
         organizationId: organizationId
-      }
+      },
     });
 
     return {org, users}
@@ -149,7 +139,7 @@ export class OrganizationService {
     const users = await this.prisma.user.findMany({
       where:{
         organizationName: organizationName
-      }
+      },
     });
 
     return {org, users}
@@ -172,7 +162,7 @@ export class OrganizationService {
       )
     };
 
-    const org1 = await this.prisma.organization.findFirst({
+    /*const org1 = await this.prisma.organization.findFirst({
       where:{
         name: dto.name
       },
@@ -182,12 +172,12 @@ export class OrganizationService {
       throw new ForbiddenException(
         'Este nombre ya está siendo utilizado'
       )
-    };
+    };*/
 
     const organization0 = await this.prisma.organization.findUnique({
       where: {
         id: organizationId,
-      }
+      },
     });
 
     if (organization0.name != dto.name){
@@ -210,7 +200,10 @@ export class OrganizationService {
       });
     }
 
-    const organization = await this.prisma.organization.update({
+    const numMembersIds = JSON.parse(dto.membersId);
+    delete dto.membersId;
+
+    const org = await this.prisma.organization.update({
       where: {
         id: organizationId,
       },
@@ -218,7 +211,25 @@ export class OrganizationService {
         ...dto,
       },
     });
-    return organization;
+
+    for(var i = 0; i<numMembersIds.length ; i++) {
+      await this.prisma.user.update({
+        where: {
+          id: numMembersIds[i]
+        },
+        data: {
+          organizationId: org.id,
+          organizationName: org.name
+          }
+      });
+    };
+
+    const users = await this.prisma.user.findMany({
+      where:{
+        organizationId: org.id,
+      },
+    });
+    return {org, users};
   }
 
   async upgradeOrganizationById(
@@ -229,7 +240,7 @@ export class OrganizationService {
     const user = await this.prisma.user.findUnique({
       where:{
         id: userId
-      }
+      },
     });
 
     if (user.organizationId != organizationId){
@@ -264,7 +275,7 @@ export class OrganizationService {
       await this.prisma.user.findMany({
         where:{
           organizationId: organizationId
-        }
+        },
       });
 
     return users;
@@ -301,7 +312,7 @@ export class OrganizationService {
       data:{
         organizationId: null,
         organizationName: null,
-      }
+      },
     });
 
     return await this.prisma.organization.delete({
