@@ -172,7 +172,7 @@ export class OrganizationService {
       )
     };
 
-    const org1 = await this.prisma.organization.findUnique({
+    const org1 = await this.prisma.organization.findFirst({
       where:{
         name: dto.name
       },
