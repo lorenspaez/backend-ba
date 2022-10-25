@@ -156,6 +156,8 @@ export class AlertService {
       },
       data: {
         ...dto,
+        photo: dto.photo,
+        alertCategoryPhoto: dto.alertCategoryPhoto
       },
     });
   }

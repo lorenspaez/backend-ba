@@ -35,6 +35,11 @@ export class CategoryService {
       await this.prisma.category.findMany({
       where: {
       },
+      orderBy: [
+        {
+          id: 'asc',
+        }
+      ]
     });
 
     return {posts, categories}
