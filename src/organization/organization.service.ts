@@ -97,6 +97,14 @@ export class OrganizationService {
     });
   }
 
+  getAllFoundations() {
+    return this.prisma.organization.findMany({
+      where: {
+        isFoundation: true,
+      },
+    });
+  }
+
   async searchUsers(
     name: string){
     return await this.prisma.user.findMany({
