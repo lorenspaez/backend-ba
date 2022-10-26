@@ -1,5 +1,6 @@
-import { Body,Controller,HttpCode,HttpStatus,Post, Patch} from '@nestjs/common';
+import { Body,Controller,HttpCode,HttpStatus,Post, Patch, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { JwtGuard } from '../auth/guard';
 import { AuthDto } from './dto';
 import { User } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
@@ -19,6 +20,7 @@ export class AuthController {
     return this.authService.signin(dto);
   }
 
+  @UseGuards(JwtGuard)
   @Patch('logout')
   logout(
     @GetUser('id') userId: number
