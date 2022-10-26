@@ -17,6 +17,7 @@ model User{
   name String
   isVolunteer Boolean @default(false)
   isActive Boolean @default(false)
+  notifUserToken String @default("")
 
   alertKey String?
   takenAlertId String?
@@ -54,6 +55,7 @@ model Alert{
   longitude String
   arrivalTime String?
   status String @default("Abierto")
+  notifAlertToken String @default("")
 
   parentId Int?
   childId Int?

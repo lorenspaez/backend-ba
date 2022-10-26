@@ -94,7 +94,7 @@ export class AuthService {
   async logout(
     userId: number
   ){
-    await this.prisma.user.update({
+    return await this.prisma.user.update({
       where:{
         id: userId,
       },
