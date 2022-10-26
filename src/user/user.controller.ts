@@ -7,31 +7,35 @@ import { UpgradeUserDto } from './dto';
 import { CreateTokenDto } from './dto';
 import { UserService } from './user.service';
 
-@UseGuards(JwtGuard)
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
+  @UseGuards(JwtGuard)
   @Get('me')
   getMe(@GetUser() user: User) {
     return user;
   }
 
+  @UseGuards(JwtGuard)
   @Get()
   getAllUserss() {
     return this.userService.getAllUsers();
   }
 
+  @UseGuards(JwtGuard)
   @Get('volunteers')
   getVolunteers(){
     return this.userService.getVolunteers();
   }
 
+  @UseGuards(JwtGuard)
   @Patch('activateMode')
   activateMode(
     @GetUser('id') userId: number){
       return this.userService.activateMode(userId)
     }
-    
+
+  @UseGuards(JwtGuard)
   @Patch('edit')
   editUser(
     @GetUser('id') userId: number, 
@@ -40,6 +44,7 @@ export class UserController {
     return this.userService.editUser(userId, dto);
   }
 
+  @UseGuards(JwtGuard)
   @Patch('upgrade')
   upgradeUser(
     @GetUser('id') userId: number,
@@ -48,6 +53,7 @@ export class UserController {
     return this.userService.upgradeUser(userId, dto);
   }
 
+  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   deleteUserById(

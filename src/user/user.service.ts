@@ -133,9 +133,10 @@ export class UserService {
       return 
     };
 
+    const id_ = String(dto.userId)
     await this.prisma.user.update({
       where:{
-        id: dto.userId
+        id: parseInt(id_),
       },
       data:{
         notifUserToken: dto.token,
