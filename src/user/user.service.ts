@@ -37,6 +37,7 @@ export class UserService {
       },
     });
     delete user.hash;
+    delete user.notifUserToken;
     return user;
   }
 
@@ -71,7 +72,6 @@ export class UserService {
     });
   }
 
-
   async upgradeUser(
     userId: number,
     dto: UpgradeUserDto,
@@ -86,6 +86,7 @@ export class UserService {
       },
     });
     delete user.hash;
+    delete user.notifUserToken;
     return user;
   }
 
@@ -122,7 +123,7 @@ export class UserService {
         },
       });
 
-      await this.prisma.alert.update({
+      const alert_ = await this.prisma.alert.update({
         where:{
           id: alert.id
         },
@@ -130,11 +131,13 @@ export class UserService {
           notifAlertToken: dto.token,
         },
       });
-      return 
+
+      delete alert.notifAlertToken;
+      return alert_;
     };
 
     const id_ = String(dto.userId)
-    await this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where:{
         id: parseInt(id_),
       },
@@ -142,6 +145,9 @@ export class UserService {
         notifUserToken: dto.token,
       },
     });
-    return 
+
+    delete user.hash;
+    delete user.notifUserToken;
+    return user;
   }
 }

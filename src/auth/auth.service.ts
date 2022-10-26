@@ -99,7 +99,7 @@ export class AuthService {
         id: userId,
       },
       data:{
-        notifUserToken: null
+        notifUserToken: ""
       },
     });
     delete user.hash;
