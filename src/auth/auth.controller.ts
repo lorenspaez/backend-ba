@@ -2,7 +2,6 @@ import { Body,Controller,HttpCode,HttpStatus,Post, Patch, UseGuards } from '@nes
 import { AuthService } from './auth.service';
 import { JwtGuard } from '../auth/guard';
 import { AuthDto } from './dto';
-import { User } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
 
 @Controller('auth')

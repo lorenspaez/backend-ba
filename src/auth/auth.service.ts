@@ -94,13 +94,15 @@ export class AuthService {
   async logout(
     userId: number
   ){
-    return await this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where:{
         id: userId,
       },
       data:{
-        notifUserToken: ""
+        notifUserToken: null
       },
     });
+    delete user.hash;
+    return user;
   }
 }
