@@ -90,4 +90,17 @@ export class AuthService {
       access_token: token
     };
   }
+
+  async logout(
+    userId: number
+  ){
+    await this.prisma.user.update({
+      where:{
+        id: userId,
+      },
+      data:{
+        notifUserToken: ""
+      },
+    });
+  }
 }

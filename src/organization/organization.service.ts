@@ -161,14 +161,14 @@ export class OrganizationService {
         'No perteneces a esta fundación'
       )
     };
-
-    /*const org1 = await this.prisma.organization.findFirst({
+/*
+    const org1 = await this.prisma.organization.findFirst({
       where:{
         name: dto.name
       },
     });
 
-    if(!org1){
+    if(org1.name != null){
       throw new ForbiddenException(
         'Este nombre ya está siendo utilizado'
       )

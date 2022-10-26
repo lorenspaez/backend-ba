@@ -4,6 +4,7 @@ import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { EditUserDto } from './dto';
 import { UpgradeUserDto } from './dto';
+import { CreateTokenDto } from './dto';
 import { UserService } from './user.service';
 
 @UseGuards(JwtGuard)
@@ -53,5 +54,12 @@ export class UserController {
     @GetUser('id') userId: number
     ) {
     return this.userService.deleteUserById(userId);
+  }
+
+  @Patch('notification')
+  setNotifications(
+    @Body() dto: CreateTokenDto
+    ) {
+    return this.userService.setNotifications(dto);
   }
 }

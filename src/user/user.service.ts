@@ -2,6 +2,7 @@ import { Injectable , ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditUserDto } from './dto';
 import { UpgradeUserDto } from './dto';
+import { CreateTokenDto } from './dto';
 
 @Injectable()
 export class UserService {
@@ -109,5 +110,37 @@ export class UserService {
       },
     });
     return "Usuario eliminado";
+  }
+
+  async setNotifications(
+    dto: CreateTokenDto
+  ){
+    if(dto.userId == 0){
+      const alert = await this.prisma.alert.findFirst({
+        where:{
+          alertKey: dto.alertKey,
+        },
+      });
+
+      await this.prisma.alert.update({
+        where:{
+          id: alert.id
+        },
+        data:{
+          notifAlertToken: dto.token,
+        },
+      });
+      return 
+    };
+
+    await this.prisma.user.update({
+      where:{
+        id: dto.userId
+      },
+      data:{
+        notifUserToken: dto.token,
+      },
+    });
+    return 
   }
 }
