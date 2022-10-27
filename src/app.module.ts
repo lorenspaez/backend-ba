@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, } from '@nestjs/common';
 import { ConfigModule, ConfigService} from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { OrganizationModule } from './organization/organization.module';
@@ -9,6 +9,7 @@ import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AlertElementModule } from './alertElement/alertElement.module';
+import { HttpModule, HttpService} from '@nestjs/axios'
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { AlertElementModule } from './alertElement/alertElement.module';
     AlertCategoryModule,
     AlertElementModule,
     PostModule,
-    PrismaModule],
+    PrismaModule,
+    HttpModule],
   controllers: [],
   providers: [],
 })
