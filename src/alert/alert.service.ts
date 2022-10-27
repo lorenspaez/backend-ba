@@ -3,10 +3,11 @@ import { CreateAlertDto } from './dto/create-alert.dto';
 import { UpdateAlertDto } from './dto/update-alert.dto';
 import { TakeAlertDto } from './dto/take-alert.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { HttpService } from '@nestjs/axios/dist';
 
 @Injectable()
 export class AlertService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private readonly httpService: HttpService) {}
 
   async createAlert(
     dto: CreateAlertDto,
@@ -225,6 +226,13 @@ export class AlertService {
         takenAlertId: String(alert.id)+alert.userName
       },
     });
+
+    await this.httpService.post('https://fcm.googleapis.com/fcm/send',
+        { data: {"to": "ept61Yr9QnGPh5GLkItyU3:APA91bFVAA_7j_ZMZ2Sv6Lk0QztRN7R69HiZphvab-7TPCegFLsFOTZ7PneQuzoMzzw8d2gtY3Kj5rYM3yrMjQae2CWO0-OCDIE6-Xi1D92KNWpKNcv0DH7Q0WGD9JXTBpggoM0LEQaT",
+        "notification": {
+         "body": "wapo",
+         "title": "jiji"
+        }}})
     
     return await this.prisma.alert.update({
       where: {
