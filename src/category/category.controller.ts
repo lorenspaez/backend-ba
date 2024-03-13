@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { EditCategoryDto } from './dto';
 import { CreateCategoryDto } from './dto';
 import { CategoryService } from './category.service';
@@ -8,9 +19,7 @@ export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
   @Post()
-  createCategory(
-    @Body() dto: CreateCategoryDto,
-  ) {
+  createCategory(@Body() dto: CreateCategoryDto) {
     return this.categoryService.createCategory(dto);
   }
 
@@ -20,16 +29,12 @@ export class CategoryController {
   }
 
   @Get(':id')
-  getCategoryById(
-    @Param('id', ParseIntPipe) categoryId: number,
-    ) {
+  getCategoryById(@Param('id', ParseIntPipe) categoryId: number) {
     return this.categoryService.getCategoryById(categoryId);
   }
 
   @Get(':name')
-  getCategoryByName(
-    @Param('name') name: string,
-    ) {
+  getCategoryByName(@Param('name') name: string) {
     return this.categoryService.getCategoryByName(name);
   }
 
@@ -43,9 +48,7 @@ export class CategoryController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteCategoryById(
-    @Param('id', ParseIntPipe) categoryId: number,
-  ) {
+  deleteCategoryById(@Param('id', ParseIntPipe) categoryId: number) {
     return this.categoryService.deleteCategoryById(categoryId);
   }
 }

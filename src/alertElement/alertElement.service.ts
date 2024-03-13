@@ -7,28 +7,22 @@ import { CreateAlertElementDto } from './dto';
 export class AlertElementService {
   constructor(private prisma: PrismaService) {}
 
-  async createElement(
-    dto: CreateAlertElementDto,
-  ) {
-    const element =
-      await this.prisma.alertElement.create({
-        data: {
-          ...dto,
-        },
-      });
+  async createElement(dto: CreateAlertElementDto) {
+    const element = await this.prisma.alertElement.create({
+      data: {
+        ...dto,
+      },
+    });
     return element;
   }
 
   getAllElements() {
     return this.prisma.alertElement.findMany({
-      where: {
-      },
+      where: {},
     });
   }
 
-  getElementById(
-    elementId: number,
-  ) {
+  getElementById(elementId: number) {
     return this.prisma.alertElement.findFirst({
       where: {
         id: elementId,
@@ -36,10 +30,7 @@ export class AlertElementService {
     });
   }
 
-  async editElementById(
-    elementId: number,
-    dto: EditAlertElementDto,
-  ) {
+  async editElementById(elementId: number, dto: EditAlertElementDto) {
     const element = await this.prisma.alertElement.update({
       where: {
         id: elementId,
@@ -51,10 +42,7 @@ export class AlertElementService {
     return element;
   }
 
-  async deleteElementById(
-    elementId: number
-  ) {
-    
+  async deleteElementById(elementId: number) {
     return await this.prisma.alertElement.delete({
       where: {
         id: elementId,

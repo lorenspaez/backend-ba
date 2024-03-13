@@ -1,4 +1,12 @@
-import { Body,Controller,HttpCode,HttpStatus,Post, Patch, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtGuard } from '../auth/guard';
 import { AuthDto } from './dto';
@@ -21,9 +29,7 @@ export class AuthController {
 
   @UseGuards(JwtGuard)
   @Patch('logout')
-  logout(
-    @GetUser('id') userId: number
-    ) {
+  logout(@GetUser('id') userId: number) {
     return this.authService.logout(userId);
   }
 }

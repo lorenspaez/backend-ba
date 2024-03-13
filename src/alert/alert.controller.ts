@@ -1,17 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { AlertService } from './alert.service';
-import { CreateAlertDto, TakeAlertDto, UpdateAlertDto} from './dto';
+import { CreateAlertDto, TakeAlertDto, UpdateAlertDto } from './dto';
 
 @Controller('alerts')
 export class AlertController {
   constructor(private alertService: AlertService) {}
 
   @Post()
-  createAlert(
-    @Body() dto: CreateAlertDto,
-  ) {
+  createAlert(@Body() dto: CreateAlertDto) {
     return this.alertService.createAlert(dto);
   }
 
@@ -27,16 +37,12 @@ export class AlertController {
   }
 
   @Get(':id')
-  getAlertById(
-    @Param('id', ParseIntPipe) alertId: number,
-  ) {
+  getAlertById(@Param('id', ParseIntPipe) alertId: number) {
     return this.alertService.getAlertById(alertId);
   }
 
   @Get('key/:alertKey')
-  getAlertByKey(
-    @Param('alertKey') alertKey: string,
-  ) {
+  getAlertByKey(@Param('alertKey') alertKey: string) {
     return this.alertService.getAlertByKey(alertKey);
   }
 
@@ -53,9 +59,9 @@ export class AlertController {
   takeAlert(
     @Param('id', ParseIntPipe) id: number,
     @GetUser('id') volunteerId: number,
-    @Body() dto: TakeAlertDto
-  ){
-    return this.alertService.takeAlert(id, volunteerId, dto)
+    @Body() dto: TakeAlertDto,
+  ) {
+    return this.alertService.takeAlert(id, volunteerId, dto);
   }
 
   @UseGuards(JwtGuard)
@@ -63,8 +69,7 @@ export class AlertController {
   leaveAlert(
     @Param('id', ParseIntPipe) id: number,
     @GetUser('id') volunteerId: number,
-
-  ){
+  ) {
     return this.alertService.leaveAlert(volunteerId, id);
   }
 
@@ -73,25 +78,23 @@ export class AlertController {
   askForHelp(
     @Param('id', ParseIntPipe) alertId: number,
     @GetUser('id') userId: number,
-    @Body() dto: CreateAlertDto
-  ){
-    return this.alertService.cloneAlert(alertId, userId, dto)
+    @Body() dto: CreateAlertDto,
+  ) {
+    return this.alertService.cloneAlert(alertId, userId, dto);
   }
 
   @UseGuards(JwtGuard)
   @Patch('closeAlert/:id')
   closeAlert(
     @Param('id', ParseIntPipe) id: number,
-    @GetUser('id') volunteerId: number
-  ){
-    return this.alertService.closeAlert(id, volunteerId)
+    @GetUser('id') volunteerId: number,
+  ) {
+    return this.alertService.closeAlert(id, volunteerId);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('key/:alertKey')
-  deleteAlertByKey(
-    @Param('alertKey') alertKey: string,
-  ) {
+  deleteAlertByKey(@Param('alertKey') alertKey: string) {
     return this.alertService.deleteAlertByKey(alertKey);
   }
 }

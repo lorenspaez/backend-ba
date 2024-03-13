@@ -1,20 +1,14 @@
-import {
-    IsOptional,
-    IsString,
-    IsNumber
-  } from 'class-validator';
-  
-  export class CreateTokenDto {
+import { IsOptional, IsString } from 'class-validator';
 
-    @IsOptional()
-    userId?: number;
-  
-    @IsString()
-    @IsOptional()
-    alertKey: string;
+export class CreateTokenDto {
+  @IsOptional()
+  userId?: number;
 
-    @IsString()
-    @IsOptional()
-    token: string;
-  }
-  
+  @IsString()
+  @IsOptional()
+  alertKey: string;
+
+  @IsString()
+  @IsOptional()
+  token: string;
+}

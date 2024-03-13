@@ -4,6 +4,6 @@ import { AlertCategoryService } from './alertCategory.service';
 
 @Module({
   controllers: [AlertCategoryController],
-  providers: [AlertCategoryService]
+  providers: [AlertCategoryService],
 })
 export class AlertCategoryModule {}

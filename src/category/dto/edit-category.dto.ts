@@ -1,8 +1,4 @@
-import {
-  IsOptional,
-  IsString,
-  IsNotEmpty
-} from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty } from 'class-validator';
 
 export class EditCategoryDto {
   @IsString()
@@ -12,5 +8,4 @@ export class EditCategoryDto {
   @IsString()
   @IsOptional()
   photo: string;
-
 }

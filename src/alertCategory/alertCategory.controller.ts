@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { EditAlertCategoryDto } from './dto';
 import { CreateAlertCategoryDto } from './dto';
 import { AlertCategoryService } from './alertCategory.service';
@@ -8,9 +19,7 @@ export class AlertCategoryController {
   constructor(private alertCategoryService: AlertCategoryService) {}
 
   @Post()
-  createAlertCategory(
-    @Body() dto: CreateAlertCategoryDto,
-  ) {
+  createAlertCategory(@Body() dto: CreateAlertCategoryDto) {
     return this.alertCategoryService.createCategory(dto);
   }
 
@@ -20,9 +29,7 @@ export class AlertCategoryController {
   }
 
   @Get(':id')
-  getAlertCategoryById(
-    @Param('id', ParseIntPipe) categoryId: number,
-    ) {
+  getAlertCategoryById(@Param('id', ParseIntPipe) categoryId: number) {
     return this.alertCategoryService.getCategoryById(categoryId);
   }
 
@@ -36,9 +43,7 @@ export class AlertCategoryController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteAlertCategoryById(
-    @Param('id', ParseIntPipe) categoryId: number,
-  ) {
+  deleteAlertCategoryById(@Param('id', ParseIntPipe) categoryId: number) {
     return this.alertCategoryService.deleteCategoryById(categoryId);
   }
 }

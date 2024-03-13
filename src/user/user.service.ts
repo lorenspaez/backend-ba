@@ -1,4 +1,4 @@
-import { Injectable , ForbiddenException } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditUserDto } from './dto';
 import { UpgradeUserDto } from './dto';
@@ -10,24 +10,20 @@ export class UserService {
 
   async getAllUsers() {
     return this.prisma.user.findMany({
-      where: {
-      },
+      where: {},
     });
   }
 
-  async getVolunteers(){
+  async getVolunteers() {
     const volunteers = await this.prisma.user.findMany({
-      where:{
-        isVolunteer: true
-      }
+      where: {
+        isVolunteer: true,
+      },
     });
     return volunteers;
   }
 
-  async editUser(
-    userId: number,
-    dto: EditUserDto,
-  ) {
+  async editUser(userId: number, dto: EditUserDto) {
     const user = await this.prisma.user.update({
       where: {
         id: userId,
@@ -41,23 +37,21 @@ export class UserService {
     return user;
   }
 
-  async activateMode(
-    userId: number,
-  ) {
+  async activateMode(userId: number) {
     const user = await this.prisma.user.findUnique({
       where: {
-        id: userId
-      }
+        id: userId,
+      },
     });
     delete user.hash;
 
-    if (user.isActive == true){
+    if (user.isActive == true) {
       return await this.prisma.user.update({
         where: {
           id: userId,
         },
         data: {
-          isActive: false
+          isActive: false,
         },
       });
     }
@@ -67,15 +61,12 @@ export class UserService {
         id: userId,
       },
       data: {
-        isActive: true
+        isActive: true,
       },
     });
   }
 
-  async upgradeUser(
-    userId: number,
-    dto: UpgradeUserDto,
-  ) {
+  async upgradeUser(userId: number, dto: UpgradeUserDto) {
     const user = await this.prisma.user.update({
       where: {
         id: userId,
@@ -90,58 +81,51 @@ export class UserService {
     return user;
   }
 
-  async deleteUserById(
-    userId: number
-  ) {
-    const user =
-      await this.prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
+  async deleteUserById(userId: number) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
 
     if (user.id !== userId)
-      throw new ForbiddenException(
-        'Acceso denegado al usuario',
-      );
+      throw new ForbiddenException('Acceso denegado al usuario');
 
     await this.prisma.user.delete({
       where: {
         id: userId,
       },
     });
-    return "Usuario eliminado";
+    return 'Usuario eliminado';
   }
 
-  async setNotifications(
-    dto: CreateTokenDto
-  ){
-    if(dto.userId == 0){
+  async setNotifications(dto: CreateTokenDto) {
+    if (dto.userId == 0) {
       const alert = await this.prisma.alert.findFirst({
-        where:{
+        where: {
           alertKey: dto.alertKey,
         },
       });
 
       const alert_ = await this.prisma.alert.update({
-        where:{
-          id: alert.id
+        where: {
+          id: alert.id,
         },
-        data:{
+        data: {
           notifAlertToken: dto.token,
         },
       });
 
       delete alert.notifAlertToken;
       return alert_;
-    };
+    }
 
-    const id_ = String(dto.userId)
+    const id_ = String(dto.userId);
     const user = await this.prisma.user.update({
-      where:{
+      where: {
         id: parseInt(id_),
       },
-      data:{
+      data: {
         notifUserToken: dto.token,
       },
     });

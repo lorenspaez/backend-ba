@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, Post } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuthDto } from './dto';
 import * as argon from 'argon2';
@@ -13,10 +13,11 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
   ) {}
-  
+
   async signup(dto: AuthDto) {
     const hash = await argon.hash(dto.password); // generate the password hash
-    try {// save the new user in the db 
+    try {
+      // save the new user in the db
       const user = await this.prisma.user.create({
         data: {
           name: dto.name,
@@ -25,16 +26,11 @@ export class AuthService {
         },
       });
       const tok = await this.signToken(user.id, user.email);
-      return {tok, user};
+      return { tok, user };
     } catch (error) {
-      if (
-        error instanceof
-        PrismaClientKnownRequestError
-      ) {
+      if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ForbiddenException(
-            'El email ya está siendo utilizado',
-          );
+          throw new ForbiddenException('El email ya está siendo utilizado');
         }
       }
       throw error;
@@ -43,29 +39,19 @@ export class AuthService {
 
   async signin(dto: AuthDto) {
     // find the user by email
-    const user =
-      await this.prisma.user.findUnique({
-        where: {
-          email: dto.email,
-        },
-      });
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
     // if user does not exist throw exception
-    if (!user)
-      throw new ForbiddenException(
-        'Email no está registrado',
-      );
+    if (!user) throw new ForbiddenException('Email no está registrado');
     // compare password
-    const pwMatches = await argon.verify(
-      user.hash,
-      dto.password,
-    );
+    const pwMatches = await argon.verify(user.hash, dto.password);
     // if password incorrect throw exception
-    if (!pwMatches)
-      throw new ForbiddenException(
-        'Contraseña incorrecta',
-      );
+    if (!pwMatches) throw new ForbiddenException('Contraseña incorrecta');
     const tok = await this.signToken(user.id, user.email);
-    return {tok, user};
+    return { tok, user };
   }
 
   async signToken(
@@ -78,28 +64,23 @@ export class AuthService {
     };
     const secret = this.config.get('JWT_SECRET');
 
-    const token = await this.jwt.signAsync(
-      payload,
-      {
-        expiresIn: '30d',
-        secret: secret,
-      },
-    );
+    const token = await this.jwt.signAsync(payload, {
+      expiresIn: '30d',
+      secret: secret,
+    });
 
     return {
-      access_token: token
+      access_token: token,
     };
   }
 
-  async logout(
-    userId: number
-  ){
+  async logout(userId: number) {
     const user = await this.prisma.user.update({
-      where:{
+      where: {
         id: userId,
       },
-      data:{
-        notifUserToken: ""
+      data: {
+        notifUserToken: '',
       },
     });
     delete user.hash;

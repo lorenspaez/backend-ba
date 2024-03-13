@@ -1,8 +1,4 @@
-import {
-  IsOptional,
-  IsString,
-  IsNotEmpty
-} from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class EditAlertCategoryDto {
   @IsString()
@@ -16,5 +12,4 @@ export class EditAlertCategoryDto {
   @IsString()
   @IsOptional()
   colour?: string;
-
 }

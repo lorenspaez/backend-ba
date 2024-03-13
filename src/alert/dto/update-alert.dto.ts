@@ -1,15 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateAlertDto } from './create-alert.dto';
-import {
-    IsNotEmpty,
-    IsNumber,
-    IsObject,
-    IsOptional,
-    IsString,
-  } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateAlertDto extends PartialType(CreateAlertDto) {
-
   @IsString()
   @IsOptional()
   userName?: string;
@@ -27,26 +20,26 @@ export class UpdateAlertDto extends PartialType(CreateAlertDto) {
   body: string;
 
   @IsOptional()
-  neededElementName: string
+  neededElementName: string;
 
   @IsString()
   @IsOptional()
   photo?: string;
 
   @IsOptional()
-  providedElementName?: string
+  providedElementName?: string;
 
   @IsString()
   @IsOptional()
-  userPhone?: string
+  userPhone?: string;
 
   @IsString()
   @IsOptional()
-  volunteerPhone?: string
+  volunteerPhone?: string;
 
   @IsString()
   @IsOptional()
-  arrivalTime?: string
+  arrivalTime?: string;
 
   @IsNumber()
   @IsOptional()

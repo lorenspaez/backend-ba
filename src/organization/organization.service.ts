@@ -1,8 +1,8 @@
-import { Injectable , ForbiddenException } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
-import { CreateOrganizationDto} from './dto';
+import { CreateOrganizationDto } from './dto';
 
 @Injectable()
 export class OrganizationService {
@@ -13,77 +13,70 @@ export class OrganizationService {
     createdBy: string,
     dto: CreateOrganizationDto,
   ) {
-    
     const org1 = await this.prisma.organization.findUnique({
-      where:{
-        name: dto.name
+      where: {
+        name: dto.name,
       },
     });
 
-    if (org1 != null){
-      throw new ForbiddenException(
-        'Este nombre ya está siendo utilizado'
-      )
-    };
+    if (org1 != null) {
+      throw new ForbiddenException('Este nombre ya está siendo utilizado');
+    }
 
     const user = await this.prisma.user.findUnique({
-      where:{
-        id: userId
+      where: {
+        id: userId,
       },
     });
 
-    if(user.organizationId != null){
-      throw new ForbiddenException(
-        'Ya perteneces a una organización',
-      );
-    };
+    if (user.organizationId != null) {
+      throw new ForbiddenException('Ya perteneces a una organización');
+    }
 
     const numMembersIds = JSON.parse(dto.membersId);
     delete dto.membersId;
 
-    const org =
-      await this.prisma.organization.create({
-        data: {
-          createdBy: createdBy,
-          ...dto,
-        },
-      });
+    const org = await this.prisma.organization.create({
+      data: {
+        createdBy: createdBy,
+        ...dto,
+      },
+    });
 
     await this.prisma.user.update({
       where: {
-        id: userId
+        id: userId,
       },
       data: {
         organizationId: org.id,
-        organizationName: org.name
-        }
-    });
-
-    for(var i = 0; i<numMembersIds.length ; i++) { 
-      await this.prisma.user.update({
-        where: {
-          id: numMembersIds[i]
-        },
-        data: {
-          organizationId: org.id,
-          organizationName: org.name
-          }
-      });
-    };
-
-    const users = await this.prisma.user.findMany({
-      where:{
-        organizationId: org.id
+        organizationName: org.name,
       },
     });
 
-    return {org, users};
+    for (var i = 0; i < numMembersIds.length; i++) {
+      await this.prisma.user.update({
+        where: {
+          id: numMembersIds[i],
+        },
+        data: {
+          organizationId: org.id,
+          organizationName: org.name,
+        },
+      });
+    }
+
+    const users = await this.prisma.user.findMany({
+      where: {
+        organizationId: org.id,
+      },
+    });
+
+    return { org, users };
   }
 
   getAllOrganizations() {
     return this.prisma.organization.findMany({
-      where: {
-      },
+      where: {},
     });
   }
 
@@ -95,8 +88,7 @@ export class OrganizationService {
     });
   }
 
-  async searchUsers(
-    name: string){
+  async searchUsers(name: string) {
     return await this.prisma.user.findMany({
       where: {
         name: {
@@ -109,9 +101,7 @@ export class OrganizationService {
     });
   }
 
-  async getOrganizationById(
-    organizationId: number,
-  ) {
+  async getOrganizationById(organizationId: number) {
     const org = await this.prisma.organization.findFirst({
       where: {
         id: organizationId,
@@ -119,17 +109,15 @@ export class OrganizationService {
     });
 
     const users = await this.prisma.user.findMany({
-      where:{
-        organizationId: organizationId
+      where: {
+        organizationId: organizationId,
       },
     });
 
-    return {org, users}
+    return { org, users };
   }
 
-  async getOrganizationByName(
-    organizationName: string,
-  ) {
+  async getOrganizationByName(organizationName: string) {
     const org = await this.prisma.organization.findFirst({
       where: {
         name: organizationName,
@@ -137,12 +125,12 @@ export class OrganizationService {
     });
 
     const users = await this.prisma.user.findMany({
-      where:{
-        organizationName: organizationName
+      where: {
+        organizationName: organizationName,
       },
     });
 
-    return {org, users}
+    return { org, users };
   }
 
   async editOrganizationById(
@@ -156,12 +144,10 @@ export class OrganizationService {
       },
     });
 
-    if(user.organizationId != organizationId){
-      throw new ForbiddenException(
-        'No perteneces a esta fundación'
-      )
-    };
-/*
+    if (user.organizationId != organizationId) {
+      throw new ForbiddenException('No perteneces a esta fundación');
+    }
+    /*
     const org1 = await this.prisma.organization.findFirst({
       where:{
         name: dto.name
@@ -180,22 +166,22 @@ export class OrganizationService {
       },
     });
 
-    if (organization0.name != dto.name){
+    if (organization0.name != dto.name) {
       await this.prisma.user.updateMany({
-        where:{
+        where: {
           organizationId: organizationId,
         },
-        data:{
-          organizationName: dto.name
+        data: {
+          organizationName: dto.name,
         },
       });
-  
+
       await this.prisma.post.updateMany({
-        where:{
+        where: {
           organizationId: organizationId,
         },
-        data:{
-          organizationName: dto.name
+        data: {
+          organizationName: dto.name,
         },
       });
     }
@@ -212,42 +198,40 @@ export class OrganizationService {
       },
     });
 
-    for(var i = 0; i<numMembersIds.length ; i++) {
+    for (var i = 0; i < numMembersIds.length; i++) {
       await this.prisma.user.update({
         where: {
-          id: numMembersIds[i]
+          id: numMembersIds[i],
         },
         data: {
           organizationId: org.id,
-          organizationName: org.name
-          }
+          organizationName: org.name,
+        },
       });
-    };
+    }
 
     const users = await this.prisma.user.findMany({
-      where:{
+      where: {
         organizationId: org.id,
       },
     });
-    return {org, users};
+    return { org, users };
   }
 
   async upgradeOrganizationById(
     organizationId: number,
     userId: number,
-    dto: UpgradeOrganizationDto
+    dto: UpgradeOrganizationDto,
   ) {
     const user = await this.prisma.user.findUnique({
-      where:{
-        id: userId
+      where: {
+        id: userId,
       },
     });
 
-    if (user.organizationId != organizationId){
-      throw new ForbiddenException(
-        'No perteneces a esta fundación'
-      )
-    };
+    if (user.organizationId != organizationId) {
+      throw new ForbiddenException('No perteneces a esta fundación');
+    }
 
     const org = await this.prisma.organization.update({
       where: {
@@ -255,61 +239,51 @@ export class OrganizationService {
       },
       data: {
         isFoundation: true,
-        ...dto
+        ...dto,
       },
     });
 
     const users = await this.prisma.user.findMany({
-      where:{
+      where: {
         organizationId: org.id,
       },
     });
-    
-    return {org, users}
+
+    return { org, users };
   }
 
-  async getUsersFromOrg(
-    organizationId: number
-  ){
-    const users = 
-      await this.prisma.user.findMany({
-        where:{
-          organizationId: organizationId
-        },
-      });
+  async getUsersFromOrg(organizationId: number) {
+    const users = await this.prisma.user.findMany({
+      where: {
+        organizationId: organizationId,
+      },
+    });
 
     return users;
   }
 
-  async deleteOrganizationById(
-    organizationId: number,
-    userId: number
-  ) {
-    const user =
-      await this.prisma.user.findUnique({
-        where:{
-          id: userId
-        },
-      });
+  async deleteOrganizationById(organizationId: number, userId: number) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
 
-    const organization =
-      await this.prisma.organization.findUnique({
-        where: {
-          id: organizationId,
-        },
-      });
+    const organization = await this.prisma.organization.findUnique({
+      where: {
+        id: organizationId,
+      },
+    });
 
-    if (user.organizationName !== organization.name){
-      throw new ForbiddenException(
-        'No perteneces a esta fundación',
-      );
-    };
+    if (user.organizationName !== organization.name) {
+      throw new ForbiddenException('No perteneces a esta fundación');
+    }
 
     await this.prisma.user.updateMany({
-      where:{
-        organizationId: organizationId
+      where: {
+        organizationId: organizationId,
       },
-      data:{
+      data: {
         organizationId: null,
         organizationName: null,
       },

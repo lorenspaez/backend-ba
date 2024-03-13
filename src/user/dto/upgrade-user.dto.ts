@@ -1,45 +1,39 @@
-import {
-    IsBoolean,
-    IsNotEmpty,
-    IsOptional,
-    IsString,
-  } from 'class-validator';
-  
-  export class UpgradeUserDto {
-    @IsBoolean()
-    @IsOptional()
-    isVolunteer: boolean;
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-    @IsString()
-    @IsNotEmpty()
-    name: string;
-    
-    @IsString()
-    @IsNotEmpty()
-    rut: string;
+export class UpgradeUserDto {
+  @IsBoolean()
+  @IsOptional()
+  isVolunteer: boolean;
 
-    @IsString()
-    @IsOptional()
-    organizationName?: string;
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-    @IsString()
-    @IsOptional()
-    organizationId?: number;
+  @IsString()
+  @IsNotEmpty()
+  rut: string;
 
-    @IsString()
-    @IsOptional()
-    patente: string;
+  @IsString()
+  @IsOptional()
+  organizationName?: string;
 
-    @IsString()
-    @IsOptional()
-    sector: string;
+  @IsString()
+  @IsOptional()
+  organizationId?: number;
 
-    @IsString()
-    @IsOptional()
-    comuna: string;
+  @IsString()
+  @IsOptional()
+  patente: string;
 
-    @IsString()
-    @IsOptional()
-    region: string;
-  }
-  
+  @IsString()
+  @IsOptional()
+  sector: string;
+
+  @IsString()
+  @IsOptional()
+  comuna: string;
+
+  @IsString()
+  @IsOptional()
+  region: string;
+}

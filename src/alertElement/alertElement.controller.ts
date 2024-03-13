@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { EditAlertElementDto } from './dto';
 import { CreateAlertElementDto } from './dto';
 import { AlertElementService } from './alertElement.service';
@@ -8,9 +19,7 @@ export class AlertElementController {
   constructor(private alertElementService: AlertElementService) {}
 
   @Post()
-  createAlertElement(
-    @Body() dto: CreateAlertElementDto,
-  ) {
+  createAlertElement(@Body() dto: CreateAlertElementDto) {
     return this.alertElementService.createElement(dto);
   }
 
@@ -20,9 +29,7 @@ export class AlertElementController {
   }
 
   @Get(':id')
-  getAlertElementById(
-    @Param('id', ParseIntPipe) elementId: number,
-    ) {
+  getAlertElementById(@Param('id', ParseIntPipe) elementId: number) {
     return this.alertElementService.getElementById(elementId);
   }
 
@@ -36,9 +43,7 @@ export class AlertElementController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteAlertElementById(
-    @Param('id', ParseIntPipe) elementId: number,
-  ) {
+  deleteAlertElementById(@Param('id', ParseIntPipe) elementId: number) {
     return this.alertElementService.deleteElementById(elementId);
   }
 }

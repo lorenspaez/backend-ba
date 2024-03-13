@@ -1,9 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { EditOrganizationDto } from './dto';
 import { UpgradeOrganizationDto } from './dto';
-import { CreateOrganizationDto} from './dto';
+import { CreateOrganizationDto } from './dto';
 import { OrganizationService } from './organization.service';
 
 @Controller('organizations')
@@ -31,23 +43,17 @@ export class OrganizationController {
   }
 
   @Get('users/:id')
-  getUsersFromOrg(
-    @Param('id', ParseIntPipe) organizationId: number,
-  ){
+  getUsersFromOrg(@Param('id', ParseIntPipe) organizationId: number) {
     return this.organizationService.getUsersFromOrg(organizationId);
   }
 
   @Get('search/:name')
-  search(
-    @Param('name') name: string,
-  ){
+  search(@Param('name') name: string) {
     return this.organizationService.searchUsers(name);
   }
 
   @Get(':id')
-  getOrganizationById(
-    @Param('id', ParseIntPipe) organizationId: number,
-    ) {
+  getOrganizationById(@Param('id', ParseIntPipe) organizationId: number) {
     return this.organizationService.getOrganizationById(organizationId);
   }
 
@@ -58,7 +64,11 @@ export class OrganizationController {
     @Param('id', ParseIntPipe) organizationId: number,
     @Body() dto: EditOrganizationDto,
   ) {
-    return this.organizationService.editOrganizationById(userId, organizationId, dto);
+    return this.organizationService.editOrganizationById(
+      userId,
+      organizationId,
+      dto,
+    );
   }
 
   @UseGuards(JwtGuard)
@@ -68,7 +78,11 @@ export class OrganizationController {
     @GetUser('id', ParseIntPipe) userId: number,
     @Body() dto: UpgradeOrganizationDto,
   ) {
-    return this.organizationService.upgradeOrganizationById(organizationId, userId, dto);
+    return this.organizationService.upgradeOrganizationById(
+      organizationId,
+      userId,
+      dto,
+    );
   }
 
   @UseGuards(JwtGuard)
@@ -78,6 +92,9 @@ export class OrganizationController {
     @Param('id', ParseIntPipe) organizationId: number,
     @GetUser('id', ParseIntPipe) userId: number,
   ) {
-    return this.organizationService.deleteOrganizationById(organizationId, userId);
+    return this.organizationService.deleteOrganizationById(
+      organizationId,
+      userId,
+    );
   }
 }

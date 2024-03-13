@@ -4,6 +4,6 @@ import { AlertElementService } from './alertElement.service';
 
 @Module({
   controllers: [AlertElementController],
-  providers: [AlertElementService]
+  providers: [AlertElementService],
 })
 export class AlertElementModule {}

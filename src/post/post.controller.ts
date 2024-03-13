@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { CreatePostDto } from './dto';
@@ -17,11 +29,7 @@ export class PostController {
     @GetUser('organizationName') organizationName: string,
     @Body() dto: CreatePostDto,
   ) {
-    return this.postService.createPost(
-      name,
-      userId,
-      organizationName,
-      dto);
+    return this.postService.createPost(name, userId, organizationName, dto);
   }
 
   @Get()
@@ -30,38 +38,28 @@ export class PostController {
   }
 
   @Get(':id')
-  getPostById(
-    @Param('id', ParseIntPipe) id: number,
-    ) {
+  getPostById(@Param('id', ParseIntPipe) id: number) {
     return this.postService.getPostById(id);
   }
 
   @UseGuards(JwtGuard)
   @Get('myposts')
-  getPosts(
-    @GetUser('id', ParseIntPipe) userId: number
-    ) {
+  getPosts(@GetUser('id', ParseIntPipe) userId: number) {
     return this.postService.getMyPosts(userId);
   }
 
   @Get('foundation/:organizationName')
-  getPostByFoundationName(
-    @Param('organizationName') organizatioName: string,
-  ) {
+  getPostByFoundationName(@Param('organizationName') organizatioName: string) {
     return this.postService.getPostByFoundationName(organizatioName);
   }
 
   @Get('category/:categoryName')
-  getPostByCategoryName(
-    @Param('categoryName') categoryName: string,
-  ) {
+  getPostByCategoryName(@Param('categoryName') categoryName: string) {
     return this.postService.getPostByCategoryName(categoryName);
   }
 
   @Get('search/:text')
-  search(
-    @Param('text') text: string,
-  ){
+  search(@Param('text') text: string) {
     return this.postService.searchPosts(text);
   }
 
